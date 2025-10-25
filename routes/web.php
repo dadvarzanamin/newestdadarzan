@@ -20,6 +20,9 @@ Route::middleware('admin')->namespace('App\Http\Controllers\Panel')->group(funct
     Route::resource('panel/invoice'      , 'InvoiceController');
     Route::resource('panel/menusite'     , 'MenusiteController');
     Route::resource('panel/submenusite'  , 'SubmenusiteController');
+    Route::resource('panel/transaction'  , 'TransactionController');
+    Route::resource('panel/wallet'       , 'WalletController');
+    Route::resource('panel/content'      , 'ContentController');
 
 //    Route::resource('panel/leveluser'    , 'LeveluserController');
 

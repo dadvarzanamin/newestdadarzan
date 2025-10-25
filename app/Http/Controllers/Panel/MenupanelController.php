@@ -52,9 +52,15 @@ class MenupanelController extends Controller
                 })
                 ->addColumn('status', function ($data) {
                     if ($data->status == "0") {
-                        return "عدم نمایش";
+                        return "لغو ";
+                    } elseif ($data->status == "1") {
+                        return "غیر فعال";
+                    } elseif ($data->status == "2") {
+                        return "تکمیل ظرفیت";
+                    } elseif ($data->status == "3") {
+                        return "پایان یافته";
                     } elseif ($data->status == "4") {
-                        return "در حال نمایش";
+                        return "فعال";
                     }
                 })
                 ->editColumn('action', function ($data) {
@@ -71,7 +77,7 @@ class MenupanelController extends Controller
                 ->rawColumns(['action'])
                 ->make(true);
         }
-        return view('panel.Menupanel')->with(compact(['thispage']));
+        return view('panel.menupanel')->with(compact(['thispage']));
     }
 
     public function store(Request $request)
@@ -135,7 +141,7 @@ class MenupanelController extends Controller
         $menupanel  = Menu::whereId($id)->first();
         $submenupanels   = Submenu::all();
 
-        return view('panel.partials.edit-form-Menupanel', compact('menupanel', 'submenupanels'));
+        return view('panel.partials.edit-form-menupanel', compact('menupanel', 'submenupanels'));
     }
 
     public function update(Request $request , $id)

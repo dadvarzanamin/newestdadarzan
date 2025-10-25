@@ -20,10 +20,8 @@
                         <th>نام فایل</th>
                         <th>نام اصلی فایل</th>
                         <th>نوع فایل</th>
-                        <th>مرحله</th>
                         <th>سایز فایل</th>
                         <th>تاریخ آپلود</th>
-                        <th>پروژه</th>
                         <th>عملیات</th>
                     </tr>
                     </thead>
@@ -90,7 +88,6 @@
             </div>
         </div>
     </div>
-
     <!-- Preview Modal -->
     <div class="modal fade" id="previewModal" tabindex="-1" aria-labelledby="previewModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-xl modal-dialog-centered">
@@ -120,14 +117,12 @@
                 order: [[0, 'desc']],
                 ajax: "{{route(request()->segment(2).'.index')}}",
                 columns: [
-                    {data: 'file_path'      , name: 'file_path' },
-                    {data: 'name'           , name: 'name'     },
-                    {data: 'original_name'  , name: 'original_name'     },
-                    {data: 'type'           , name: 'type'      },
-                    {data: 'step'           , name: 'step'      },
-                    {data: 'size'           , name: 'size'      },
-                    {data: 'date'           , name: 'date'      },
-                    {data: 'title'          , name: 'title'      },
+                    {data: 'file_path'      , name: 'file_path'     },
+                    {data: 'title'          , name: 'title'         },
+                    {data: 'original_name'  , name: 'original_name' },
+                    {data: 'type'           , name: 'type'          },
+                    {data: 'size'           , name: 'size'          },
+                    {data: 'date'           , name: 'date'          },
                     {data: 'action'         , name: 'action', orderable: true, searchable: true},
                 ],
                 language: {

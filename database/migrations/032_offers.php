@@ -21,8 +21,8 @@ return new class extends Migration
             $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
 
             $table->string('offercode')->nullable()->comment('کد تخفیف');
-            $table->string('discount')->default(0)->comment('مبلغ تخفیف');
-            $table->string('percentage')->default(0)->comment('درصد تخفیف');
+            $table->string('discount')->nullable()->default(0)->comment('مبلغ تخفیف');
+            $table->string('percentage')->nullable()->default(0)->comment('درصد تخفیف');
             $table->tinyInteger('status')->default(1)->comment('وضعیت فعال / غیر فعال');
             $table->timestamps();
         });

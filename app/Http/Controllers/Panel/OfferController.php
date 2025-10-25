@@ -35,7 +35,7 @@ class OfferController extends Controller
             $data = DB::table('offers')
                 ->leftJoin('products' ,'offers.product_id' ,'=' , 'products.id')
                 ->leftJoin('users' ,'offers.user_offer' ,'=' , 'users.id')
-                ->select('products.title' , 'offers.id' , 'offers.discount' , 'offers.percentage' , 'offers.status' , 'offers.offercode' , 'users.name')->get();
+                ->select('products.title' , 'offers.id' , 'offers.discount' , 'offers.percentage' , 'offers.status' , 'offers.offercode' , 'users.name' , 'offers.user_offer')->get();
 
             return Datatables::of($data)
 
@@ -46,23 +46,32 @@ class OfferController extends Controller
                     return ($data->title);
                 })
                 ->addColumn('discount', function ($data) {
-                    return ($data->discount);
+                    return (number_format((int)$data->discount) . ' تومان ');
                 })
                 ->addColumn('percentage', function ($data) {
-                    return ($data->percentage);
+                    return ((int)$data->percentage . ' % ');
                 })
                 ->addColumn('offercode', function ($data) {
                     return ($data->offercode);
                 })
                 ->addColumn('name', function ($data) {
-                    return ($data->name);
+                    if($data->user_offer == null){
+                        return "همه کاربران";
+                    }else {
+                        return ($data->name);
+                    }
                 })
                 ->addColumn('status', function ($data) {
                     if ($data->status == "0") {
-                        return "عدم نمایش";
-                    }
-                    elseif ($data->status == "4") {
-                        return "در حال نمایش";
+                        return "لغو ";
+                    } elseif ($data->status == "1") {
+                        return "غیر فعال";
+                    } elseif ($data->status == "2") {
+                        return "تکمیل ظرفیت";
+                    } elseif ($data->status == "3") {
+                        return "پایان یافته";
+                    } elseif ($data->status == "4") {
+                        return "فعال";
                     }
                 })
                 ->editColumn('action', function ($data) {
@@ -84,16 +93,16 @@ class OfferController extends Controller
 
     public function store(Request $request)
     {
-        try{
+
             $offers = new Offer();
             $offers->user_offer   = $request->input('user_offer');
-            $offers->workshop_id  = $request->input('workshop_id');
+            $offers->product_id   = $request->input('product_id');
             $offers->discount     = $request->input('discount');
             $offers->percentage   = $request->input('percentage');
             $offers->status       = $request->input('status');
             $offers->user_id      = Auth::user()->id;
 
-            $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ%';
+            $characters = '0123456789abcdefghijklmnopqrstuvwxyz%';
             $randomCode = '';
             $length = 8;
             for ($i = 0; $i < $length; $i++) {
@@ -117,7 +126,7 @@ class OfferController extends Controller
                 $subject = 'عملیات نا موفق';
                 $message = 'اطلاعات ثبت نشد، لطفا مجددا تلاش نمایید';
             }
-
+            try{
         } catch (Exception $e) {
 
             $success = false;
@@ -132,22 +141,21 @@ class OfferController extends Controller
 
     public function edit($id)
     {
+        $offer   = Offer::whereId($id)->first();
         $products = Product::select('id' , 'title')->get();
         $users    = User::select('id' , 'name')->get();
-        $offers   = Offer::whereId($id)->first();
 
-        return view('Admin.offers.edit')
-            ->with(compact(['products','offers','users']));
+        return view('panel.partials.edit-form-offer', compact('offer','products' , 'users'));
 
     }
 
-    public function update(Request $request)
+    public function update(Request $request , $id)
     {
         try{
-            $offers = Offer::whereId($request->input('id'))->first();
+            $offers = Offer::whereId($id)->first();
             $offers->user_id        = Auth::user()->id;
             $offers->user_offer     = $request->input('user_offer');
-            $offers->workshop_id    = $request->input('workshop_id');
+            $offers->product_id     = $request->input('product_id');
             $offers->discount       = $request->input('discount');
             $offers->percentage     = $request->input('percentage');
             $offers->status         = $request->input('status');
@@ -155,25 +163,34 @@ class OfferController extends Controller
             $result = $offers->save();
 
             if ($result == true) {
-                Alert::success('عملیات موفق', 'اطلاعات با موفقیت ثبت شد')->autoclose(3000);
-            }
-            else {
-                Alert::error('عملیات نا موفق', 'اطلاعات ثبت نشد، لطفا مجددا تلاش نمایید')->autoclose(3000);
+                $success = true;
+                $flag = 'success';
+                $subject = 'عملیات موفق';
+                $message = 'اطلاعات با موفقیت ذخیره شد';
+
+            }else {
+                $success = false;
+                $flag    = 'error';
+                $subject = 'عملیات نا موفق';
+                $message = 'اطلاعات ثبت نشد، لطفا مجددا تلاش نمایید';
             }
 
         } catch (Exception $e) {
-            Alert::error('خطا در ارتباط با سرور', 'اطلاعات ثبت نشد، لطفا مجددا تلاش نمایید')->autoclose(3000);
+
+            $success = false;
+            $flag    = 'error';
+            $subject = 'خطا در ارتباط با سرور';
+            $message = 'اطلاعات ذخیره نشد،لطفا بعدا مجدد تلاش نمایید ';
         }
 
-        return Redirect::back();
+        return response()->json(['success'=>$success , 'subject' => $subject, 'flag' => $flag, 'message' => $message]);
+
     }
 
-    public function deleteoffer(Request $request)
+    public function destroy($id)
     {
-
         try {
-
-            $offer = Offer::findOrfail($request->input('id'));
+            $offer = Offer::findOrfail($id);
             $result1 = $offer->delete();
             if ($result1 == true) {
                 $success = true;

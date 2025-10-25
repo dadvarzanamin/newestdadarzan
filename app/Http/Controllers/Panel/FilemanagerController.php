@@ -30,9 +30,7 @@ class FilemanagerController extends Controller
         ];
 
         if ($request->ajax()) {
-            $data = MediaFile::leftjoin('projects', 'projects.id', '=', 'media_files.project_id')
-                ->leftjoin('subject_files', 'subject_files.id', '=', 'media_files.subject_id')
-                ->select('media_files.id' , 'media_files.file_path' , 'media_files.name' , 'media_files.original_name' , 'media_files.type' , 'media_files.size' , 'media_files.updated_at' , 'projects.title' , 'subject_files.title as step')->get();
+            $data = MediaFile::all();
             return Datatables::of($data)
                 ->addColumn('file_path', function ($data) {
                     $fileUrl = asset('storage/' . $data->file_path);
@@ -47,17 +45,24 @@ class FilemanagerController extends Controller
                         return '<a href="' . $fileUrl . '">' . $data->original_name . '</a>';
                     }
                 })
-                ->addColumn('name', function ($data) {
-                    return ($data->name);
-                })
-                ->addColumn('step', function ($data) {
-                    return ($data->step);
+                ->addColumn('title', function ($data) {
+                    return ($data->title);
                 })
                 ->addColumn('original_name', function ($data) {
                     return ($data->original_name);
                 })
-                ->addColumn('title', function ($data) {
-                    return ($data->title);
+                ->addColumn('status', function ($data) {
+                    if ($data->status == "0") {
+                        return "لغو ";
+                    } elseif ($data->status == "1") {
+                        return "غیر فعال";
+                    } elseif ($data->status == "2") {
+                        return "تکمیل ظرفیت";
+                    } elseif ($data->status == "3") {
+                        return "پایان یافته";
+                    } elseif ($data->status == "4") {
+                        return "فعال";
+                    }
                 })
                 ->addColumn('type', function ($data) {
                     return match ($data->type) {
@@ -102,7 +107,7 @@ class FilemanagerController extends Controller
                 ->rawColumns(['action' ,'file_path'])
                 ->make(true);
         }
-        return view('panel.file_manager')->with(compact(['thispage']));
+        return view('panel.file')->with(compact(['thispage']));
     }
 
     public function store(Request $request)

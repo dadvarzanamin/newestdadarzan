@@ -20,12 +20,12 @@
                 <table id="sample1" class="table table-striped table-bordered yajra-datatable">
                     <thead>
                     <tr class="table-light">
-                        <th>سریال</th>
-                        <th>نام خدمات</th>
-                        <th>مبلغ تخفیف</th>
-                        <th>درصد تخفیف</th>
-                        <th>کد تخفیف</th>
-                        <th>نام کاربر</th>
+                        <th>اولویت نمایش</th>
+                        <th>نام صفحه</th>
+                        <th>نام صفحه فارسی</th>
+                        <th>آدرس صفحه</th>
+                        <th>کلاس</th>
+                        <th>کنترلر</th>
                         <th>وضعیت</th>
                         <th>تغییر</th>
                     </tr>
@@ -64,50 +64,56 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="بستن"></button>
                 </div>
                 <div class="modal-body">
-                    <form id="addform" data-type="create" method="POST" class="row g-4 mb-4" action="{{ route('offer.store') }}">
+                    <form id="addform" data-type="create" method="POST" class="row g-4 mb-4" action="{{ route('menupanel.store') }}">
                         {{csrf_field()}}
                         <div class="col-12 col-md-4">
                             <div class="form-floating form-floating-outline">
-                                <select name="product_id" id="product_id" class="form-control">
-                                    <option value="" >انتخاب کنید</option>
-                                    @foreach($products as $product)
-                                        <option value="{{$product->id}}">{{$product->title}}</option>
-                                    @endforeach
+                                <input required type="text" class="form-control" id="label" name="label"
+                                       placeholder="نام  منو داشبورد فارسی" >
+                                <label for="label">نام  منو داشبورد فارسی</label>
+                                <div class="invalid-feedback" id="labelFeedback">نام  منو داشبورد فارسی اجباری می باشد.</div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-4">
+                            <div class="form-floating form-floating-outline">
+                                <input required type="text" class="form-control" id="title" name="title"
+                                       placeholder="نام  منو داشبورد" >
+                                <label for="title">نام  منو داشبورد</label>
+                                <div class="invalid-feedback" id="titleFeedback">نام  منو داشبورد اجباری می باشد.</div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-4">
+                            <div class="form-floating form-floating-outline">
+                                <select name="submenu" id="submenu" class="form-control">
+                                    <option value="1" >دارد</option>
+                                    <option value="0" >ندارد</option>
                                 </select>
-                                <label for="status">انتخاب خدمات</label>
+                                <label for="submenu">زیر  منو داشبورد</label>
                             </div>
                         </div>
                         <div class="col-12 col-md-4">
                             <div class="form-floating form-floating-outline">
-                                <select name="user_offer" id="user_offer" class="form-control">
-                                    <option value="" >انتخاب همه</option>
-                                    @foreach($users as $user)
-                                        <option value="{{$user->id}}">{{$user->name}}</option>
-                                    @endforeach
-                                </select>
-                                <label for="user_offer">کاربر خاص</label>
+                                <input required type="text" class="form-control" id="class" name="class"
+                                       placeholder="کلاس داشبورد">
+                                <label for="class">کلاس داشبورد</label>
+                                <div class="invalid-feedback" id="classFeedback">کلاس داشبورد اجباری می باشد.</div>
                             </div>
                         </div>
                         <div class="col-12 col-md-4">
                             <div class="form-floating form-floating-outline">
-                                <input  type="text" class="form-control" id="percentage" name="percentage" placeholder="درصد تخفیف" >
-                                <label for="percentage">درصد تخفیف</label>
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-4">
-                            <div class="form-floating form-floating-outline">
-                                <input  type="text" class="form-control" id="discount" name="discount" placeholder="مبلغ تخفیف" >
-                                <label for="discount">مبلغ تخفیف</label>
+                                <input required type="text" class="form-control" id="controller" name="controller"
+                                       placeholder="کنترلر داشبورد" >
+                                <label for="controller">کنترلر داشبورد</label>
+                                <div class="invalid-feedback" id="controllerFeedback">کنترلر داشبورد اجباری می باشد.</div>
                             </div>
                         </div>
                         <div class="col-12 col-md-4">
                             <div class="form-floating form-floating-outline">
                                 <select name="status" id="status" class="form-control">
-                                    <option value="" >انتخاب کنید</option>
-                                    <option value="4" >فعال</option>
-                                    <option value="1" >غیر فعال</option>
+                                    <option value="4" >نمایش</option>
+                                    <option value="0">عدم نمایش</option>
                                 </select>
-                                <label for="submenu">وضعیت کد تخفیف</label>
+                                <label for="status">نمایش/عدم نمایش</label>
                             </div>
                         </div>
                         <div class="text-end">
@@ -144,13 +150,13 @@
                 serverSide: true,
                 ajax: "{{route(request()->segment(2).'.index')}}",
                 columns: [
-                    {data: 'id'             , name: 'id'         },
-                    {data: 'title'          , name: 'title'      },
-                    {data: 'discount'       , name: 'discount'   },
-                    {data: 'percentage'     , name: 'percentage' },
-                    {data: 'offercode'      , name: 'offercode'  },
-                    {data: 'name'           , name: 'name'       },
-                    {data: 'status'         , name: 'status'     },
+                    {data: 'id'             , name: 'id'        },
+                    {data: 'title'          , name: 'title'     },
+                    {data: 'label'          , name: 'label'     },
+                    {data: 'slug'           , name: 'slug'      },
+                    {data: 'class'          , name: 'class'     },
+                    {data: 'controller'     , name: 'controller'},
+                    {data: 'status'         , name: 'status'    },
                     {data: 'action'         , name: 'action', orderable: true, searchable: true},
                 ],
                 language: {

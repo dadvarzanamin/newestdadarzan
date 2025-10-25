@@ -54,9 +54,15 @@ class SubmenupanelController extends Controller
                 })
                 ->addColumn('status', function ($data) {
                     if ($data->status == "0") {
-                        return "عدم نمایش";
+                        return "لغو ";
+                    } elseif ($data->status == "1") {
+                        return "غیر فعال";
+                    } elseif ($data->status == "2") {
+                        return "تکمیل ظرفیت";
+                    } elseif ($data->status == "3") {
+                        return "پایان یافته";
                     } elseif ($data->status == "4") {
-                        return "در حال نمایش";
+                        return "فعال";
                     }
                 })
                 ->editColumn('action', function ($data) {
