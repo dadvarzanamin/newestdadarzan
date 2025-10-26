@@ -29,6 +29,7 @@ return new class extends Migration
             $table->string('offer_discount')->nullable()->comment('مبلغ تخفیف اعمالی');
             $table->string('offer_percentage')->nullable()->comment('درصد تخفیف اعمالی');
             $table->string('price')->nullable()->comment('مبلغ');
+            $table->string('final_price')->nullable()->comment('مبلغ نهایی');
             $table->string('price_status')->nullable()->comment('وضعیت پرداخت');
             $table->text('transactionId')->nullable()->comment('کد پیگیری ارسال به درگاه');
             $table->string('referenceId')->nullable()->comment('کد پیگیری دریافتی از درگاه');

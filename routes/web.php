@@ -3,6 +3,10 @@
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
+Route::namespace('App\Http\Controllers\Site')->group(function () {
+    Route::get('/'                    , 'IndexController@index')->name('/');
+
+});
 
 Route::middleware('admin')->namespace('App\Http\Controllers\Panel')->group(function () {
     Route::get('panel/'                    , 'IndexController@index')->name('dashboard');
@@ -23,6 +27,7 @@ Route::middleware('admin')->namespace('App\Http\Controllers\Panel')->group(funct
     Route::resource('panel/transaction'  , 'TransactionController');
     Route::resource('panel/wallet'       , 'WalletController');
     Route::resource('panel/content'      , 'ContentController');
+    Route::resource('panel/emploee'      , 'EmploeeController');
 
 //    Route::resource('panel/leveluser'    , 'LeveluserController');
 
