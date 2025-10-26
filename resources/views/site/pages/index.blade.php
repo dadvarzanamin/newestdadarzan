@@ -166,10 +166,10 @@
                                             </h5>
                                         </div>
                                         <div class="explore-item-footer d-flex align-items-center justify-content-between">
-                                            <div class="explore-title">
-                                                <div class="img">
-                                                    <img src="{{ asset('storage/'.$product->item2) }}" alt="{{$product->item1}}">
-                                                </div>
+                                            <div class="explore-title"> مدرس :
+{{--                                                <div class="img">--}}
+{{--                                                    <img src="{{ asset('storage/'.$product->item2) }}" alt="{{$product->item1}}">--}}
+{{--                                                </div>--}}
                                                 {{$product->item1}}
                                             </div>
                                             <div class="view-list"><i class="fa-solid fa-cart-plus"></i> 341</div>

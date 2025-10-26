@@ -20,12 +20,15 @@
                 <table id="sample1" class="table table-striped table-bordered yajra-datatable">
                     <thead>
                     <tr class="table-light">
-                        <th>اولویت نمایش</th>
-                        <th>نام صفحه</th>
-                        <th>نام صفحه فارسی</th>
-                        <th>آدرس صفحه</th>
-                        <th>کلاس</th>
-                        <th>کنترلر</th>
+                        <th>سریال</th>
+                        <th>عنوان محتوا</th>
+                        <th>منو</th>
+                        <th>زیر منو</th>
+                        <th>اسلاید</th>
+                        <th>کاور</th>
+                        <th>تصویر</th>
+                        <th>ویدئو</th>
+                        <th>آپارات</th>
                         <th>وضعیت</th>
                         <th>تغییر</th>
                     </tr>
@@ -38,7 +41,7 @@
     </div>
 
     <!-- Delete Modal -->
-        <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content text-center">
                     <div class="modal-header border-bottom-0">
@@ -150,13 +153,16 @@
                 serverSide: true,
                 ajax: "{{route(request()->segment(2).'.index')}}",
                 columns: [
-                    {data: 'id'             , name: 'id'        },
-                    {data: 'title'          , name: 'title'     },
-                    {data: 'label'          , name: 'label'     },
-                    {data: 'slug'           , name: 'slug'      },
-                    {data: 'class'          , name: 'class'     },
-                    {data: 'controller'     , name: 'controller'},
-                    {data: 'status'         , name: 'status'    },
+                    {data: 'id'             , name: 'id'            },
+                    {data: 'title'          , name: 'title'         },
+                    {data: 'menu_title'     , name: 'menu_title'    },
+                    {data: 'submenu_title'  , name: 'submenu_title' },
+                    {data: 'slide'          , name: 'slide'         },
+                    {data: 'cover'          , name: 'cover'         },
+                    {data: 'image'          , name: 'image'         },
+                    {data: 'video'          , name: 'video'         },
+                    {data: 'aparat'         , name: 'aparat'        },
+                    {data: 'status'         , name: 'status'        },
                     {data: 'action'         , name: 'action', orderable: true, searchable: true},
                 ],
                 language: {
