@@ -1,10 +1,28 @@
 <?php
 
+use App\Models\Menu;
+use App\Models\Submenu;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 Route::namespace('App\Http\Controllers\Site')->group(function () {
-    Route::get('/'                    , 'IndexController@index')->name('/');
+
+    $sitemenus  = Menu::select('slug', 'class', 'submenu')->whereType('site')->whereStatus(4)->get();
+    $submenus   = Submenu::select('id', 'slug', 'class')->whereType('site')->whereStatus(4)->get();
+
+    foreach ($sitemenus as $menu) {
+        if ($menu->submenu == 0) {
+            Route::get($menu->slug, 'IndexController@' . $menu->class)->name($menu->slug);
+        } else {
+            foreach ($submenus as $submenu) {
+                if ($submenu->menu_id == $menu->id) {
+                    Route::get($menu->slug . '/' . $submenu->slug, 'IndexController@' . $submenu->class);
+                }
+            }
+        }
+    }
+
+    ///Route::get('/'                    , 'IndexController@index')->name('/');
 
 });
 

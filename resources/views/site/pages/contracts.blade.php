@@ -167,15 +167,9 @@
                             <div class="explore-item">
                                 <div class="explore-item-header d-flex align-items-center justify-content-between">
                                     <div class="explore-title">
-                                        <img src="{{asset('site/assets/images/logo/darklogodadvarzan.png')}}" alt="user">
+                                        <img src="{{asset('site/assets/images/logo/logodadvarzan.png')}}" alt="user">
                                     </div>
-                                    <div class="star-list">
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                    </div>
+
                                 </div>
                                 <div class="explore-img">
                                     <div class="featured-price">{{$contract->price == 0 ? 'رایگان' : number_format($contract->price)}}</div>
@@ -193,9 +187,7 @@
                                 </div>
                                 <div class="explore-item-footer d-flex align-items-center justify-content-between">
                                     <div class="explore-title">
-                                        <div class="img">
-                                            <img src="{{asset('storage/'.$contract->image)}}" alt="explore">
-                                        </div>
+
                                         تیم حقوقی
                                     </div>
                                     <div class="view-list">

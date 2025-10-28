@@ -35,7 +35,7 @@
                 <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
                     <div class="team-item top-reveal">
                         <figure class="image-effect ">
-                            <img src="{{asset($emploee->image)}}" alt="{{$emploee->fullname}}" class="img-fluid w-100">
+                            <img src="{{asset('storage/'.$emploee->image)}}" alt="{{$emploee->fullname}}" class="img-fluid w-100">
                         </figure>
                         <ul class="social">
                             <li>

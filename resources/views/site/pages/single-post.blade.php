@@ -49,14 +49,14 @@
                         <div class="blogs-tags">
                             <p>
                                 <strong>برچسب ها :</strong>
-                                @if($posts['keyword'])
-                                    @foreach (json_decode($posts['keyword']) as $item)
-                                        <li class="mr-2">
-                                            <a href="#">{{$item}}</a>
-                                            <a href="#">{{$item}}،</a>
-                                        </li>
-                                    @endforeach
-                                @endif
+{{--                                @if($posts['keyword'])--}}
+{{--                                    @foreach (json_decode($posts['keyword']) as $item)--}}
+{{--                                        <li class="mr-2">--}}
+{{--                                            <a href="#">{{$item}}</a>--}}
+{{--                                            <a href="#">{{$item}}،</a>--}}
+{{--                                        </li>--}}
+{{--                                    @endforeach--}}
+{{--                                @endif--}}
                             </p>
                             <ul class="social">
                                 <li>
@@ -309,11 +309,11 @@
                             <div class="sidebar-item">
                                 <h5>برچسب ها</h5>
                                 <div class="tags-list">
-                                    @if($posts['keyword'])
-                                        @foreach (json_decode($posts['keyword']) as $item)
-                                            <a href="#">{{$item}}</a>
-                                        @endforeach
-                                    @endif
+{{--                                    @if($posts['keyword'])--}}
+{{--                                        @foreach (json_decode($posts['keyword']) as $item)--}}
+{{--                                            <a href="#">{{$item}}</a>--}}
+{{--                                        @endforeach--}}
+{{--                                    @endif--}}
                                 </div>
                             </div>
                         </div>

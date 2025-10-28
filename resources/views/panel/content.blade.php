@@ -71,18 +71,16 @@
                         {{csrf_field()}}
                         <div class="col-12 col-md-4">
                             <div class="form-floating form-floating-outline">
-                                <input required type="text" class="form-control" id="label" name="label"
-                                       placeholder="نام  منو داشبورد فارسی" >
-                                <label for="label">نام  منو داشبورد فارسی</label>
-                                <div class="invalid-feedback" id="labelFeedback">نام  منو داشبورد فارسی اجباری می باشد.</div>
+                                <input required type="text" class="form-control" id="title" name="title" placeholder="عنوان محتوا" >
+                                <label for="label">عنوان محتوا</label>
+                                <div class="invalid-feedback" id="labelFeedback">عنوان محتوا اجباری می باشد.</div>
                             </div>
                         </div>
                         <div class="col-12 col-md-4">
                             <div class="form-floating form-floating-outline">
-                                <input required type="text" class="form-control" id="title" name="title"
-                                       placeholder="نام  منو داشبورد" >
-                                <label for="title">نام  منو داشبورد</label>
-                                <div class="invalid-feedback" id="titleFeedback">نام  منو داشبورد اجباری می باشد.</div>
+                                <input required type="text" class="form-control" id="meta_title" name="meta_title" placeholder="عنوان صفحه" >
+                                <label for="title">عنوان صفحه داشبورد</label>
+                                <div class="invalid-feedback" id="meta_titleFeedback">عنوان صفحه اجباری می باشد.</div>
                             </div>
                         </div>
                         <div class="col-12 col-md-4">
@@ -96,8 +94,7 @@
                         </div>
                         <div class="col-12 col-md-4">
                             <div class="form-floating form-floating-outline">
-                                <input required type="text" class="form-control" id="class" name="class"
-                                       placeholder="کلاس داشبورد">
+                                <input required type="text" class="form-control" id="class" name="class" placeholder="کلاس داشبورد">
                                 <label for="class">کلاس داشبورد</label>
                                 <div class="invalid-feedback" id="classFeedback">کلاس داشبورد اجباری می باشد.</div>
                             </div>
