@@ -12,11 +12,6 @@
                         <h2 class="breadcrumb__title mt-2">
                             {{$emploees->fullname}}
                         </h2>
-{{--                        <ul class="breadcrumb__date">--}}
-{{--                            <li>ادمین</li>--}}
-{{--                            <li>۴ کامنت</li>--}}
-{{--                            <li>۱۵ تیر ۱۴۰۴</li>--}}
-{{--                        </ul>--}}
                     </div>
                 </div>
             </div>

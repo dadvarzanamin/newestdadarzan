@@ -86,9 +86,9 @@ class IndexController extends Controller
         }
         $submenus       = Submenu::select('id', 'title', 'slug', 'menu_id')->whereStatus(4)->whereType('site')->get();
 
-        $contracts      = content::where('menu_id' , 61)->where('slug' , $thispage->slug)->first();
+        $services      = content::where('menu_id' , 61)->where('slug' , $thispage->slug)->first();
 
-        return view('site.pages.single-department')->with(compact('menus', 'thispage', 'submenus' , 'contracts'));
+        return view('site.pages.single-service')->with(compact('menus', 'thispage', 'submenus' , 'services'));
     }
 
     public function departmangharardad(Request $request)
@@ -105,9 +105,11 @@ class IndexController extends Controller
         }
         $submenus       = Submenu::select('id', 'title', 'slug', 'menu_id')->whereStatus(4)->whereType('site')->get();
 
-        $contracts      = content::where('menu_id' , 62)->where('slug' , $thispage->slug)->first();
+        $services      = content::where('menu_id' , 62)->where('slug' , $thispage->slug)->first();
 
-        return view('site.pages.single-department')->with(compact('menus', 'thispage', 'submenus' , 'contracts'));
+
+
+        return view('site.pages.single-service')->with(compact('menus', 'thispage', 'submenus' , 'services'));
     }
 
     public function departmanamoozesh(Request $request)
@@ -126,7 +128,7 @@ class IndexController extends Controller
 
         //$contracts      = content::where('menu_id' , 62)->where('slug' , $thispage->slug)->first();
 
-        $workshops       = Product::orderBy('id' , 'DESC')->get();
+        $workshops       = Product::orderBy('id' , 'DESC')->whereProduct_type('workshop')->get();
 
 
         return view('site.pages.workshops')->with(compact('menus', 'thispage', 'submenus' , 'workshops'));
@@ -274,8 +276,24 @@ class IndexController extends Controller
         return view('site.pages.faq')->with(compact('menus', 'thispage', 'submenus' , 'questionlists'));
     }
 
+    public function post(Request $request)
+    {
+
+        $url = $request->segments();
+        $menus = Menu::select('id', 'title', 'slug', 'submenu', 'priority')->orderBy('priority')->whereStatus(4)->whereType('site')->get();
+        if (count($url) == 1) {
+            $thispage = Menu::select('id', 'title', 'slug')->whereStatus(4)->whereType('site')->whereSlug($url[0])->first();
+        } elseif (count($url) > 1) {
+            $thispage = Submenu::select('id', 'title', 'slug')->whereStatus(4)->whereType('site')->whereSlug($url[1])->first();
+        }elseif (count($url) == 0) {
+            $thispage = Menu::select('id', 'title', 'slug')->whereStatus(4)->whereType('site')->whereSlug('/')->first();
+        }
+        $submenus       = Submenu::select('id', 'title', 'slug', 'menu_id')->whereStatus(4)->whereType('site')->get();
+
+        $posts      = content::where('menu_id' , 65)->whereStatus(4)->orderBy('id' , 'DESC')->get();
 
 
-
+        return view('site.pages.posts')->with(compact('menus', 'thispage', 'submenus' , 'posts'));
+    }
 
 }

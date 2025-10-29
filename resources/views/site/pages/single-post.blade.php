@@ -10,15 +10,15 @@
             <div class="row justify-content-center">
                 <div class="col-lg-8">
                     <div class="breadcrumb__wrapper">
-                        <div class="breadcrumb__postType">
-                            <div class="btn btn--base">کسب و کار</div>
-                        </div>
+{{--                        <div class="breadcrumb__postType">--}}
+{{--                            <div class="btn btn--base">کسب و کار</div>--}}
+{{--                        </div>--}}
                         <h2 class="breadcrumb__title mt-2">
                             {{$posts->title}}
                         </h2>
                         <ul class="breadcrumb__date">
-                            <li>ادمین</li>
-                            <li>۴ کامنت</li>
+{{--                            <li>ادمین</li>--}}
+{{--                            <li>۴ کامنت</li>--}}
                             <li>۱۵ تیر ۱۴۰۴</li>
                         </ul>
                     </div>
@@ -81,94 +81,94 @@
                                 </li>
                             </ul>
                         </div>
-                        <div class="blog-comment">
-                            <h4>۳ کامنت</h4>
-                            <div class="comment-item">
-                                <figure class="image-effect">
-                                    <img src="{{asset('assets/images/testimonial/1.jpg')}}" alt="author" class="img-fluid w-100">
-                                </figure>
-                                <div class="text-box">
-                                    <p>«تصاویر تولید شده با هوش مصنوعی کاملاً شگفت‌انگیز! سطح جزئیات و واقع‌گرایی
-                                        فراتر از انتظارات بود. راهنمایی سریع در رسیدن به دقیقاً همان چیزی که تصور می‌کردم، بسیار مفید بود.»</p>
-                                    <div class="comment-name">
-                                        <div class="name">
-                                            <h6>باربد باباخانی</h6>
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="33" height="5"
-                                                 viewBox="0 0 33 5" fill="none">
-                                                <line y1="2.5" x2="32" y2="2.5" stroke="#AAAAAA" />
-                                                <circle cx="30.5" cy="2.5" r="2.5" fill="#D9D9D9" />
-                                            </svg>
-                                            ۱۷ تیر ۱۴۰۴
-                                        </div>
-                                        <button>پاسخ</button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="comment-item ms-md-5 ps-lg-5">
-                                <figure class="image-effect">
-                                    <img src="assets/images/testimonial/2.jpg" alt="author" class="img-fluid w-100">
-                                </figure>
-                                <div class="text-box">
-                                    <p>«تصاویر تولید شده با هوش مصنوعی کاملاً شگفت‌انگیز! سطح جزئیات و واقع‌گرایی
-                                        فراتر از انتظارات بود. راهنمایی سریع در رسیدن به دقیقاً همان چیزی که تصور می‌کردم، بسیار مفید بود.»</p>
-                                    <div class="comment-name">
-                                        <div class="name">
-                                            <h6>متین قدسی</h6>
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="33" height="5"
-                                                 viewBox="0 0 33 5" fill="none">
-                                                <line y1="2.5" x2="32" y2="2.5" stroke="#AAAAAA" />
-                                                <circle cx="30.5" cy="2.5" r="2.5" fill="#D9D9D9" />
-                                            </svg>
-                                            ۱۷ تیر ۱۴۰۴
-                                        </div>
-                                        <button>پاسخ</button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="comment-item">
-                                <figure class="image-effect">
-                                    <img src="assets/images/testimonial/3.jpg" alt="author" class="img-fluid w-100">
-                                </figure>
-                                <div class="text-box">
-                                    <p>«تصاویر تولید شده با هوش مصنوعی کاملاً شگفت‌انگیز! سطح جزئیات و واقع‌گرایی
-                                        فراتر از انتظارات بود. راهنمایی سریع در رسیدن به دقیقاً همان چیزی که تصور می‌کردم، بسیار مفید بود.»</p>
-                                    <div class="comment-name">
-                                        <div class="name">
-                                            <h6>پوریا میرزایی</h6>
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="33" height="5"
-                                                 viewBox="0 0 33 5" fill="none">
-                                                <line y1="2.5" x2="32" y2="2.5" stroke="#AAAAAA" />
-                                                <circle cx="30.5" cy="2.5" r="2.5" fill="#D9D9D9" />
-                                            </svg>
-                                            ۱۷ تیر ۱۴۰۴
-                                        </div>
-                                        <button>پاسخ</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="post-form">
-                            <h4>دیدگاه خود را بنویسید</h4>
-                            <form action="https://www.iarsalan.ir/template/pixgix/pixgix/index.htmlhtml/pixgix/pixgix/index.html">
-                                <input type="text" class="form-control" placeholder="نام و نام خانوادگی*">
-                                <input type="email" class="form-control" placeholder="ایمیل خود را وارد کنید*">
-                                <input type="text" class="form-control" placeholder="موضوع را انتخاب کنید">
-                                <textarea name="messages" class="form-control"
-                                          placeholder="دیدگاه خود را بنویسید"></textarea>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                                    <label class="form-check-label" for="flexCheckDefault">
-                                        نام و ایمیل من را در مرورگر ذخیره کن
-                                    </label>
-                                </div>
-                                <div class="button">
-                                    <button type="submit" class="btn btn--base">
-                                        ثبت دیدگاه
-                                        <i class="flaticon-right-arrow"></i>
-                                    </button>
-                                </div>
-                            </form>
-                        </div>
+{{--                        <div class="blog-comment">--}}
+{{--                            <h4>۳ کامنت</h4>--}}
+{{--                            <div class="comment-item">--}}
+{{--                                <figure class="image-effect">--}}
+{{--                                    <img src="{{asset('assets/images/testimonial/1.jpg')}}" alt="author" class="img-fluid w-100">--}}
+{{--                                </figure>--}}
+{{--                                <div class="text-box">--}}
+{{--                                    <p>«تصاویر تولید شده با هوش مصنوعی کاملاً شگفت‌انگیز! سطح جزئیات و واقع‌گرایی--}}
+{{--                                        فراتر از انتظارات بود. راهنمایی سریع در رسیدن به دقیقاً همان چیزی که تصور می‌کردم، بسیار مفید بود.»</p>--}}
+{{--                                    <div class="comment-name">--}}
+{{--                                        <div class="name">--}}
+{{--                                            <h6>باربد باباخانی</h6>--}}
+{{--                                            <svg xmlns="http://www.w3.org/2000/svg" width="33" height="5"--}}
+{{--                                                 viewBox="0 0 33 5" fill="none">--}}
+{{--                                                <line y1="2.5" x2="32" y2="2.5" stroke="#AAAAAA" />--}}
+{{--                                                <circle cx="30.5" cy="2.5" r="2.5" fill="#D9D9D9" />--}}
+{{--                                            </svg>--}}
+{{--                                            ۱۷ تیر ۱۴۰۴--}}
+{{--                                        </div>--}}
+{{--                                        <button>پاسخ</button>--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                            <div class="comment-item ms-md-5 ps-lg-5">--}}
+{{--                                <figure class="image-effect">--}}
+{{--                                    <img src="assets/images/testimonial/2.jpg" alt="author" class="img-fluid w-100">--}}
+{{--                                </figure>--}}
+{{--                                <div class="text-box">--}}
+{{--                                    <p>«تصاویر تولید شده با هوش مصنوعی کاملاً شگفت‌انگیز! سطح جزئیات و واقع‌گرایی--}}
+{{--                                        فراتر از انتظارات بود. راهنمایی سریع در رسیدن به دقیقاً همان چیزی که تصور می‌کردم، بسیار مفید بود.»</p>--}}
+{{--                                    <div class="comment-name">--}}
+{{--                                        <div class="name">--}}
+{{--                                            <h6>متین قدسی</h6>--}}
+{{--                                            <svg xmlns="http://www.w3.org/2000/svg" width="33" height="5"--}}
+{{--                                                 viewBox="0 0 33 5" fill="none">--}}
+{{--                                                <line y1="2.5" x2="32" y2="2.5" stroke="#AAAAAA" />--}}
+{{--                                                <circle cx="30.5" cy="2.5" r="2.5" fill="#D9D9D9" />--}}
+{{--                                            </svg>--}}
+{{--                                            ۱۷ تیر ۱۴۰۴--}}
+{{--                                        </div>--}}
+{{--                                        <button>پاسخ</button>--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                            <div class="comment-item">--}}
+{{--                                <figure class="image-effect">--}}
+{{--                                    <img src="assets/images/testimonial/3.jpg" alt="author" class="img-fluid w-100">--}}
+{{--                                </figure>--}}
+{{--                                <div class="text-box">--}}
+{{--                                    <p>«تصاویر تولید شده با هوش مصنوعی کاملاً شگفت‌انگیز! سطح جزئیات و واقع‌گرایی--}}
+{{--                                        فراتر از انتظارات بود. راهنمایی سریع در رسیدن به دقیقاً همان چیزی که تصور می‌کردم، بسیار مفید بود.»</p>--}}
+{{--                                    <div class="comment-name">--}}
+{{--                                        <div class="name">--}}
+{{--                                            <h6>پوریا میرزایی</h6>--}}
+{{--                                            <svg xmlns="http://www.w3.org/2000/svg" width="33" height="5"--}}
+{{--                                                 viewBox="0 0 33 5" fill="none">--}}
+{{--                                                <line y1="2.5" x2="32" y2="2.5" stroke="#AAAAAA" />--}}
+{{--                                                <circle cx="30.5" cy="2.5" r="2.5" fill="#D9D9D9" />--}}
+{{--                                            </svg>--}}
+{{--                                            ۱۷ تیر ۱۴۰۴--}}
+{{--                                        </div>--}}
+{{--                                        <button>پاسخ</button>--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+{{--                        <div class="post-form">--}}
+{{--                            <h4>دیدگاه خود را بنویسید</h4>--}}
+{{--                            <form action="https://www.iarsalan.ir/template/pixgix/pixgix/index.htmlhtml/pixgix/pixgix/index.html">--}}
+{{--                                <input type="text" class="form-control" placeholder="نام و نام خانوادگی*">--}}
+{{--                                <input type="email" class="form-control" placeholder="ایمیل خود را وارد کنید*">--}}
+{{--                                <input type="text" class="form-control" placeholder="موضوع را انتخاب کنید">--}}
+{{--                                <textarea name="messages" class="form-control"--}}
+{{--                                          placeholder="دیدگاه خود را بنویسید"></textarea>--}}
+{{--                                <div class="form-check">--}}
+{{--                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">--}}
+{{--                                    <label class="form-check-label" for="flexCheckDefault">--}}
+{{--                                        نام و ایمیل من را در مرورگر ذخیره کن--}}
+{{--                                    </label>--}}
+{{--                                </div>--}}
+{{--                                <div class="button">--}}
+{{--                                    <button type="submit" class="btn btn--base">--}}
+{{--                                        ثبت دیدگاه--}}
+{{--                                        <i class="flaticon-right-arrow"></i>--}}
+{{--                                    </button>--}}
+{{--                                </div>--}}
+{{--                            </form>--}}
+{{--                        </div>--}}
                     </div>
                 </div>
                 <div class="col-lg-4">

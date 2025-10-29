@@ -11,16 +11,18 @@
                 <div class="col-lg-8">
                     <div class="breadcrumb__wrapper">
                         <div class="breadcrumb__postType">
-                            <div class="btn btn--base">کسب و کار</div>
+                            <h2 class="btn btn--base">
+                                {{$services->title}}
+                            </h2>
                         </div>
-                        <h2 class="breadcrumb__title mt-2">
-                            {{$services->title}}
-                        </h2>
-                        <ul class="breadcrumb__date">
-                            <li>ادمین</li>
-                            <li>۴ کامنت</li>
-                            <li>۱۵ تیر ۱۴۰۴</li>
-                        </ul>
+{{--                        <h2 class="breadcrumb__title mt-2">--}}
+{{--                            {{$services->title}}--}}
+{{--                        </h2>--}}
+{{--                        <ul class="breadcrumb__date">--}}
+{{--                            <li>ادمین</li>--}}
+{{--                            <li>۴ کامنت</li>--}}
+{{--                            <li>۱۵ تیر ۱۴۰۴</li>--}}
+{{--                        </ul>--}}
                     </div>
                 </div>
             </div>
@@ -57,18 +59,13 @@
                         <div class="blogs-tags">
                             <p>
                                 <strong>برچسب ها :</strong>
-{{--                                @if($services['keyword'])--}}
-{{--                                    @foreach (json_decode($services['keyword']) as $item)--}}
-{{--                                        <a href="#">{{$item}}،</a>--}}
-{{--                                    @endforeach--}}
-{{--                                @endif--}}
+                                @if($services['keyword'])
+                                    @foreach (json_decode($services['keyword']) as $item)
+                                        <a href="#">{{$item}}،</a>
+                                    @endforeach
+                                @endif
                             </p>
                             <ul class="social">
-                                <li>
-                                    <a href="https://www.facebook.com/" target="_blank">
-                                        <i class="fab fa-instagram-f"></i>
-                                    </a>
-                                </li>
                                 <li>
                                     <a href="https://www.x.com/?lang=en" target="_blank">
                                         <i class="fa-brands fa-telegram"></i>
