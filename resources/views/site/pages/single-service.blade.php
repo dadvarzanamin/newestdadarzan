@@ -37,7 +37,7 @@
                     <div class="d-grid row-gap-5">
                         <div class="blog-details-content">
                             {!! $services->full_description !!}
-                            ->first();
+
 {{--                                @foreach($medias as $media)--}}
 {{--                                    <div class="card-image m-3">--}}
 {{--                                        @if($media->file_link)--}}
@@ -325,11 +325,11 @@
                             <div class="sidebar-item">
                                 <h5>برچسب ها</h5>
                                 <div class="tags-list">
-                                    @if($services['keyword'])
-                                        @foreach (json_decode($services['keyword']) as $item)
-                                            <a href="#">{{$item}}</a>
-                                        @endforeach
-                                    @endif
+{{--                                    @if($services['keyword'])--}}
+{{--                                        @foreach (json_decode($services['keyword']) as $item)--}}
+{{--                                            <a href="#">{{$item}}</a>--}}
+{{--                                        @endforeach--}}
+{{--                                    @endif--}}
                                 </div>
                             </div>
                         </div>

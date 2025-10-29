@@ -90,6 +90,7 @@ class IndexController extends Controller
 
         return view('site.pages.single-department')->with(compact('menus', 'thispage', 'submenus' , 'contracts'));
     }
+
     public function departmangharardad(Request $request)
     {
 
@@ -130,7 +131,6 @@ class IndexController extends Controller
 
     public function service(Request $request)
     {
-
         $url = $request->segments();
         $menus = Menu::select('id', 'title', 'slug', 'submenu', 'priority')->orderBy('priority')->whereStatus(4)->whereType('site')->get();
         if (count($url) == 1) {
@@ -200,6 +200,7 @@ class IndexController extends Controller
 
         return view('site.pages.about')->with(compact('menus', 'thispage', 'submenus'));
     }
+
     public function privacy(Request $request)
     {
 
