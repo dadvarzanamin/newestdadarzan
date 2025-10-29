@@ -124,9 +124,12 @@ class IndexController extends Controller
         }
         $submenus       = Submenu::select('id', 'title', 'slug', 'menu_id')->whereStatus(4)->whereType('site')->get();
 
-        $contracts      = content::where('menu_id' , 62)->where('slug' , $thispage->slug)->first();
+        //$contracts      = content::where('menu_id' , 62)->where('slug' , $thispage->slug)->first();
 
-        return view('site.pages.single-department')->with(compact('menus', 'thispage', 'submenus' , 'contracts'));
+        $workshops       = Product::orderBy('id' , 'DESC')->get();
+
+
+        return view('site.pages.workshops')->with(compact('menus', 'thispage', 'submenus' , 'workshops'));
     }
 
     public function service(Request $request)
