@@ -38,32 +38,32 @@
                         <div class="swiper details-list">
                             <div class="swiper-wrapper">
                                 <div class="swiper-slide">
-                                    <img src="{{asset('storage/'.$singleworkshops->image)}}" alt="product">
+                                    <img src="{{asset('storage/'.$singleworkshops->cover)}}" alt="product">
                                 </div>
                                 <div class="swiper-slide">
-                                    <img src="{{asset('storage/'.$singleworkshops->image)}}" alt="product">
+                                    <img src="{{asset('storage/'.$singleworkshops->cover)}}" alt="product">
                                 </div>
                                 <div class="swiper-slide">
-                                    <img src="{{asset('storage/'.$singleworkshops->image)}}" alt="product">
+                                    <img src="{{asset('storage/'.$singleworkshops->cover)}}" alt="product">
                                 </div>
                                 <div class="swiper-slide">
-                                    <img src="{{asset('storage/'.$singleworkshops->image)}}" alt="product">
+                                    <img src="{{asset('storage/'.$singleworkshops->cover)}}" alt="product">
                                 </div>
                             </div>
                         </div>
                         <div class="swiper details-main">
                             <div class="swiper-wrapper">
                                 <div class="swiper-slide">
-                                    <img src="{{asset('storage/'.$singleworkshops->image)}}" alt="product">
+                                    <img src="{{asset('storage/'.$singleworkshops->cover)}}" alt="product">
                                 </div>
                                 <div class="swiper-slide">
-                                    <img src="{{asset('storage/'.$singleworkshops->image)}}" alt="product">
+                                    <img src="{{asset('storage/'.$singleworkshops->cover)}}" alt="product">
                                 </div>
                                 <div class="swiper-slide">
-                                    <img src="{{asset('storage/'.$singleworkshops->image)}}" alt="product">
+                                    <img src="{{asset('storage/'.$singleworkshops->cover)}}" alt="product">
                                 </div>
                                 <div class="swiper-slide">
-                                    <img src="{{asset('storage/'.$singleworkshops->image)}}" alt="product">
+                                    <img src="{{asset('storage/'.$singleworkshops->cover)}}" alt="product">
                                 </div>
                             </div>
                             <div class="swiper-button-next"></div>
@@ -77,14 +77,14 @@
                             <li class="d-flex align-items-center justify-content-between">
                                 <span>
                                     <i class="mr-2 text-color"></i>مدت زمان</span>
-                                {{$singleworkshops->duration}}
+                                {{$singleworkshops->product_time}}
                                 ساعت
                             </li>
                             <div class="divider"></div>
                             <li class="d-flex align-items-center justify-content-between">
                                 <span>
                                     <i class="mr-2 text-color"></i>نوع برگزاری : </span>
-                                {{implode("," , json_decode($singleworkshops->type))}}
+                                {{implode("," , json_decode($singleworkshops->product_use))}}
                             </li>
                             <div class="divider"><span></span></div>
 
@@ -133,10 +133,10 @@
                             <div class="creator-profile">
                                 <h6 class="pb-3">مدرس </h6>
                                 <div class="d-flex gap-2 align-items-center">
-                                    <img src="{{asset($singleworkshops->teacher_image)}}" alt="creator user"
+                                    <img src="{{asset('storage/' . $singleworkshops->item2)}}" alt="creator user"
                                          class="creator-img">
                                     <span class="text-black fs-16 fw-semibold">
-                                        {{$singleworkshops->teacher}}
+                                        {{$singleworkshops->item1}}
                                     </span>
                                 </div>
                             </div>
@@ -157,12 +157,8 @@
                         <div class="pricing-det pt-5">
                             <h6 class="pb-2">قیمت</h6>
                             <h4>
-                                @if($singleworkshops->offer)
-                                    <span class="fs-20 font-weight-semi-bold text-black">{{number_format($singleworkshops->offer)}} تومان </span>
-                                    <span class="before-price mx-1"> {{number_format($singleworkshops->price)}} تومان </span>
-                                @else
-                                    <span style="font-size: 24px">{{number_format($singleworkshops->price)}} تومان </span>
-                                @endif                            </h4>
+                                <span style="font-size: 24px">{{number_format($singleworkshops->price)}} تومان </span>
+                            </h4>
                         </div>
                         <div class="product-content">
                             <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
@@ -189,7 +185,7 @@
                                 </li>
                             </ul>
                             @php
-                                $lines = explode("\n", $singleworkshops->target);
+                                $lines = explode("\n", $singleworkshops->description);
                             @endphp
                             <div class="tab-content" id="pills-tabContent">
                                 <div class="tab-pane fade show active" id="pills-details" role="tabpanel"
@@ -203,14 +199,14 @@
                                 </div>
                                 <div class="tab-pane fade" id="pills-description" role="tabpanel"
                                      aria-labelledby="pills-description-tab" tabindex="0">
-                                    {!! $singleworkshops->description !!}
+                                    {!! $singleworkshops->full_description !!}
                                 </div>
                                 <div class="tab-pane fade" id="pills-reviews" role="tabpanel"
                                      aria-labelledby="pills-reviews-tab" tabindex="0">
                                     <div class="rating gap-4 ms-2">
                                         <h6 class="pb-2">سوابق و مدارک
                                         </h6>
-                                        {!! $singleworkshops->teacher_resume !!}
+                                        {!! $singleworkshops->item3 !!}
 
                                     </div>
                                 </div>

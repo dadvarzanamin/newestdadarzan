@@ -34,14 +34,11 @@
     <section class="faq-section section-one-bg py-120 ">
         <div class="container">
             <div class="row justify-content-between">
-                <div class="col-lg-6 col-xl-5">
-                    <div class="section-title">
+
+                <div class="col-lg-8">
+                    <div class="section-title mb-5">
                         <span class="sub-title right-reveal">سوالات متداول</span>
-                        <h2 class="right-reveal">تولید محتوای بسیار سریع‌تر با هوش مصنوعی</h2>
-                        <p class="right-reveal">تولید محتوای سریع‌تر و بسیار کارآمد با هوش مصنوعی به شما این امکان را می‌دهد که با بهره‌گیری از هوش مصنوعی پیشرفته، فرآیند خلاقیت خود را ساده‌تر کنید و در کسری از زمان، محتوای باکیفیت تولید کنید.</p>
                     </div>
-                </div>
-                <div class="col-lg-6">
                     <div class="accordion top-reveal" id="accordionWorking">
                         @foreach($questionlists as $questionlist)
                             <div class="accordion-item">

@@ -9,14 +9,14 @@
                 <div class="app-brand justify-content-center mt-5">
                     <a href="{{ url('/') }}" class="app-brand-link gap-2">
                         <span class="app-brand-logo demo">
-                            <img src="{{ asset('assets/img/sinavclogo.png') }}" alt="توسعه دانش بنیان سینا" width="40">
+                            <img src="{{ asset('assets/img/darklogodadvarzan.png') }}" alt="توسعه دانش بنیان سینا" width="40">
                         </span>
-                        <span class="app-brand-text demo text-heading fw-bold">توسعه دانش بنیان سینا</span>
+                        <span class="app-brand-text demo text-heading fw-bold">دادورزان امین</span>
                     </a>
                 </div>
 
                 <div class="card-body mt-2">
-                    <h4 class="mb-2 fw-semibold">ایجاد حساب و ثبت طرح</h4>
+                    <h4 class="mb-2 fw-semibold">ایجاد حساب</h4>
                     <p class="mb-4">لطفاً اطلاعات زیر را با دقت وارد کنید</p>
 
 
@@ -46,13 +46,13 @@
                             @enderror
                         </div>
 
-                        <div class="form-floating form-floating-outline mb-3">
-                            <input type="text" class="form-control @error('CEO') is-invalid @enderror" id="CEO" name="CEO" placeholder=" نام مدیرعامل" value="{{ old('CEO') }}" required>
-                            <label for="CEO"> نام مدیرعامل</label>
-                            @error('CEO')
-                            <div class="invalid-feedback d-block">{{ $message }}</div>
-                            @enderror
-                        </div>
+{{--                        <div class="form-floating form-floating-outline mb-3">--}}
+{{--                            <input type="text" class="form-control @error('CEO') is-invalid @enderror" id="CEO" name="CEO" placeholder=" نام مدیرعامل" value="{{ old('CEO') }}" required>--}}
+{{--                            <label for="CEO"> نام مدیرعامل</label>--}}
+{{--                            @error('CEO')--}}
+{{--                            <div class="invalid-feedback d-block">{{ $message }}</div>--}}
+{{--                            @enderror--}}
+{{--                        </div>--}}
 
                         <div class="form-floating form-floating-outline mb-3">
                             <input type="text" class="form-control @error('phone') is-invalid @enderror" id="phone" name="phone" placeholder="شماره همراه" value="{{ old('phone') }}" required>

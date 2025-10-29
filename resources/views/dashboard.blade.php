@@ -172,7 +172,7 @@
                         </div>
                         <div class="card-info mt-4 pt-1" data-bs-toggle="modal" data-bs-target="#usersModal" style="cursor: pointer;">
                             <p class="text-muted">تعداد کاربران</p>
-                            <h5 class="mb-2">{{ DB::table('users')->whereLevel('applicant')->count() }}</h5>
+                            <h5 class="mb-2">{{ DB::table('users')->whereLevel('site')->count() }}</h5>
                         </div>
                         <div class="modal fade" id="usersModal" tabindex="-1" aria-labelledby="usersModalLabel" aria-hidden="true">
                             <div class="modal-dialog modal-lg">
@@ -241,7 +241,7 @@
                             {{--</div>--}}
                         </div>
                         <div class="card-info mt-4 pt-1" data-bs-toggle="modal" data-bs-target="#totalprojectsModal" style="cursor: pointer;">
-                            <p class="text-muted"> تعداد کل طرح </p>
+                            <p class="text-muted"> تعداد قراردادها </p>
                             <h5 class="mb-2">
 {{--                                {{DB::table('projects')->count()}}--}}
                             </h5>
@@ -301,7 +301,7 @@
                             </div>
                         </div>
                         <div class="card-info mt-4 pt-1" data-bs-toggle="modal" data-bs-target="#activeprojectsModal" style="cursor: pointer;">
-                            <p class="text-muted">تعداد طرح جاری</p>
+                            <p class="text-muted">تعداد کارگاه ها</p>
                             <h5 class="mb-2">
 {{--                                {{DB::table('projects')->where('invest_step' , '>=' , 1)->where('invest_step', '<>', 20)->count()}}--}}
                             </h5>
@@ -360,7 +360,7 @@
                             </div>
                         </div>
                         <div class="card-info mt-4 pt-1" data-bs-toggle="modal" data-bs-target="#endprojectsModal" style="cursor: pointer;">
-                            <p class="text-muted">تعداد طرح خاتمه یافته</p>
+                            <p class="text-muted">تعداد استعلام های فعال</p>
                             <h5 class="mb-2">
 {{--                                {{DB::table('projects')->Where('invest_step' , '>=' , 20)->count()}}--}}
                             </h5>
@@ -428,7 +428,7 @@
                             <div class="modal-dialog modal-lg">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title" id="rejectprojectsModalLabel">تعداد طرح رد شده</h5>
+                                        <h5 class="modal-title" id="rejectprojectsModalLabel">تعداد مقالات</h5>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="بستن"></button>
                                     </div>
                                     <div class="modal-body">
@@ -478,7 +478,7 @@
                             </div>
                         </div>
                         <div class="card-info mt-4 pt-1">
-                            <p class="text-muted">مجموع سرمایه گذاری (ریال)</p>
+                            <p class="text-muted">مجموع پرداختی های کارگاه ها</p>
                             <h5 class="mb-2">
 {{--                                {{number_format(DB::table('finances')->sum('amount'))}}--}}
                             </h5>
@@ -495,8 +495,8 @@
                     <div class="row">
                         <div class="col-md-8 col-12">
                             <div class="card-header">
-                                <h5 class="mb-1">جدول زمانی پروژه ها</h5>
-                                <small class="mb-0 text-body">مجموع 840 وظیفه تکمیل شده</small>
+                                <h5 class="mb-1">کارگاه ها</h5>
+                                <small class="mb-0 text-body">مجموع کارگاه های برگزار شده</small>
                             </div>
                             <div class="card-body px-2">
                                 <div id="projectTimelineChart"></div>
@@ -594,8 +594,8 @@
                     <!-- Header -->
                     <div class="card-header d-flex align-items-center justify-content-between bg-white rounded-top-4">
                         <div>
-                            <h6 class="card-title m-0 me-2 fw-bold">مجموع پورتفوی سرمایه‌گذاری (ریال)</h6>
-                            <small class="text-muted">نمای کلی سهم هر پروژه از کل پورتفو</small>
+                            <h6 class="card-title m-0 me-2 fw-bold">مجموع پرداختی کارگاه ها (ریال)</h6>
+                            <small class="text-muted">نمای کلی سهم هر کارگاه از کل پرداختی ها</small>
                         </div>
                         <div class="dropdown">
                             <button class="btn p-0" type="button" id="portfolioMenu" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -726,7 +726,7 @@
                 <div class="card h-100">
                     <div class="card-header pb-1">
                         <div class="d-flex justify-content-between">
-                            <h5 class="mb-1">سرمایه گذاری سالانه</h5>
+                            <h5 class="mb-1">فروش سالانه</h5>
                             <div class="dropdown">
                                 <button class="btn p-0" type="button" id="monthlyBudgetDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     <i class="mdi mdi-dots-vertical mdi-24px"></i>
@@ -742,7 +742,7 @@
                     <div class="card-body">
                         <div id="monthlyBudgetChart"></div>
                         <div class="mt-3">
-                            <p class="mb-0 text-muted">در سال گذشته شما 4.7 میلیارد تومان سرمایه گذاری موفق داشته اید</p>
+                            <p class="mb-0 text-muted">در سال گذشته شما فروش داشته اید</p>
                         </div>
                     </div>
                 </div>

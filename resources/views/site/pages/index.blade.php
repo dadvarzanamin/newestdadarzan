@@ -414,42 +414,42 @@
         </div>
     </section>
 
-    <div class="section-two-bg py-60 @@services-text-slide">
-        <div class="text-slide swiper">
-            <div class="swiper-wrapper slide-transition">
-                <div class="swiper-slide inner-slide-element">
-                    <div class="slide-text">
-                        وکلای حرفه ای
-                    </div>
-                </div>
-                <div class="swiper-slide inner-slide-element">
-                    <div class="slide-text">
-                        <img src="{{asset('site/assets/images/shape/star.svg')}}" alt="icon">
-                    </div>
-                </div>
-                <div class="swiper-slide inner-slide-element">
-                    <div class="slide-text">
-                        بیش از یک دهه تجربه موفق
-                    </div>
-                </div>
-                <div class="swiper-slide inner-slide-element">
-                    <div class="slide-text">
-                        <img src="{{asset('site/assets/images/shape/star.svg')}}" alt="icon">
-                    </div>
-                </div>
-                <div class="swiper-slide inner-slide-element">
-                    <div class="slide-text">
-                        خدمات نوین
-                    </div>
-                </div>
-                <div class="swiper-slide inner-slide-element">
-                    <div class="slide-text">
-                        <img src="{{asset('site/assets/images/shape/star.svg')}}" alt="icon">
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+{{--    <div class="section-two-bg py-60 @@services-text-slide">--}}
+{{--        <div class="text-slide swiper">--}}
+{{--            <div class="swiper-wrapper slide-transition">--}}
+{{--                <div class="swiper-slide inner-slide-element">--}}
+{{--                    <div class="slide-text">--}}
+{{--                        وکلای حرفه ای--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--                <div class="swiper-slide inner-slide-element">--}}
+{{--                    <div class="slide-text">--}}
+{{--                        <img src="{{asset('site/assets/images/shape/star.svg')}}" alt="icon">--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--                <div class="swiper-slide inner-slide-element">--}}
+{{--                    <div class="slide-text">--}}
+{{--                        بیش از یک دهه تجربه موفق--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--                <div class="swiper-slide inner-slide-element">--}}
+{{--                    <div class="slide-text">--}}
+{{--                        <img src="{{asset('site/assets/images/shape/star.svg')}}" alt="icon">--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--                <div class="swiper-slide inner-slide-element">--}}
+{{--                    <div class="slide-text">--}}
+{{--                        خدمات نوین--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--                <div class="swiper-slide inner-slide-element">--}}
+{{--                    <div class="slide-text">--}}
+{{--                        <img src="{{asset('site/assets/images/shape/star.svg')}}" alt="icon">--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--            </div>--}}
+{{--        </div>--}}
+{{--    </div>--}}
 
 
     <section class="working-process-section section-one-bg py-60">
