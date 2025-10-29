@@ -159,20 +159,20 @@
                                             <figure class="image-effect">
                                                 <img src="{{ asset('storage/'.$product->cover) }}" alt="explore images" class="img-fluid w-100" loading="lazy">
                                             </figure>
-                                            <h5 class="featured-title">
-                                                <a href="{{ url('دپارتمان-اموزش-و-پژوهش/دوره-های-آموزشی/' . $product->slug) }}" style="font-size: 1rem;">
-{{--                                                    {{$product->title}}--}}
-                                                </a>
-                                            </h5>
                                         </div>
                                         <div class="explore-item-footer d-flex align-items-center justify-content-between">
-                                            <div class="explore-title"> مدرس :
+                                            <div class="explore-title">
 {{--                                                <div class="img">--}}
 {{--                                                    <img src="{{ asset('storage/'.$product->item2) }}" alt="{{$product->item1}}">--}}
 {{--                                                </div>--}}
-                                                {{$product->item1}}
+                                                <h5>
+                                                    <a class="name-details" href="{{ url('دپارتمان-اموزش-و-پژوهش/دوره-های-آموزشی/' . $product->slug) }}" style="font-size: 1rem;">
+                                                        {{$product->title}}
+                                                    </a>
+                                                </h5>
                                             </div>
-                                            <div class="view-list"><i class="fa-solid fa-cart-plus"></i> 341</div>
+
+{{--                                            <div class="view-list"><i class="fa-solid fa-cart-plus"></i> 341</div>--}}
                                         </div>
                                     </div>
                                 </div>
@@ -216,7 +216,7 @@
                     <div class="about-section__content">
                         <div class="section-title">
                             <span class="sub-title right-reveal">درباره ما</span>
-                            <h2 class="right-reveal">
+                            <h2 class="right-reveal" style="font-size: 2rem">
                                 ارائه دهنده خدمات جامع حقوقی به سبکی نوین
                             </h2>
                             <p class="right-reveal">
@@ -458,7 +458,7 @@
                 <div class="col-xl-6">
                     <div class="section-title">
                         <span class="sub-title right-reveal">فرآیند کار</span>
-                        <h2 class="right-reveal">تولید محتوای بسیار سریع‌تر با هوش مصنوعی</h2>
+                        <h2 class="right-reveal">برخی از فعالیت های ما</h2>
                     </div>
                     <div class="accordion mt-60 ms-xl-5 top-reveal" id="accordionWorking">
                         <div class="accordion-item">
@@ -594,152 +594,152 @@
     </section>
 
     {{--testimonials section--}}
-    <section class="testimonials-section section-one-bg py-60">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="section-title text-center">
-                        <span class="sub-title top-reveal">دیدگاه مشتریان</span>
-                        <h2 class="top-reveal">مشتریان ما درباره دادورزان امین می‌گویند</h2>
-                    </div>
-                </div>
-            </div>
-            <div class="row mt-60">
-                <div class="col-lg-12">
-                    <div class="testimonials-slider swiper">
-                        <div class="swiper-wrapper">
-                            <div class="swiper-slide">
-                                <div class="testimonials-slider__item">
-                                    <div class="question">
-                                        <i class="flaticon-quote"></i>
-                                    </div>
-                                    <div class="body-text">
-                                        <p>
-                                            همکاری با مؤسسه حقوقی دادورزان امین تجربه‌ای آرامش‌بخش و مطمئن برای من بود.
-                                            تیم حرفه‌ای وکلا با دقت و تخصص تمام مراحل پرونده‌ام را پیگیری کردند و همیشه
-                                            با صبر و شفافیت پاسخگوی سؤالاتم بودند. نتیجه‌ای که به دست آمد بسیار فراتر از
-                                            انتظاراتم بود و باعث شد ارزش واقعی داشتن یک همراه حقوقی متخصص را درک کنم.
-                                        </p>
+{{--    <section class="testimonials-section section-one-bg py-60">--}}
+{{--        <div class="container">--}}
+{{--            <div class="row">--}}
+{{--                <div class="col-lg-12">--}}
+{{--                    <div class="section-title text-center">--}}
+{{--                        <span class="sub-title top-reveal">دیدگاه مشتریان</span>--}}
+{{--                        <h2 class="top-reveal">مشتریان ما درباره دادورزان امین می‌گویند</h2>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--            </div>--}}
+{{--            <div class="row mt-60">--}}
+{{--                <div class="col-lg-12">--}}
+{{--                    <div class="testimonials-slider swiper">--}}
+{{--                        <div class="swiper-wrapper">--}}
+{{--                            <div class="swiper-slide">--}}
+{{--                                <div class="testimonials-slider__item">--}}
+{{--                                    <div class="question">--}}
+{{--                                        <i class="flaticon-quote"></i>--}}
+{{--                                    </div>--}}
+{{--                                    <div class="body-text">--}}
+{{--                                        <p>--}}
+{{--                                            همکاری با مؤسسه حقوقی دادورزان امین تجربه‌ای آرامش‌بخش و مطمئن برای من بود.--}}
+{{--                                            تیم حرفه‌ای وکلا با دقت و تخصص تمام مراحل پرونده‌ام را پیگیری کردند و همیشه--}}
+{{--                                            با صبر و شفافیت پاسخگوی سؤالاتم بودند. نتیجه‌ای که به دست آمد بسیار فراتر از--}}
+{{--                                            انتظاراتم بود و باعث شد ارزش واقعی داشتن یک همراه حقوقی متخصص را درک کنم.--}}
+{{--                                        </p>--}}
 
-                                        <div class="user">
-                                            <div class="img">
-                                                <img src="{{asset('site/assets/images/testimonial/1.jpg')}}" alt="user">
-                                            </div>
-                                            <div class="text">
-                                                <h4>امیرارسلان رهنما</h4>
-                                                <p>بازاریاب دیجیتال</p>
-                                                <ul>
-                                                    <li><i class="fa-solid fa-star"></i></li>
-                                                    <li><i class="fa-solid fa-star"></i></li>
-                                                    <li><i class="fa-solid fa-star"></i></li>
-                                                    <li><i class="fa-solid fa-star"></i></li>
-                                                    <li><i class="fa-solid fa-star"></i></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="swiper-slide">
-                                <div class="testimonials-slider__item">
-                                    <div class="question">
-                                        <i class="flaticon-quote"></i>
-                                    </div>
-                                    <div class="body-text">
-                                        <p>
-                                            دادورزان امین نه‌تنها در حوزه حقوقی و وکالت تخصص بالایی دارند، بلکه برخورد
-                                            انسانی و تعهد کاری آنان تحسین‌برانگیز است. از همان ابتدای کار، احساس امنیت و
-                                            اعتماد کامل داشتم و مطمئن بودم پرونده من در بهترین دستان قرار دارد. بدون
-                                            تردید این مجموعه را به هر کسی که به خدمات حقوقی دقیق و مطمئن نیاز دارد توصیه
-                                            می‌کنم.
-                                        </p>
+{{--                                        <div class="user">--}}
+{{--                                            <div class="img">--}}
+{{--                                                <img src="{{asset('site/assets/images/testimonial/1.jpg')}}" alt="user">--}}
+{{--                                            </div>--}}
+{{--                                            <div class="text">--}}
+{{--                                                <h4>امیرارسلان رهنما</h4>--}}
+{{--                                                <p>بازاریاب دیجیتال</p>--}}
+{{--                                                <ul>--}}
+{{--                                                    <li><i class="fa-solid fa-star"></i></li>--}}
+{{--                                                    <li><i class="fa-solid fa-star"></i></li>--}}
+{{--                                                    <li><i class="fa-solid fa-star"></i></li>--}}
+{{--                                                    <li><i class="fa-solid fa-star"></i></li>--}}
+{{--                                                    <li><i class="fa-solid fa-star"></i></li>--}}
+{{--                                                </ul>--}}
+{{--                                            </div>--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                            <div class="swiper-slide">--}}
+{{--                                <div class="testimonials-slider__item">--}}
+{{--                                    <div class="question">--}}
+{{--                                        <i class="flaticon-quote"></i>--}}
+{{--                                    </div>--}}
+{{--                                    <div class="body-text">--}}
+{{--                                        <p>--}}
+{{--                                            دادورزان امین نه‌تنها در حوزه حقوقی و وکالت تخصص بالایی دارند، بلکه برخورد--}}
+{{--                                            انسانی و تعهد کاری آنان تحسین‌برانگیز است. از همان ابتدای کار، احساس امنیت و--}}
+{{--                                            اعتماد کامل داشتم و مطمئن بودم پرونده من در بهترین دستان قرار دارد. بدون--}}
+{{--                                            تردید این مجموعه را به هر کسی که به خدمات حقوقی دقیق و مطمئن نیاز دارد توصیه--}}
+{{--                                            می‌کنم.--}}
+{{--                                        </p>--}}
 
-                                        <div class="user">
-                                            <div class="img">
-                                                <img src="{{asset('site/assets/images/testimonial/2.jpg')}}" alt="user">
-                                            </div>
-                                            <div class="text">
-                                                <h4>ایلیا میرزایی</h4>
-                                                <p>گرافیست</p>
-                                                <ul>
-                                                    <li><i class="fa-solid fa-star"></i></li>
-                                                    <li><i class="fa-solid fa-star"></i></li>
-                                                    <li><i class="fa-solid fa-star"></i></li>
-                                                    <li><i class="fa-solid fa-star"></i></li>
-                                                    <li><i class="fa-solid fa-star"></i></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="swiper-slide">
-                                <div class="testimonials-slider__item">
-                                    <div class="question">
-                                        <i class="flaticon-quote"></i>
-                                    </div>
-                                    <div class="body-text">
-                                        <p>در برخورد با مسائل حقوقی همیشه نگرانی و استرس وجود دارد، اما با انتخاب
-                                            دادورزان امین تمام این دغدغه‌ها از بین رفت. وکلای این مؤسسه با تسلط کامل بر
-                                            قوانین و ارائه راهکارهای عملی، مسیر پرونده را برایم روشن کردند. تجربه‌ای که
-                                            به من اعتماد و آرامش خاطر داد.</p>
+{{--                                        <div class="user">--}}
+{{--                                            <div class="img">--}}
+{{--                                                <img src="{{asset('site/assets/images/testimonial/2.jpg')}}" alt="user">--}}
+{{--                                            </div>--}}
+{{--                                            <div class="text">--}}
+{{--                                                <h4>ایلیا میرزایی</h4>--}}
+{{--                                                <p>گرافیست</p>--}}
+{{--                                                <ul>--}}
+{{--                                                    <li><i class="fa-solid fa-star"></i></li>--}}
+{{--                                                    <li><i class="fa-solid fa-star"></i></li>--}}
+{{--                                                    <li><i class="fa-solid fa-star"></i></li>--}}
+{{--                                                    <li><i class="fa-solid fa-star"></i></li>--}}
+{{--                                                    <li><i class="fa-solid fa-star"></i></li>--}}
+{{--                                                </ul>--}}
+{{--                                            </div>--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                            <div class="swiper-slide">--}}
+{{--                                <div class="testimonials-slider__item">--}}
+{{--                                    <div class="question">--}}
+{{--                                        <i class="flaticon-quote"></i>--}}
+{{--                                    </div>--}}
+{{--                                    <div class="body-text">--}}
+{{--                                        <p>در برخورد با مسائل حقوقی همیشه نگرانی و استرس وجود دارد، اما با انتخاب--}}
+{{--                                            دادورزان امین تمام این دغدغه‌ها از بین رفت. وکلای این مؤسسه با تسلط کامل بر--}}
+{{--                                            قوانین و ارائه راهکارهای عملی، مسیر پرونده را برایم روشن کردند. تجربه‌ای که--}}
+{{--                                            به من اعتماد و آرامش خاطر داد.</p>--}}
 
-                                        <div class="user">
-                                            <div class="img">
-                                                <img src="{{asset('site/assets/images/testimonial/1.jpg')}}" alt="user">
-                                            </div>
-                                            <div class="text">
-                                                <h4>امیرارسلان رهنما</h4>
-                                                <p>بازاریاب دیجیتال</p>
-                                                <ul>
-                                                    <li><i class="fa-solid fa-star"></i></li>
-                                                    <li><i class="fa-solid fa-star"></i></li>
-                                                    <li><i class="fa-solid fa-star"></i></li>
-                                                    <li><i class="fa-solid fa-star"></i></li>
-                                                    <li><i class="fa-solid fa-star"></i></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="swiper-slide">
-                                <div class="testimonials-slider__item">
-                                    <div class="question">
-                                        <i class="flaticon-quote"></i>
-                                    </div>
-                                    <div class="body-text">
-                                        <p>آنچه دادورزان امین را از سایر مؤسسات متمایز می‌کند، ترکیب دانش حقوقی عمیق با
-                                            مسئولیت‌پذیری واقعی است. در تمام مراحل پرونده‌ام، شفافیت و پیگیری منظم را به
-                                            وضوح دیدم. نتیجه موفقیت‌آمیز پرونده باعث شد مطمئن شوم انتخاب درستی
-                                            داشته‌ام.</p>
+{{--                                        <div class="user">--}}
+{{--                                            <div class="img">--}}
+{{--                                                <img src="{{asset('site/assets/images/testimonial/1.jpg')}}" alt="user">--}}
+{{--                                            </div>--}}
+{{--                                            <div class="text">--}}
+{{--                                                <h4>امیرارسلان رهنما</h4>--}}
+{{--                                                <p>بازاریاب دیجیتال</p>--}}
+{{--                                                <ul>--}}
+{{--                                                    <li><i class="fa-solid fa-star"></i></li>--}}
+{{--                                                    <li><i class="fa-solid fa-star"></i></li>--}}
+{{--                                                    <li><i class="fa-solid fa-star"></i></li>--}}
+{{--                                                    <li><i class="fa-solid fa-star"></i></li>--}}
+{{--                                                    <li><i class="fa-solid fa-star"></i></li>--}}
+{{--                                                </ul>--}}
+{{--                                            </div>--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                            <div class="swiper-slide">--}}
+{{--                                <div class="testimonials-slider__item">--}}
+{{--                                    <div class="question">--}}
+{{--                                        <i class="flaticon-quote"></i>--}}
+{{--                                    </div>--}}
+{{--                                    <div class="body-text">--}}
+{{--                                        <p>آنچه دادورزان امین را از سایر مؤسسات متمایز می‌کند، ترکیب دانش حقوقی عمیق با--}}
+{{--                                            مسئولیت‌پذیری واقعی است. در تمام مراحل پرونده‌ام، شفافیت و پیگیری منظم را به--}}
+{{--                                            وضوح دیدم. نتیجه موفقیت‌آمیز پرونده باعث شد مطمئن شوم انتخاب درستی--}}
+{{--                                            داشته‌ام.</p>--}}
 
-                                        <div class="user">
-                                            <div class="img">
-                                                <img src="{{asset('site/assets/images/testimonial/2.jpg')}}" alt="user">
-                                            </div>
-                                            <div class="text">
-                                                <h4>ایلیا میرزایی</h4>
-                                                <p>گرافیست</p>
-                                                <ul>
-                                                    <li><i class="fa-solid fa-star"></i></li>
-                                                    <li><i class="fa-solid fa-star"></i></li>
-                                                    <li><i class="fa-solid fa-star"></i></li>
-                                                    <li><i class="fa-solid fa-star"></i></li>
-                                                    <li><i class="fa-solid fa-star"></i></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="swiper-pagination"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+{{--                                        <div class="user">--}}
+{{--                                            <div class="img">--}}
+{{--                                                <img src="{{asset('site/assets/images/testimonial/2.jpg')}}" alt="user">--}}
+{{--                                            </div>--}}
+{{--                                            <div class="text">--}}
+{{--                                                <h4>ایلیا میرزایی</h4>--}}
+{{--                                                <p>گرافیست</p>--}}
+{{--                                                <ul>--}}
+{{--                                                    <li><i class="fa-solid fa-star"></i></li>--}}
+{{--                                                    <li><i class="fa-solid fa-star"></i></li>--}}
+{{--                                                    <li><i class="fa-solid fa-star"></i></li>--}}
+{{--                                                    <li><i class="fa-solid fa-star"></i></li>--}}
+{{--                                                    <li><i class="fa-solid fa-star"></i></li>--}}
+{{--                                                </ul>--}}
+{{--                                            </div>--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+{{--                        <div class="swiper-pagination"></div>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--            </div>--}}
+{{--        </div>--}}
+{{--    </section>--}}
 
     <section class="call-to-action-section section-base-bg py-60">
         <div class="container">
@@ -892,10 +892,6 @@
                                                     <i class="fas fa-envelope"></i>
                                                 </a>
                                             </li>
-{{--                                            <li><a href="https://www.instagram.com/" target="_blank"><i--}}
-{{--                                                        class="fab fa-instagram"></i></a></li>--}}
-{{--                                            <li><a href="https://www.pinterest.com/" target="_blank"><i--}}
-{{--                                                        class="fa-brands fa-pinterest-p"></i></a></li>--}}
                                         </ul>
                                         <div class="name-details">
                                             <h4>

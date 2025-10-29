@@ -3367,6 +3367,7 @@
 
 .section-base-bg .section-title h2 {
   color: hsl(var(--black));
+  font-size: 2rem;
 }
 
 .section-base-bg .section-title p {
@@ -7487,7 +7488,7 @@ label {
 ============================= */
 .slide-text {
   direction: rtl;
-  font-size: 4.25rem;
+  font-size: 2.25rem;
   font-weight: 800;
   line-height: 88%;
   -webkit-text-stroke: 0.02375rem hsl(var(--black));

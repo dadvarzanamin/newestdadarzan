@@ -11,12 +11,12 @@
                         <span class="app-brand-logo demo">
                           <img src="{{ asset('assets/img/sinavclogo.png') }}" alt="توسعه دانش بنیان سینا" width="40">
                         </span>
-                        <span class="app-brand-text demo text-heading fw-bold">توسعه دانش بنیان سینا</span>
+                        <span class="app-brand-text demo text-heading fw-bold">دادورزان امین</span>
                     </a>
                 </div>
 
                 <div class="card-body mt-2">
-                    <h4 class="mb-2 fw-semibold">بستر ارزیابی اطلاعات سازمان‌ یافته‌ی تجاری </h4>
+                    <h4 class="mb-2 fw-semibold"></h4>
                     <p class="mb-4 text-center">(بِست شیت)</p>
 
                     {{-- Flash messages (success/info/warn/error) --}}
@@ -81,7 +81,7 @@
 
                     <p class="text-center">
                         <a href="{{ route('register') }}">
-                            <span>برای ایجاد حساب و ثبت طرح کلیک کنید</span>
+                            <span>برای ایجاد حساب کلیک کنید</span>
                         </a>
                     </p>
                 </div>

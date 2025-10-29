@@ -37,23 +37,6 @@
                         <figure class="image-effect ">
                             <img src="{{asset('storage/'.$emploee->image)}}" alt="{{$emploee->fullname}}" class="img-fluid w-100">
                         </figure>
-                        <ul class="social">
-                            <li>
-                                <a href="https://www.facebook.com/" target="_blank">
-                                    <i class="fab fa-facebook-f"></i>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="https://www.instagram.com/" target="_blank">
-                                    <i class="fab fa-instagram"></i>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="https://www.pinterest.com/" target="_blank">
-                                    <i class="fa-brands fa-pinterest-p"></i>
-                                </a>
-                            </li>
-                        </ul>
                         <div class="name-details">
                             <h4><a href="{{url('تیم-ما/رزومه/'.$emploee->slug)}}">{{$emploee->fullname}}</a> </h4>
                             <p>{{$emploee->side}}</p>
@@ -64,59 +47,4 @@
             </div>
         </div>
     </section>
-
-
-{{--    <div class="section-two-bg py-60 @@services-text-slide">--}}
-{{--        <div class="text-slide swiper">--}}
-{{--            <div class="swiper-wrapper slide-transition">--}}
-{{--                <div class="swiper-slide inner-slide-element">--}}
-{{--                    <div class="slide-text">--}}
-{{--                        AI IMAGE GENERATE--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--                <div class="swiper-slide inner-slide-element">--}}
-{{--                    <div class="slide-text">--}}
-{{--                        <img src="assets/images/shape/star.svg" alt="icon">--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--                <div class="swiper-slide inner-slide-element">--}}
-{{--                    <div class="slide-text">--}}
-{{--                        AI IMAGE GENERATE--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--                <div class="swiper-slide inner-slide-element">--}}
-{{--                    <div class="slide-text">--}}
-{{--                        <img src="assets/images/shape/star.svg" alt="icon">--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--                <div class="swiper-slide inner-slide-element">--}}
-{{--                    <div class="slide-text">--}}
-{{--                        AI IMAGE GENERATE--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--                <div class="swiper-slide inner-slide-element">--}}
-{{--                    <div class="slide-text">--}}
-{{--                        <img src="assets/images/shape/star.svg" alt="icon">--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--                <div class="swiper-slide inner-slide-element">--}}
-{{--                    <div class="slide-text">--}}
-{{--                        AI IMAGE GENERATE--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--                <div class="swiper-slide inner-slide-element">--}}
-{{--                    <div class="slide-text">--}}
-{{--                        <img src="assets/images/shape/star.svg" alt="icon">--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--                <div class="swiper-slide inner-slide-element">--}}
-{{--                    <div class="slide-text">--}}
-{{--                        <img src="assets/images/shape/star.svg" alt="icon">--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--            </div>--}}
-{{--        </div>--}}
-{{--    </div>--}}
-    <!-- =====>> End Text-slide <<=====
-    =========================== -->
 @endsection

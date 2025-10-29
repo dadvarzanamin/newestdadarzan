@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-lg navbar-main">
     <div class="container-fluid">
         <a class="navbar-brand" href="{{ route('/') }}">
-            <img src="{{ asset('site/assets/images/logo/logodadvarzan.png') }}" alt="logo" class="logo-img">
+            <img src="{{ asset('site/assets/images/logo/darklogodadvarzan.png') }}" alt="logo" class="logo-img">
         </a>
         <div class="right-nav">
             <a href="#" class="card___btn">

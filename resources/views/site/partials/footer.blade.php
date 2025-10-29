@@ -5,7 +5,7 @@
                 <div class="col-lg-4 col-md-8">
                     <div class="footer-widget__item text-center text-lg-end">
                         <a href="{{ route('/') }}" class="d-block">
-                            <img src="{{ asset('site/assets/images/logo/logodadvarzan.png') }}" style="max-width: 60px"
+                            <img src="{{ asset('site/assets/images/logo/darklogodadvarzan.png') }}" style="max-width: 60px"
                                  alt="logo">
                         </a>
                         <br>
@@ -21,17 +21,15 @@
                             <a href="#"><span class="__cf_email__">[email&#160;protected]</span></a>
                         </div>
                         <div class="footer-phone">
-                            <h4><a href="tel:09010010011">۰۹۰۱۰۰۱۰۰۱۱</a></h4>
+                            <h4><a href="tel:09124917054">09124917054</a></h4>
                         </div>
                         <ul class="social">
-                            <li><a href="https://www.facebook.com/" target="_blank"><i
-                                        class="fab fa-facebook-f"></i></a></li>
-                            <li><a href="https://www.x.com/?lang=en" target="_blank"><i
-                                        class="fa-brands fa-x-twitter"></i></a></li>
+                            <li><a href="https://www.whatsapp.com/" target="_blank"><i
+                                        class="fab fa-whatsapp"></i></a></li>
+                            <li><a href="https://www.telegram.com/?lang=en" target="_blank"><i
+                                        class="fa-brands fa-telegram"></i></a></li>
                             <li><a href="https://www.instagram.com/" target="_blank"><i
                                         class="fab fa-instagram"></i></a></li>
-                            <li><a href="https://www.linkedin.com/" target="_blank"><i
-                                        class="fab fa-linkedin-in"></i></a></li>
                         </ul>
                     </div>
                 </div>
@@ -50,6 +48,15 @@
                             {{--                                @endif--}}
 
                             {{--                            </ul>--}}
+                            <ul class="useful-list">
+                                <li><a href="#">انواع خدمات قرادادی</a></li>
+                                <li><a href="#">انواع خدمات کیفری</a></li>
+                                <li><a href="#">انواع خدمات حقوقی</a></li>
+                                <li><a href="#">انواع خدمات شرکت ها</a></li>
+                                <li><a href="#">انواع خدمات مالیاتی</a></li>
+                                <li><a href="#">انواع خدمات ملکی</a></li>
+                                <li><a href="#">انواع خدمات بیمه ای</a></li>
+                            </ul>
                         </div>
 
                         <div class="footer-widget__item">
