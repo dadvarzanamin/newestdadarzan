@@ -253,6 +253,26 @@ class IndexController extends Controller
         return view('site.pages.team')->with(compact('menus', 'thispage', 'submenus' , 'emploees'));
     }
 
+    public function questionlist(Request $request)
+    {
+
+        $url = $request->segments();
+        $menus = Menu::select('id', 'title', 'slug', 'submenu', 'priority')->orderBy('priority')->whereStatus(4)->whereType('site')->get();
+        if (count($url) == 1) {
+            $thispage = Menu::select('id', 'title', 'slug')->whereStatus(4)->whereType('site')->whereSlug($url[0])->first();
+        } elseif (count($url) > 1) {
+            $thispage = Submenu::select('id', 'title', 'slug')->whereStatus(4)->whereType('site')->whereSlug($url[1])->first();
+        }elseif (count($url) == 0) {
+            $thispage = Menu::select('id', 'title', 'slug')->whereStatus(4)->whereType('site')->whereSlug('/')->first();
+        }
+        $submenus       = Submenu::select('id', 'title', 'slug', 'menu_id')->whereStatus(4)->whereType('site')->get();
+        $questionlists  = DB::table('questionlists')->whereStatus(4)->orderBy('id')->get();
+
+        return view('site.pages.faq')->with(compact('menus', 'thispage', 'submenus' , 'questionlists'));
+    }
+
+
+
 
 
 }

@@ -65,11 +65,11 @@
                             </div>
                         @endforeach
                     </div>
-                    @if($questionlists->hasMorePages())
-                        <div class="load-more-btn-box pt-5 text-center">
-                            <button type="button" id="loadMore" class="btn theme-btn"><i class="la la-refresh mr-1"></i> بارگذاری بیشتر</button>
-                        </div>
-                    @endif
+{{--                    @if($questionlists->hasMorePages())--}}
+{{--                        <div class="load-more-btn-box pt-5 text-center">--}}
+{{--                            <button type="button" id="loadMore" class="btn theme-btn"><i class="la la-refresh mr-1"></i> بارگذاری بیشتر</button>--}}
+{{--                        </div>--}}
+{{--                    @endif--}}
                 </div>
             </div>
         </div>
