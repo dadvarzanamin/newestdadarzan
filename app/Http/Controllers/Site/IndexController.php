@@ -49,8 +49,9 @@ class IndexController extends Controller
 
         $products       = Product::orderBy('id' , 'DESC')->get();
         $emploees       = Emploee::whereStatus(4)->orderBy('priority')->get();
+        $posts          = Post::whereStatus(4)->orderBy('id' , 'DESC')->limit(6)->get();
 
-        return view('site.pages.index')->with(compact('menus', 'thispage', 'submenus' , 'products' , 'emploees'));
+        return view('site.pages.index')->with(compact('menus', 'thispage', 'submenus' , 'products' , 'emploees' , 'posts'));
     }
 
     public function contract(Request $request)

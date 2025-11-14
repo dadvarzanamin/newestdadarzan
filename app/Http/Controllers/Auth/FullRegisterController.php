@@ -76,7 +76,7 @@ class FullRegisterController extends Controller
     {
         if (Auth::user()->level == 'admin'){
             $users = User::findOrfail($id);
-        }elseif(Auth::user()->level == 'applicant'){
+        }elseif(Auth::user()->level == 'site'){
             $users = Auth::user();
         }
 

@@ -59,6 +59,7 @@ Route::middleware('admin')->namespace('App\Http\Controllers\Panel')->group(funct
 //    Route::resource('panel/leveluser'    , 'LeveluserController');
 
     Route::get('panel/profile'            , 'ProfileController@index')->name('profile');
+    Route::get('panel/userdata'           , 'ProfileController@userdata')->name('userdata');
 
     Route::get('panel/changepassword'      , 'ChangePasswordController@index')->name('password.change.form');
     Route::post('panel/changepassword'     , 'ChangePasswordController@change')->name('password.change.submit');

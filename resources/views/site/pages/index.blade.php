@@ -80,34 +80,33 @@
                     <div class="banner-section__content">
                         <h1 class="right-reveal"> موسسه حقوقی <span>دادورزان امین</span></h1>
                         <p class="right-reveal">
-                            شرکت حقوقی با وکلای حرفه‌ای و مجرب، حقوق مهاجرتی و مشاوره مالیاتی و مشاوره حقوقی دادگستری و
-                            کلیه امور وکالتی
+                            ما با تکیه بر وکلای متخصص و باتجربه، خدمات جامع حقوقی از جمله امور دعاوی، قراردادها، شرکت‌ها، مهاجرت، مالیات، خانواده، کیفری و مشاوره‌های تخصصی را به اشخاص و کسب‌وکارها ارائه می‌دهیم
+{{--                            ما با بهره‌گیری از تیمی متشکل از وکلای پایه‌یک، متخصصان حقوقی و مشاوران ارشد، ارائه‌دهنده‌ی طیف کاملی از خدمات حقوقی در حوزه‌های دعاوی دادگستری، تنظیم و بررسی قراردادها، حقوق تجارت و شرکت‌ها، داوری و میانجی‌گری، امور ثبتی و مالکیت فکری، مهاجرت و اقامت، مشاوره مالیاتی، امور خانواده، کیفری و کلیه خدمات وکالتی تخصصی است. رویکرد ما ارائه راهکارهای دقیق، حرفه‌ای و قابل اتکا برای اشخاص حقیقی و حقوقی در تمامی حوزه‌های حقوقی است.--}}
                         </p>
-                        <div
-                            class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start gap-4 right-reveal">
-                            <a href="login.html" class="btn btn--base">
-                                شروع کنید
-                                <i class="flaticon-right-arrow"></i>
-                            </a>
-                            <div class="community-content">
-                                <div class="img">
-                                    <figure class="image-effect">
-                                        <img src="{{asset('site/assets/images/community/1.png')}}"
-                                             alt="community images">
-                                    </figure>
-                                    <figure class="image-effect">
-                                        <img src="{{asset('site/assets/images/community/2.png')}}"
-                                             alt="community images">
-                                    </figure>
-                                    <div class="numbers">
-                                        +۹M
-                                    </div>
-                                </div>
-                                <div class="text">
-                                    به <span>جمع مشریان ما</span> بپیوندید
-                                </div>
-                            </div>
-                        </div>
+{{--                        <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start gap-4 right-reveal">--}}
+{{--                            <a href="login.html" class="btn btn--base">--}}
+{{--                                شروع کنید--}}
+{{--                                <i class="flaticon-right-arrow"></i>--}}
+{{--                            </a>--}}
+{{--                            <div class="community-content">--}}
+{{--                                <div class="img">--}}
+{{--                                    <figure class="image-effect">--}}
+{{--                                        <img src="{{asset('site/assets/images/community/1.png')}}"--}}
+{{--                                             alt="community images">--}}
+{{--                                    </figure>--}}
+{{--                                    <figure class="image-effect">--}}
+{{--                                        <img src="{{asset('site/assets/images/community/2.png')}}"--}}
+{{--                                             alt="community images">--}}
+{{--                                    </figure>--}}
+{{--                                    <div class="numbers">--}}
+{{--                                        +۹M--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
+{{--                                <div class="text">--}}
+{{--                                    به <span>جمع مشریان ما</span> بپیوندید--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
                     </div>
                 </div>
                 <div class="col-lg-6 align-self-center">
@@ -219,17 +218,10 @@
                             <h2 class="right-reveal" style="font-size: 2rem">
                                 ارائه دهنده خدمات جامع حقوقی به سبکی نوین
                             </h2>
-                            <p class="right-reveal">
-                                تفاوتی ندارد یک کسب و کار کوچک داشته باشید یا یک هلدینگ بین المللی، در برابر چالش‌های
-                                حقوقی همواره نیاز به یک مشاور حقوقی با تجربه و قراردادهای منسجم خواهید داشت. موسسه حقوقی
-                                دادورزان امین، این امکان را برای شما به ارمغان آورده است تا تمام امور حقوقی و ثبتی خود
-                                را بدون دغدغه و به صورت یکپارچه به تیم متخصص و باتجربه‌ای بسپارید که سال‌ها در این حوزه
-                                فعالیت داشته و به انواع مسائل و قوانین کسب و کار تسلط بالایی دارند
+                            <p class="right-reveal" style="text-align: justify">
+                                چه صاحب یک کسب‌وکار نوپا باشید و چه مدیر یک هلدینگ بین‌المللی، مواجهه با چالش‌های حقوقی همواره نیازمند مشاوری باتجربه و قراردادهایی منسجم است. موسسه حقوقی دادورزان امین این امکان را فراهم کرده است تا تمامی امور حقوقی و ثبتی خود را با آسودگی خاطر به تیمی متخصص، باتجربه و آشنا به قوانین و الزامات کسب‌وکار بسپارید؛ تیمی که سال‌ها در این حوزه فعالیت کرده و پاسخگوی طیف گسترده‌ای از نیازهای حقوقی شما خواهد بود.
                             </p>
-                            <a href="about.html" class="btn btn--base right-reveal">
-                                بیشتر بخوانید
-                                <i class="flaticon-right-arrow"></i>
-                            </a>
+
                         </div>
                     </div>
                 </div>
@@ -258,7 +250,7 @@
                         </div>
                         <div class="text">
                             <h5>نظریه شورای حقوقی</h5>
-                            <p>بر اساس ایده‌های خود، تصاویر منحصر به فرد ایجاد کنید. ماموریت ما این است که این روش را
+                            <p style="text-align: justify">بر اساس ایده‌های خود، تصاویر منحصر به فرد ایجاد کنید. ماموریت ما این است که این روش را
                                 متحول کنیم.</p>
                         </div>
                     </div>
@@ -270,7 +262,7 @@
                         </div>
                         <div class="text">
                             <h5>ایرانیان خارج از کشور</h5>
-                            <p>بر اساس ایده‌های خود، تصاویر منحصر به فرد ایجاد کنید. ماموریت ما این است که این روش را
+                            <p style="text-align: justify">بر اساس ایده‌های خود، تصاویر منحصر به فرد ایجاد کنید. ماموریت ما این است که این روش را
                                 متحول کنیم.</p>
                         </div>
                     </div>
@@ -282,7 +274,7 @@
                         </div>
                         <div class="text">
                             <h5>تنظیم قرارداد</h5>
-                            <p>بر اساس ایده‌های خود، تصاویر منحصر به فرد ایجاد کنید. ماموریت ما این است که این روش را
+                            <p style="text-align: justify"> بر اساس ایده‌های خود، تصاویر منحصر به فرد ایجاد کنید. ماموریت ما این است که این روش را
                                 متحول کنیم.</p>
                         </div>
                     </div>
@@ -294,7 +286,7 @@
                         </div>
                         <div class="text">
                             <h5>تنظیم اوراق قضایی</h5>
-                            <p>بر اساس ایده‌های خود، تصاویر منحصر به فرد ایجاد کنید. ماموریت ما این است که این روش را
+                            <p style="text-align: justify">بر اساس ایده‌های خود، تصاویر منحصر به فرد ایجاد کنید. ماموریت ما این است که این روش را
                                 متحول کنیم.</p>
                         </div>
                     </div>
@@ -308,7 +300,7 @@
                         </div>
                         <div class="text">
                             <h5>مشاوره</h5>
-                            <p>بر اساس ایده‌های خود، تصاویر منحصر به فرد ایجاد کنید. ماموریت ما این است که این روش را
+                            <p style="text-align: justify">بر اساس ایده‌های خود، تصاویر منحصر به فرد ایجاد کنید. ماموریت ما این است که این روش را
                                 متحول کنیم.</p>
                         </div>
                     </div>
@@ -320,7 +312,7 @@
                         </div>
                         <div class="text">
                             <h5>داوری</h5>
-                            <p>بر اساس ایده‌های خود، تصاویر منحصر به فرد ایجاد کنید. ماموریت ما این است که این روش را
+                            <p style="text-align: justify">بر اساس ایده‌های خود، تصاویر منحصر به فرد ایجاد کنید. ماموریت ما این است که این روش را
                                 متحول کنیم.</p>
                         </div>
                     </div>
@@ -332,7 +324,7 @@
                         </div>
                         <div class="text">
                             <h5>ثبت شرکت</h5>
-                            <p>بر اساس ایده‌های خود، تصاویر منحصر به فرد ایجاد کنید. ماموریت ما این است که این روش را
+                            <p style="text-align: justify">بر اساس ایده‌های خود، تصاویر منحصر به فرد ایجاد کنید. ماموریت ما این است که این روش را
                                 متحول کنیم.</p>
                         </div>
                     </div>
@@ -344,7 +336,7 @@
                         </div>
                         <div class="text">
                             <h5>قبول دعاوی</h5>
-                            <p>بر اساس ایده‌های خود، تصاویر منحصر به فرد ایجاد کنید. ماموریت ما این است که این روش را
+                            <p style="text-align: justify">بر اساس ایده‌های خود، تصاویر منحصر به فرد ایجاد کنید. ماموریت ما این است که این روش را
                                 متحول کنیم.</p>
                         </div>
                     </div>
@@ -356,8 +348,7 @@
                 <div class="col-lg-8">
                     <div class="section-title text-center">
                         <span class="sub-title top-reveal">خدمات برای وکلا</span>
-                        <h2 class="top-reveal">برخی از خدمات مجموعه ما برای وکلای عزیز
-                        </h2>
+                        <h2 class="top-reveal">برخی از خدمات مجموعه ما برای وکلای عزیز</h2>
                     </div>
                 </div>
             </div>
@@ -369,7 +360,7 @@
                         </div>
                         <div class="text">
                             <h5>نظریه شورای حقوقی</h5>
-                            <p>بر اساس ایده‌های خود، تصاویر منحصر به فرد ایجاد کنید. ماموریت ما این است که این روش را
+                            <p style="text-align: justify">بر اساس ایده‌های خود، تصاویر منحصر به فرد ایجاد کنید. ماموریت ما این است که این روش را
                                 متحول کنیم.</p>
                         </div>
                     </div>
@@ -381,7 +372,7 @@
                         </div>
                         <div class="text">
                             <h5>توکیل</h5>
-                            <p>بر اساس ایده‌های خود، تصاویر منحصر به فرد ایجاد کنید. ماموریت ما این است که این روش را
+                            <p style="text-align: justify">بر اساس ایده‌های خود، تصاویر منحصر به فرد ایجاد کنید. ماموریت ما این است که این روش را
                                 متحول کنیم.</p>
                         </div>
                     </div>
@@ -393,7 +384,7 @@
                         </div>
                         <div class="text">
                             <h5>استعلامات</h5>
-                            <p>بر اساس ایده‌های خود، تصاویر منحصر به فرد ایجاد کنید. ماموریت ما این است که این روش را
+                            <p style="text-align: justify">بر اساس ایده‌های خود، تصاویر منحصر به فرد ایجاد کنید. ماموریت ما این است که این روش را
                                 متحول کنیم.</p>
                         </div>
                     </div>
@@ -405,7 +396,7 @@
                         </div>
                         <div class="text">
                             <h5>مشاوره تخصصی</h5>
-                            <p>بر اساس ایده‌های خود، تصاویر منحصر به فرد ایجاد کنید. ماموریت ما این است که این روش را
+                            <p style="text-align: justify">بر اساس ایده‌های خود، تصاویر منحصر به فرد ایجاد کنید. ماموریت ما این است که این روش را
                                 متحول کنیم.</p>
                         </div>
                     </div>
@@ -796,32 +787,32 @@
                 <div class="col-lg-12">
                     <div class="blog-slider swiper">
                         <div class="swiper-wrapper">
-{{--                            @foreach($posts as $post)--}}
-{{--                                <div class="swiper-slide">--}}
-{{--                                    <div class="blog-grid-item">--}}
-{{--                                        <div class="blog-date">--}}
-{{--                                            <div class="bar-icon"></div>--}}
-{{--                                            {{jdate($post->updated_at)->ago()}}--}}
-{{--                                        </div>--}}
-{{--                                        <a href="{{url('محتوای-آموزشی/'.$post->slug)}}">--}}
-{{--                                            <figure class="image-effect">--}}
-{{--                                                <img src="{{asset($post->image)}}" alt="{{$post->title}}"--}}
-{{--                                                     class="img-fluid w-100">--}}
-{{--                                            </figure>--}}
-{{--                                        </a>--}}
-{{--                                        <div class="post-type">--}}
-{{--                                            آموزش--}}
-{{--                                            <div class="bar-icon2"></div>--}}
-{{--                                        </div>--}}
-{{--                                        <div class="blog-content">--}}
-{{--                                            <h4>--}}
-{{--                                                <a href="{{url('محتوای-آموزشی/'.$post->slug)}}">{{ Str::words(preg_replace('/&[^;]+;/', ' ', strip_tags($post->description)), 10, ' ...') }}</a>--}}
-{{--                                            </h4>--}}
-{{--                                        </div>--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
+                            @foreach($posts as $post)
+                                <div class="swiper-slide">
+                                    <div class="blog-grid-item">
+                                        <div class="blog-date">
+                                            <div class="bar-icon"></div>
+                                            {{jdate($post->updated_at)->ago()}}
+                                        </div>
+                                        <a href="{{url('محتوای-آموزشی/'.$post->slug)}}">
+                                            <figure class="image-effect">
+                                                <img src="{{asset($post->image)}}" alt="{{$post->title}}"
+                                                     class="img-fluid w-100">
+                                            </figure>
+                                        </a>
+                                        <div class="post-type">
+                                            آموزش
+                                            <div class="bar-icon2"></div>
+                                        </div>
+                                        <div class="blog-content">
+                                            <h4>
+                                                <a href="{{url('محتوای-آموزشی/'.$post->slug)}}">{{ Str::words(preg_replace('/&[^;]+;/', ' ', strip_tags($post->description)), 10, ' ...') }}</a>
+                                            </h4>
+                                        </div>
+                                    </div>
+                                </div>
 
-{{--                            @endforeach--}}
+                            @endforeach
                         </div>
                         <div class="swiper-pagination"></div>
                     </div>

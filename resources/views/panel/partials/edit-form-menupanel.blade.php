@@ -47,7 +47,7 @@
     <div class="col-12 col-md-4">
         <div class="form-floating form-floating-outline">
             <select name="status" id="status_{{$menupanel->id}}" class="form-control">
-                <option value="4" {{$menupanel->status == 4 ? 'selected' : '' }} >نمایش</option>
+                <option value="1" {{$menupanel->status == 1 ? 'selected' : '' }} >نمایش</option>
                 <option value="0" {{$menupanel->status == 0 ? 'selected' : '' }}>عدم نمایش</option>
             </select>
             <label for="status">نمایش/عدم نمایش</label>

@@ -110,7 +110,7 @@
                         <div class="col-12 col-md-4">
                             <div class="form-floating form-floating-outline">
                                 <select name="status" id="status" class="form-control">
-                                    <option value="4" >نمایش</option>
+                                    <option value="1" >نمایش</option>
                                     <option value="0">عدم نمایش</option>
                                 </select>
                                 <label for="status">نمایش/عدم نمایش</label>
