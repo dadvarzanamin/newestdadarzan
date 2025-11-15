@@ -204,7 +204,7 @@ class IndexController extends Controller
         }
         $submenus       = Submenu::select('id', 'title', 'slug', 'menu_id')->whereStatus(4)->whereType('site')->get();
 
-        return view('site.pages.about')->with(compact('menus', 'thispage', 'submenus'));
+        return view('site.pages.contact')->with(compact('menus', 'thispage', 'submenus'));
     }
 
     public function privacy(Request $request)
