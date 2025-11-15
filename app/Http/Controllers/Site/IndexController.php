@@ -49,9 +49,10 @@ class IndexController extends Controller
 
         $products       = Product::orderBy('id' , 'DESC')->get();
         $emploees       = Emploee::whereStatus(4)->orderBy('priority')->get();
-        $posts          = Post::whereStatus(4)->orderBy('id' , 'DESC')->limit(6)->get();
+        $posts          = Content::whereMenu_id(65)->whereSubmenu_id(74)->whereStatus(4)->orderBy('id' , 'DESC')->limit(6)->get();
+        $customers      = Customer::whereStatus(4)->get();
 
-        return view('site.pages.index')->with(compact('menus', 'thispage', 'submenus' , 'products' , 'emploees' , 'posts'));
+        return view('site.pages.index')->with(compact('menus', 'thispage', 'submenus' , 'products' , 'emploees' , 'posts' , 'customers'));
     }
 
     public function contract(Request $request)
@@ -296,7 +297,6 @@ class IndexController extends Controller
 
         return view('site.pages.posts')->with(compact('menus', 'thispage', 'submenus' , 'posts'));
     }
-
     public function singlepost(Request $request , $slug)
     {
         $url = $request->segments();
@@ -315,7 +315,6 @@ class IndexController extends Controller
 
         return view('site.pages.single-post')->with(compact('menus', 'thispage', 'submenus', 'posts'));
     }
-
     public function singleworkshop(Request $request , $slug)
     {
         $url = $request->segments();

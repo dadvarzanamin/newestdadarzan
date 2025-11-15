@@ -770,14 +770,14 @@
             <div class="row row-gap-4 justify-content-center">
                 <div class="col-md-8 align-self-end">
                     <div class="section-title">
-                        <span class="sub-title right-reveal">مقالات اخیر</span>
-                        <h2 class="right-reveal">آخرین اخبار و مقالات حقوقی</h2>
+                        <span class="sub-title right-reveal">محتوا</span>
+                        <h2 class="right-reveal">محتوای آموزشی ما</h2>
                     </div>
                 </div>
                 <div class="col-md-4 align-self-end">
                     <div class="text-start pb-2">
                         <a href="{{url('دپارتمان-اموزش-و-پژوهش/محتوای-آموزشی')}}" class="btn btn--base left-reveal">
-                            مشاهده مقالات
+                            مشاهده بیشتر
                             <i class="flaticon-right-arrow"></i>
                         </a>
                     </div>
@@ -796,8 +796,7 @@
                                         </div>
                                         <a href="{{url('محتوای-آموزشی/'.$post->slug)}}">
                                             <figure class="image-effect">
-                                                <img src="{{asset($post->image)}}" alt="{{$post->title}}"
-                                                     class="img-fluid w-100">
+                                                <img src="{{asset('storage/'.$post->cover)}}" alt="{{$post->title}}" class="img-fluid w-100">
                                             </figure>
                                         </a>
                                         <div class="post-type">
@@ -835,11 +834,11 @@
                 <div class="col-lg-12">
                     <div class="company-slide swiper">
                         <div class="swiper-wrapper slide-transition">
-{{--                            @foreach($customers as $customer)--}}
-{{--                                <div class="customer-slide swiper-slide inner-slide-element">--}}
-{{--                                    <img src="{{$customer->image}}" alt="{{$customer->name}}">--}}
-{{--                                </div>--}}
-{{--                            @endforeach--}}
+                            @foreach($customers as $customer)
+                                <div class="customer-slide swiper-slide inner-slide-element">
+                                    <img src="{{asset('storage/'.$customer->image)}}" alt="{{$customer->name}}">
+                                </div>
+                            @endforeach
                         </div>
                     </div>
                 </div>
@@ -859,7 +858,7 @@
                 <div class="col-md-4 align-self-end">
                     <div class="text-start pb-2">
                         <a href="/team" class="btn btn--base left-reveal">
-                            مشاهده همه
+                            مشاهده بیشتر
                             <i class="flaticon-right-arrow"></i>
                         </a>
                     </div>
