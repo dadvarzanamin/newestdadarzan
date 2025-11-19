@@ -113,3 +113,57 @@ html:not([dir=rtl]) .authentication-wrapper.authentication-cover .authentication
     background: rgba(255, 255, 255, 0.35);
     border-color: rgba(255, 255, 255, 0.5);
 }
+
+/* --- Shared Base for Glass Buttons --- */
+.glass-btn-base {
+    padding: 12px 0;
+    font-size: 15px;
+    font-weight: 600;
+    border-radius: 14px;
+    transition: 0.25s ease-in-out;
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* --- PRIMARY (ورود) --- */
+.glass-btn-primary {
+    background: rgba(255, 255, 255, 0.28);
+    border: 1px solid rgba(255, 255, 255, 0.45);
+    color: #ffffff;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+}
+
+.glass-btn-primary:hover {
+    background: rgba(255, 255, 255, 0.38);
+    border-color: rgba(255, 255, 255, 0.65);
+    transform: translateY(-2px);
+}
+
+/* --- SECONDARY (OTP) --- */
+.glass-btn-secondary {
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    color: #ffffff;
+    box-shadow: none;            /* تفاوت اصلی */
+    font-weight: 500;            /* کمی سبک‌تر از primary */
+}
+
+.glass-btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.20);
+    border-color: rgba(255, 255, 255, 0.35);
+    transform: translateY(-1px);
+}
+
+/* Fix text color for <a> */
+.glass-btn-secondary:link,
+.glass-btn-secondary:visited {
+    color: #ffffff;
+    text-decoration: none;
+}
+
+.app-brand-text .text-heading span{
+    color: white;
+}

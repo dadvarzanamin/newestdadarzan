@@ -11,13 +11,13 @@
                         <span class="app-brand-logo demo">
                             <img src="{{ asset('assets/img/darklogodadvarzan.png') }}" alt="توسعه دانش بنیان سینا" width="40">
                         </span>
-                        <span class="app-brand-text demo text-heading fw-bold">دادورزان امین</span>
+                        <span class="text-white fw-bold">دادورزان امین</span>
                     </a>
                 </div>
 
                 <div class="card-body mt-2">
-                    <h4 class="mb-2 fw-semibold">ایجاد حساب</h4>
-                    <p class="mb-4">لطفاً اطلاعات زیر را با دقت وارد کنید</p>
+                    <h4 class="text-white mb-2 fw-semibold">ایجاد حساب</h4>
+                    <p class="text-white mb-4">لطفاً اطلاعات زیر را با دقت وارد کنید</p>
 
 
                     @include('partials.alerts')

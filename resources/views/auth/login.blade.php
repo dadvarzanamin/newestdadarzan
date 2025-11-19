@@ -11,7 +11,7 @@
                         <span class="app-brand-logo demo">
                           <img src="{{ asset('assets/img/darklogodadvarzan.png') }}" alt="دادورزان امین" width="40">
                         </span>
-                        <span class="app-brand-text demo text-heading fw-bold">دادورزان امین</span>
+                        <span class="text-white fw-bold">دادورزان امین</span>
                     </a>
                 </div>
 
@@ -67,9 +67,13 @@
                             </div>
                             <a href="{{ route('password.request') }}">فراموشی رمز عبور؟</a>
                         </div>
-
-                        <div class="mb-3">
-                            <button class="btn btn-primary d-grid w-100" type="submit">ورود</button>
+                        <div class="auth-buttons d-flex gap-3 mb-3">
+                            <button class="glass-btn-base glass-btn-primary w-50" type="submit">
+                                ورود
+                            </button>
+                            <a href="{{ route('otplogin') }}" class="glass-btn-base glass-btn-secondary w-50 text-center">
+                                ورود با رمز یکبارمصرف
+                            </a>
                         </div>
 
                         <hr>
@@ -79,10 +83,6 @@
                                 <img src="{{asset('../site/assets/images/logo/google-logo.png')}}" class="google-icon" alt="Google Logo">
                                 <span>ورود با حساب گوگل</span>
                             </a>
-                        </div>
-
-                        <div class="mb-3">
-                            <a href="{{route('otplogin')}}" class="btn btn-info d-grid w-100"><i class="fa fa-google mr-2"></i> ورود با رمز یکبارمصرف </a>
                         </div>
                     </form>
 
