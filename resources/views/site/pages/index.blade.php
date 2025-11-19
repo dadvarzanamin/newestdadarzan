@@ -80,33 +80,35 @@
                     <div class="banner-section__content">
                         <h1 class="right-reveal"> موسسه حقوقی <span>دادورزان امین</span></h1>
                         <p class="right-reveal">
-                            ما با تکیه بر وکلای متخصص و باتجربه، خدمات جامع حقوقی از جمله امور دعاوی، قراردادها، شرکت‌ها، مهاجرت، مالیات، خانواده، کیفری و مشاوره‌های تخصصی را به اشخاص و کسب‌وکارها ارائه می‌دهیم
-{{--                            ما با بهره‌گیری از تیمی متشکل از وکلای پایه‌یک، متخصصان حقوقی و مشاوران ارشد، ارائه‌دهنده‌ی طیف کاملی از خدمات حقوقی در حوزه‌های دعاوی دادگستری، تنظیم و بررسی قراردادها، حقوق تجارت و شرکت‌ها، داوری و میانجی‌گری، امور ثبتی و مالکیت فکری، مهاجرت و اقامت، مشاوره مالیاتی، امور خانواده، کیفری و کلیه خدمات وکالتی تخصصی است. رویکرد ما ارائه راهکارهای دقیق، حرفه‌ای و قابل اتکا برای اشخاص حقیقی و حقوقی در تمامی حوزه‌های حقوقی است.--}}
+                            ما با تکیه بر وکلای متخصص و باتجربه، خدمات جامع حقوقی از جمله امور دعاوی، قراردادها،
+                            شرکت‌ها، مهاجرت، مالیات، خانواده، کیفری و مشاوره‌های تخصصی را به اشخاص و کسب‌وکارها ارائه
+                            می‌دهیم
+                            {{--                            ما با بهره‌گیری از تیمی متشکل از وکلای پایه‌یک، متخصصان حقوقی و مشاوران ارشد، ارائه‌دهنده‌ی طیف کاملی از خدمات حقوقی در حوزه‌های دعاوی دادگستری، تنظیم و بررسی قراردادها، حقوق تجارت و شرکت‌ها، داوری و میانجی‌گری، امور ثبتی و مالکیت فکری، مهاجرت و اقامت، مشاوره مالیاتی، امور خانواده، کیفری و کلیه خدمات وکالتی تخصصی است. رویکرد ما ارائه راهکارهای دقیق، حرفه‌ای و قابل اتکا برای اشخاص حقیقی و حقوقی در تمامی حوزه‌های حقوقی است.--}}
                         </p>
-{{--                        <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start gap-4 right-reveal">--}}
-{{--                            <a href="login.html" class="btn btn--base">--}}
-{{--                                شروع کنید--}}
-{{--                                <i class="flaticon-right-arrow"></i>--}}
-{{--                            </a>--}}
-{{--                            <div class="community-content">--}}
-{{--                                <div class="img">--}}
-{{--                                    <figure class="image-effect">--}}
-{{--                                        <img src="{{asset('site/assets/images/community/1.png')}}"--}}
-{{--                                             alt="community images">--}}
-{{--                                    </figure>--}}
-{{--                                    <figure class="image-effect">--}}
-{{--                                        <img src="{{asset('site/assets/images/community/2.png')}}"--}}
-{{--                                             alt="community images">--}}
-{{--                                    </figure>--}}
-{{--                                    <div class="numbers">--}}
-{{--                                        +۹M--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
-{{--                                <div class="text">--}}
-{{--                                    به <span>جمع مشریان ما</span> بپیوندید--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
-{{--                        </div>--}}
+                        {{--                        <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start gap-4 right-reveal">--}}
+                        {{--                            <a href="login.html" class="btn btn--base">--}}
+                        {{--                                شروع کنید--}}
+                        {{--                                <i class="flaticon-right-arrow"></i>--}}
+                        {{--                            </a>--}}
+                        {{--                            <div class="community-content">--}}
+                        {{--                                <div class="img">--}}
+                        {{--                                    <figure class="image-effect">--}}
+                        {{--                                        <img src="{{asset('site/assets/images/community/1.png')}}"--}}
+                        {{--                                             alt="community images">--}}
+                        {{--                                    </figure>--}}
+                        {{--                                    <figure class="image-effect">--}}
+                        {{--                                        <img src="{{asset('site/assets/images/community/2.png')}}"--}}
+                        {{--                                             alt="community images">--}}
+                        {{--                                    </figure>--}}
+                        {{--                                    <div class="numbers">--}}
+                        {{--                                        +۹M--}}
+                        {{--                                    </div>--}}
+                        {{--                                </div>--}}
+                        {{--                                <div class="text">--}}
+                        {{--                                    به <span>جمع مشریان ما</span> بپیوندید--}}
+                        {{--                                </div>--}}
+                        {{--                            </div>--}}
+                        {{--                        </div>--}}
                     </div>
                 </div>
                 <div class="col-lg-6 align-self-center">
@@ -150,31 +152,37 @@
                         <div class="swiper-wrapper">
                             @foreach($products as $product)
                                 @if($product->product_type == 'workshop')
-                                <div class="swiper-slide">
-                                    <div class="explore-item">
+                                    <div class="swiper-slide">
+                                        <div class="explore-item">
 
-                                        <div class="explore-img">
-                                            <div class="featured-price">{{ number_format((int)$product->price) }} تومان</div>
-                                            <figure class="image-effect">
-                                                <img src="{{ asset('storage/'.$product->cover) }}" alt="explore images" class="img-fluid w-100" loading="lazy">
-                                            </figure>
-                                        </div>
-                                        <div class="explore-item-footer d-flex align-items-center justify-content-between">
-                                            <div class="explore-title">
-{{--                                                <div class="img">--}}
-{{--                                                    <img src="{{ asset('storage/'.$product->item2) }}" alt="{{$product->item1}}">--}}
-{{--                                                </div>--}}
-                                                <h5>
-                                                    <a class="name-details" href="{{ url('دپارتمان-اموزش-و-پژوهش/دوره-های-آموزشی/' . $product->slug) }}" style="font-size: 1rem;">
-                                                        {{$product->title}}
-                                                    </a>
-                                                </h5>
+                                            <div class="explore-img">
+                                                <div class="featured-price">{{ number_format((int)$product->price) }}
+                                                    تومان
+                                                </div>
+                                                <figure class="image-effect">
+                                                    <img src="{{ asset('storage/'.$product->cover) }}"
+                                                         alt="explore images" class="img-fluid w-100" loading="lazy">
+                                                </figure>
                                             </div>
+                                            <div
+                                                class="explore-item-footer d-flex align-items-center justify-content-between">
+                                                <div class="explore-title">
+                                                    {{--                                                <div class="img">--}}
+                                                    {{--                                                    <img src="{{ asset('storage/'.$product->item2) }}" alt="{{$product->item1}}">--}}
+                                                    {{--                                                </div>--}}
+                                                    <h5>
+                                                        <a class="name-details"
+                                                           href="{{ url('دپارتمان-اموزش-و-پژوهش/دوره-های-آموزشی/' . $product->slug) }}"
+                                                           style="font-size: 1rem;">
+                                                            {{$product->title}}
+                                                        </a>
+                                                    </h5>
+                                                </div>
 
-{{--                                            <div class="view-list"><i class="fa-solid fa-cart-plus"></i> 341</div>--}}
+                                                {{--                                            <div class="view-list"><i class="fa-solid fa-cart-plus"></i> 341</div>--}}
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
                                 @endif
                             @endforeach
                         </div>
@@ -219,7 +227,11 @@
                                 ارائه دهنده خدمات جامع حقوقی به سبکی نوین
                             </h2>
                             <p class="right-reveal" style="text-align: justify">
-                                چه صاحب یک کسب‌وکار نوپا باشید و چه مدیر یک هلدینگ بین‌المللی، مواجهه با چالش‌های حقوقی همواره نیازمند مشاوری باتجربه و قراردادهایی منسجم است. موسسه حقوقی دادورزان امین این امکان را فراهم کرده است تا تمامی امور حقوقی و ثبتی خود را با آسودگی خاطر به تیمی متخصص، باتجربه و آشنا به قوانین و الزامات کسب‌وکار بسپارید؛ تیمی که سال‌ها در این حوزه فعالیت کرده و پاسخگوی طیف گسترده‌ای از نیازهای حقوقی شما خواهد بود.
+                                چه صاحب یک کسب‌وکار نوپا باشید و چه مدیر یک هلدینگ بین‌المللی، مواجهه با چالش‌های حقوقی
+                                همواره نیازمند مشاوری باتجربه و قراردادهایی منسجم است. موسسه حقوقی دادورزان امین این
+                                امکان را فراهم کرده است تا تمامی امور حقوقی و ثبتی خود را با آسودگی خاطر به تیمی متخصص،
+                                باتجربه و آشنا به قوانین و الزامات کسب‌وکار بسپارید؛ تیمی که سال‌ها در این حوزه فعالیت
+                                کرده و پاسخگوی طیف گسترده‌ای از نیازهای حقوقی شما خواهد بود.
                             </p>
 
                         </div>
@@ -250,8 +262,9 @@
                         </div>
                         <div class="text">
                             <h5>نظریه شورای حقوقی</h5>
-                            <p style="text-align: justify">بر اساس ایده‌های خود، تصاویر منحصر به فرد ایجاد کنید. ماموریت ما این است که این روش را
-                                متحول کنیم.</p>
+                            <p style="text-align: justify">
+                                ارائه تحلیل تخصصی و مستند برای پرونده‌ها جهت اتخاذ تصمیمات حقوقی دقیق و مطمئن.
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -262,8 +275,9 @@
                         </div>
                         <div class="text">
                             <h5>ایرانیان خارج از کشور</h5>
-                            <p style="text-align: justify">بر اساس ایده‌های خود، تصاویر منحصر به فرد ایجاد کنید. ماموریت ما این است که این روش را
-                                متحول کنیم.</p>
+                            <p style="text-align: justify">
+                                ارائه خدمات حقوقی کامل برای ایرانیان خارج کشور با تمرکز بر مسائل و قوانین مهاجرتی.
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -274,8 +288,9 @@
                         </div>
                         <div class="text">
                             <h5>تنظیم قرارداد</h5>
-                            <p style="text-align: justify"> بر اساس ایده‌های خود، تصاویر منحصر به فرد ایجاد کنید. ماموریت ما این است که این روش را
-                                متحول کنیم.</p>
+                            <p style="text-align: justify">
+                                تنظیم و بررسی انواع قراردادهای تخصصی برای تضمین حقوق طرفین و جلوگیری از اختلافات.
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -286,8 +301,9 @@
                         </div>
                         <div class="text">
                             <h5>تنظیم اوراق قضایی</h5>
-                            <p style="text-align: justify">بر اساس ایده‌های خود، تصاویر منحصر به فرد ایجاد کنید. ماموریت ما این است که این روش را
-                                متحول کنیم.</p>
+                            <p style="text-align: justify">تهیه و تنظیم اوراق قضایی رسمی مطابق استانداردهای دادگستری
+                                برای پیگیری صحیح پرونده‌ها.
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -300,8 +316,9 @@
                         </div>
                         <div class="text">
                             <h5>مشاوره</h5>
-                            <p style="text-align: justify">بر اساس ایده‌های خود، تصاویر منحصر به فرد ایجاد کنید. ماموریت ما این است که این روش را
-                                متحول کنیم.</p>
+                            <p style="text-align: justify">
+                                ارائه مشاوره حقوقی دقیق و قابل اتکا جهت یافتن بهترین راهکار برای مشکلات مختلف.
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -312,8 +329,9 @@
                         </div>
                         <div class="text">
                             <h5>داوری</h5>
-                            <p style="text-align: justify">بر اساس ایده‌های خود، تصاویر منحصر به فرد ایجاد کنید. ماموریت ما این است که این روش را
-                                متحول کنیم.</p>
+                            <p style="text-align: justify">
+                                رسیدگی به اختلافات قراردادی از طریق داوری تخصصی با هدف حل‌وفصل سریع و قانونی.
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -324,8 +342,9 @@
                         </div>
                         <div class="text">
                             <h5>ثبت شرکت</h5>
-                            <p style="text-align: justify">بر اساس ایده‌های خود، تصاویر منحصر به فرد ایجاد کنید. ماموریت ما این است که این روش را
-                                متحول کنیم.</p>
+                            <p style="text-align: justify">
+                                انجام مراحل ثبت شرکت و تغییرات ثبتی با رعایت کامل مقررات و قوانین تجارت به روز کشور.
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -336,8 +355,9 @@
                         </div>
                         <div class="text">
                             <h5>قبول دعاوی</h5>
-                            <p style="text-align: justify">بر اساس ایده‌های خود، تصاویر منحصر به فرد ایجاد کنید. ماموریت ما این است که این روش را
-                                متحول کنیم.</p>
+                            <p style="text-align: justify">
+                                پذیرش و پیگیری دعاوی حقوقی توسط وکلای متخصص برای دستیابی به نتیجه‌ای مطلوب.
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -360,8 +380,10 @@
                         </div>
                         <div class="text">
                             <h5>نظریه شورای حقوقی</h5>
-                            <p style="text-align: justify">بر اساس ایده‌های خود، تصاویر منحصر به فرد ایجاد کنید. ماموریت ما این است که این روش را
-                                متحول کنیم.</p>
+                            <p style="text-align: justify">
+                                ارائه تحلیل تخصصی و مستند برای پرونده‌ها جهت اتخاذ تصمیمات حقوقی دقیق و مطمئن.
+
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -372,8 +394,9 @@
                         </div>
                         <div class="text">
                             <h5>توکیل</h5>
-                            <p style="text-align: justify">بر اساس ایده‌های خود، تصاویر منحصر به فرد ایجاد کنید. ماموریت ما این است که این روش را
-                                متحول کنیم.</p>
+                            <p style="text-align: justify">
+                                اعطای وکالت رسمی برای انجام امور حقوقی و اداری با رعایت قوانین لازم بر مبنای اصولی.
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -384,8 +407,9 @@
                         </div>
                         <div class="text">
                             <h5>استعلامات</h5>
-                            <p style="text-align: justify">بر اساس ایده‌های خود، تصاویر منحصر به فرد ایجاد کنید. ماموریت ما این است که این روش را
-                                متحول کنیم.</p>
+                            <p style="text-align: justify">
+                                انجام استعلامات رسمی در حوزه املاک، شرکت‌ها و دعاوی جهت بررسی وضعیت قانونی.
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -396,8 +420,9 @@
                         </div>
                         <div class="text">
                             <h5>مشاوره تخصصی</h5>
-                            <p style="text-align: justify">بر اساس ایده‌های خود، تصاویر منحصر به فرد ایجاد کنید. ماموریت ما این است که این روش را
-                                متحول کنیم.</p>
+                            <p style="text-align: justify">
+                                ارائه مشاوره تخصصی در موضوعات پیچیده حقوقی برای اتخاذ تصمیم‌های دقیق و مؤثر.
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -405,42 +430,42 @@
         </div>
     </section>
 
-{{--    <div class="section-two-bg py-60 @@services-text-slide">--}}
-{{--        <div class="text-slide swiper">--}}
-{{--            <div class="swiper-wrapper slide-transition">--}}
-{{--                <div class="swiper-slide inner-slide-element">--}}
-{{--                    <div class="slide-text">--}}
-{{--                        وکلای حرفه ای--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--                <div class="swiper-slide inner-slide-element">--}}
-{{--                    <div class="slide-text">--}}
-{{--                        <img src="{{asset('site/assets/images/shape/star.svg')}}" alt="icon">--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--                <div class="swiper-slide inner-slide-element">--}}
-{{--                    <div class="slide-text">--}}
-{{--                        بیش از یک دهه تجربه موفق--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--                <div class="swiper-slide inner-slide-element">--}}
-{{--                    <div class="slide-text">--}}
-{{--                        <img src="{{asset('site/assets/images/shape/star.svg')}}" alt="icon">--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--                <div class="swiper-slide inner-slide-element">--}}
-{{--                    <div class="slide-text">--}}
-{{--                        خدمات نوین--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--                <div class="swiper-slide inner-slide-element">--}}
-{{--                    <div class="slide-text">--}}
-{{--                        <img src="{{asset('site/assets/images/shape/star.svg')}}" alt="icon">--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--            </div>--}}
-{{--        </div>--}}
-{{--    </div>--}}
+    {{--    <div class="section-two-bg py-60 @@services-text-slide">--}}
+    {{--        <div class="text-slide swiper">--}}
+    {{--            <div class="swiper-wrapper slide-transition">--}}
+    {{--                <div class="swiper-slide inner-slide-element">--}}
+    {{--                    <div class="slide-text">--}}
+    {{--                        وکلای حرفه ای--}}
+    {{--                    </div>--}}
+    {{--                </div>--}}
+    {{--                <div class="swiper-slide inner-slide-element">--}}
+    {{--                    <div class="slide-text">--}}
+    {{--                        <img src="{{asset('site/assets/images/shape/star.svg')}}" alt="icon">--}}
+    {{--                    </div>--}}
+    {{--                </div>--}}
+    {{--                <div class="swiper-slide inner-slide-element">--}}
+    {{--                    <div class="slide-text">--}}
+    {{--                        بیش از یک دهه تجربه موفق--}}
+    {{--                    </div>--}}
+    {{--                </div>--}}
+    {{--                <div class="swiper-slide inner-slide-element">--}}
+    {{--                    <div class="slide-text">--}}
+    {{--                        <img src="{{asset('site/assets/images/shape/star.svg')}}" alt="icon">--}}
+    {{--                    </div>--}}
+    {{--                </div>--}}
+    {{--                <div class="swiper-slide inner-slide-element">--}}
+    {{--                    <div class="slide-text">--}}
+    {{--                        خدمات نوین--}}
+    {{--                    </div>--}}
+    {{--                </div>--}}
+    {{--                <div class="swiper-slide inner-slide-element">--}}
+    {{--                    <div class="slide-text">--}}
+    {{--                        <img src="{{asset('site/assets/images/shape/star.svg')}}" alt="icon">--}}
+    {{--                    </div>--}}
+    {{--                </div>--}}
+    {{--            </div>--}}
+    {{--        </div>--}}
+    {{--    </div>--}}
 
 
     <section class="working-process-section section-one-bg py-60">
@@ -585,185 +610,185 @@
     </section>
 
     {{--testimonials section--}}
-{{--    <section class="testimonials-section section-one-bg py-60">--}}
-{{--        <div class="container">--}}
-{{--            <div class="row">--}}
-{{--                <div class="col-lg-12">--}}
-{{--                    <div class="section-title text-center">--}}
-{{--                        <span class="sub-title top-reveal">دیدگاه مشتریان</span>--}}
-{{--                        <h2 class="top-reveal">مشتریان ما درباره دادورزان امین می‌گویند</h2>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--            </div>--}}
-{{--            <div class="row mt-60">--}}
-{{--                <div class="col-lg-12">--}}
-{{--                    <div class="testimonials-slider swiper">--}}
-{{--                        <div class="swiper-wrapper">--}}
-{{--                            <div class="swiper-slide">--}}
-{{--                                <div class="testimonials-slider__item">--}}
-{{--                                    <div class="question">--}}
-{{--                                        <i class="flaticon-quote"></i>--}}
-{{--                                    </div>--}}
-{{--                                    <div class="body-text">--}}
-{{--                                        <p>--}}
-{{--                                            همکاری با مؤسسه حقوقی دادورزان امین تجربه‌ای آرامش‌بخش و مطمئن برای من بود.--}}
-{{--                                            تیم حرفه‌ای وکلا با دقت و تخصص تمام مراحل پرونده‌ام را پیگیری کردند و همیشه--}}
-{{--                                            با صبر و شفافیت پاسخگوی سؤالاتم بودند. نتیجه‌ای که به دست آمد بسیار فراتر از--}}
-{{--                                            انتظاراتم بود و باعث شد ارزش واقعی داشتن یک همراه حقوقی متخصص را درک کنم.--}}
-{{--                                        </p>--}}
+    {{--    <section class="testimonials-section section-one-bg py-60">--}}
+    {{--        <div class="container">--}}
+    {{--            <div class="row">--}}
+    {{--                <div class="col-lg-12">--}}
+    {{--                    <div class="section-title text-center">--}}
+    {{--                        <span class="sub-title top-reveal">دیدگاه مشتریان</span>--}}
+    {{--                        <h2 class="top-reveal">مشتریان ما درباره دادورزان امین می‌گویند</h2>--}}
+    {{--                    </div>--}}
+    {{--                </div>--}}
+    {{--            </div>--}}
+    {{--            <div class="row mt-60">--}}
+    {{--                <div class="col-lg-12">--}}
+    {{--                    <div class="testimonials-slider swiper">--}}
+    {{--                        <div class="swiper-wrapper">--}}
+    {{--                            <div class="swiper-slide">--}}
+    {{--                                <div class="testimonials-slider__item">--}}
+    {{--                                    <div class="question">--}}
+    {{--                                        <i class="flaticon-quote"></i>--}}
+    {{--                                    </div>--}}
+    {{--                                    <div class="body-text">--}}
+    {{--                                        <p>--}}
+    {{--                                            همکاری با مؤسسه حقوقی دادورزان امین تجربه‌ای آرامش‌بخش و مطمئن برای من بود.--}}
+    {{--                                            تیم حرفه‌ای وکلا با دقت و تخصص تمام مراحل پرونده‌ام را پیگیری کردند و همیشه--}}
+    {{--                                            با صبر و شفافیت پاسخگوی سؤالاتم بودند. نتیجه‌ای که به دست آمد بسیار فراتر از--}}
+    {{--                                            انتظاراتم بود و باعث شد ارزش واقعی داشتن یک همراه حقوقی متخصص را درک کنم.--}}
+    {{--                                        </p>--}}
 
-{{--                                        <div class="user">--}}
-{{--                                            <div class="img">--}}
-{{--                                                <img src="{{asset('site/assets/images/testimonial/1.jpg')}}" alt="user">--}}
-{{--                                            </div>--}}
-{{--                                            <div class="text">--}}
-{{--                                                <h4>امیرارسلان رهنما</h4>--}}
-{{--                                                <p>بازاریاب دیجیتال</p>--}}
-{{--                                                <ul>--}}
-{{--                                                    <li><i class="fa-solid fa-star"></i></li>--}}
-{{--                                                    <li><i class="fa-solid fa-star"></i></li>--}}
-{{--                                                    <li><i class="fa-solid fa-star"></i></li>--}}
-{{--                                                    <li><i class="fa-solid fa-star"></i></li>--}}
-{{--                                                    <li><i class="fa-solid fa-star"></i></li>--}}
-{{--                                                </ul>--}}
-{{--                                            </div>--}}
-{{--                                        </div>--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
-{{--                            <div class="swiper-slide">--}}
-{{--                                <div class="testimonials-slider__item">--}}
-{{--                                    <div class="question">--}}
-{{--                                        <i class="flaticon-quote"></i>--}}
-{{--                                    </div>--}}
-{{--                                    <div class="body-text">--}}
-{{--                                        <p>--}}
-{{--                                            دادورزان امین نه‌تنها در حوزه حقوقی و وکالت تخصص بالایی دارند، بلکه برخورد--}}
-{{--                                            انسانی و تعهد کاری آنان تحسین‌برانگیز است. از همان ابتدای کار، احساس امنیت و--}}
-{{--                                            اعتماد کامل داشتم و مطمئن بودم پرونده من در بهترین دستان قرار دارد. بدون--}}
-{{--                                            تردید این مجموعه را به هر کسی که به خدمات حقوقی دقیق و مطمئن نیاز دارد توصیه--}}
-{{--                                            می‌کنم.--}}
-{{--                                        </p>--}}
+    {{--                                        <div class="user">--}}
+    {{--                                            <div class="img">--}}
+    {{--                                                <img src="{{asset('site/assets/images/testimonial/1.jpg')}}" alt="user">--}}
+    {{--                                            </div>--}}
+    {{--                                            <div class="text">--}}
+    {{--                                                <h4>امیرارسلان رهنما</h4>--}}
+    {{--                                                <p>بازاریاب دیجیتال</p>--}}
+    {{--                                                <ul>--}}
+    {{--                                                    <li><i class="fa-solid fa-star"></i></li>--}}
+    {{--                                                    <li><i class="fa-solid fa-star"></i></li>--}}
+    {{--                                                    <li><i class="fa-solid fa-star"></i></li>--}}
+    {{--                                                    <li><i class="fa-solid fa-star"></i></li>--}}
+    {{--                                                    <li><i class="fa-solid fa-star"></i></li>--}}
+    {{--                                                </ul>--}}
+    {{--                                            </div>--}}
+    {{--                                        </div>--}}
+    {{--                                    </div>--}}
+    {{--                                </div>--}}
+    {{--                            </div>--}}
+    {{--                            <div class="swiper-slide">--}}
+    {{--                                <div class="testimonials-slider__item">--}}
+    {{--                                    <div class="question">--}}
+    {{--                                        <i class="flaticon-quote"></i>--}}
+    {{--                                    </div>--}}
+    {{--                                    <div class="body-text">--}}
+    {{--                                        <p>--}}
+    {{--                                            دادورزان امین نه‌تنها در حوزه حقوقی و وکالت تخصص بالایی دارند، بلکه برخورد--}}
+    {{--                                            انسانی و تعهد کاری آنان تحسین‌برانگیز است. از همان ابتدای کار، احساس امنیت و--}}
+    {{--                                            اعتماد کامل داشتم و مطمئن بودم پرونده من در بهترین دستان قرار دارد. بدون--}}
+    {{--                                            تردید این مجموعه را به هر کسی که به خدمات حقوقی دقیق و مطمئن نیاز دارد توصیه--}}
+    {{--                                            می‌کنم.--}}
+    {{--                                        </p>--}}
 
-{{--                                        <div class="user">--}}
-{{--                                            <div class="img">--}}
-{{--                                                <img src="{{asset('site/assets/images/testimonial/2.jpg')}}" alt="user">--}}
-{{--                                            </div>--}}
-{{--                                            <div class="text">--}}
-{{--                                                <h4>ایلیا میرزایی</h4>--}}
-{{--                                                <p>گرافیست</p>--}}
-{{--                                                <ul>--}}
-{{--                                                    <li><i class="fa-solid fa-star"></i></li>--}}
-{{--                                                    <li><i class="fa-solid fa-star"></i></li>--}}
-{{--                                                    <li><i class="fa-solid fa-star"></i></li>--}}
-{{--                                                    <li><i class="fa-solid fa-star"></i></li>--}}
-{{--                                                    <li><i class="fa-solid fa-star"></i></li>--}}
-{{--                                                </ul>--}}
-{{--                                            </div>--}}
-{{--                                        </div>--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
-{{--                            <div class="swiper-slide">--}}
-{{--                                <div class="testimonials-slider__item">--}}
-{{--                                    <div class="question">--}}
-{{--                                        <i class="flaticon-quote"></i>--}}
-{{--                                    </div>--}}
-{{--                                    <div class="body-text">--}}
-{{--                                        <p>در برخورد با مسائل حقوقی همیشه نگرانی و استرس وجود دارد، اما با انتخاب--}}
-{{--                                            دادورزان امین تمام این دغدغه‌ها از بین رفت. وکلای این مؤسسه با تسلط کامل بر--}}
-{{--                                            قوانین و ارائه راهکارهای عملی، مسیر پرونده را برایم روشن کردند. تجربه‌ای که--}}
-{{--                                            به من اعتماد و آرامش خاطر داد.</p>--}}
+    {{--                                        <div class="user">--}}
+    {{--                                            <div class="img">--}}
+    {{--                                                <img src="{{asset('site/assets/images/testimonial/2.jpg')}}" alt="user">--}}
+    {{--                                            </div>--}}
+    {{--                                            <div class="text">--}}
+    {{--                                                <h4>ایلیا میرزایی</h4>--}}
+    {{--                                                <p>گرافیست</p>--}}
+    {{--                                                <ul>--}}
+    {{--                                                    <li><i class="fa-solid fa-star"></i></li>--}}
+    {{--                                                    <li><i class="fa-solid fa-star"></i></li>--}}
+    {{--                                                    <li><i class="fa-solid fa-star"></i></li>--}}
+    {{--                                                    <li><i class="fa-solid fa-star"></i></li>--}}
+    {{--                                                    <li><i class="fa-solid fa-star"></i></li>--}}
+    {{--                                                </ul>--}}
+    {{--                                            </div>--}}
+    {{--                                        </div>--}}
+    {{--                                    </div>--}}
+    {{--                                </div>--}}
+    {{--                            </div>--}}
+    {{--                            <div class="swiper-slide">--}}
+    {{--                                <div class="testimonials-slider__item">--}}
+    {{--                                    <div class="question">--}}
+    {{--                                        <i class="flaticon-quote"></i>--}}
+    {{--                                    </div>--}}
+    {{--                                    <div class="body-text">--}}
+    {{--                                        <p>در برخورد با مسائل حقوقی همیشه نگرانی و استرس وجود دارد، اما با انتخاب--}}
+    {{--                                            دادورزان امین تمام این دغدغه‌ها از بین رفت. وکلای این مؤسسه با تسلط کامل بر--}}
+    {{--                                            قوانین و ارائه راهکارهای عملی، مسیر پرونده را برایم روشن کردند. تجربه‌ای که--}}
+    {{--                                            به من اعتماد و آرامش خاطر داد.</p>--}}
 
-{{--                                        <div class="user">--}}
-{{--                                            <div class="img">--}}
-{{--                                                <img src="{{asset('site/assets/images/testimonial/1.jpg')}}" alt="user">--}}
-{{--                                            </div>--}}
-{{--                                            <div class="text">--}}
-{{--                                                <h4>امیرارسلان رهنما</h4>--}}
-{{--                                                <p>بازاریاب دیجیتال</p>--}}
-{{--                                                <ul>--}}
-{{--                                                    <li><i class="fa-solid fa-star"></i></li>--}}
-{{--                                                    <li><i class="fa-solid fa-star"></i></li>--}}
-{{--                                                    <li><i class="fa-solid fa-star"></i></li>--}}
-{{--                                                    <li><i class="fa-solid fa-star"></i></li>--}}
-{{--                                                    <li><i class="fa-solid fa-star"></i></li>--}}
-{{--                                                </ul>--}}
-{{--                                            </div>--}}
-{{--                                        </div>--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
-{{--                            <div class="swiper-slide">--}}
-{{--                                <div class="testimonials-slider__item">--}}
-{{--                                    <div class="question">--}}
-{{--                                        <i class="flaticon-quote"></i>--}}
-{{--                                    </div>--}}
-{{--                                    <div class="body-text">--}}
-{{--                                        <p>آنچه دادورزان امین را از سایر مؤسسات متمایز می‌کند، ترکیب دانش حقوقی عمیق با--}}
-{{--                                            مسئولیت‌پذیری واقعی است. در تمام مراحل پرونده‌ام، شفافیت و پیگیری منظم را به--}}
-{{--                                            وضوح دیدم. نتیجه موفقیت‌آمیز پرونده باعث شد مطمئن شوم انتخاب درستی--}}
-{{--                                            داشته‌ام.</p>--}}
+    {{--                                        <div class="user">--}}
+    {{--                                            <div class="img">--}}
+    {{--                                                <img src="{{asset('site/assets/images/testimonial/1.jpg')}}" alt="user">--}}
+    {{--                                            </div>--}}
+    {{--                                            <div class="text">--}}
+    {{--                                                <h4>امیرارسلان رهنما</h4>--}}
+    {{--                                                <p>بازاریاب دیجیتال</p>--}}
+    {{--                                                <ul>--}}
+    {{--                                                    <li><i class="fa-solid fa-star"></i></li>--}}
+    {{--                                                    <li><i class="fa-solid fa-star"></i></li>--}}
+    {{--                                                    <li><i class="fa-solid fa-star"></i></li>--}}
+    {{--                                                    <li><i class="fa-solid fa-star"></i></li>--}}
+    {{--                                                    <li><i class="fa-solid fa-star"></i></li>--}}
+    {{--                                                </ul>--}}
+    {{--                                            </div>--}}
+    {{--                                        </div>--}}
+    {{--                                    </div>--}}
+    {{--                                </div>--}}
+    {{--                            </div>--}}
+    {{--                            <div class="swiper-slide">--}}
+    {{--                                <div class="testimonials-slider__item">--}}
+    {{--                                    <div class="question">--}}
+    {{--                                        <i class="flaticon-quote"></i>--}}
+    {{--                                    </div>--}}
+    {{--                                    <div class="body-text">--}}
+    {{--                                        <p>آنچه دادورزان امین را از سایر مؤسسات متمایز می‌کند، ترکیب دانش حقوقی عمیق با--}}
+    {{--                                            مسئولیت‌پذیری واقعی است. در تمام مراحل پرونده‌ام، شفافیت و پیگیری منظم را به--}}
+    {{--                                            وضوح دیدم. نتیجه موفقیت‌آمیز پرونده باعث شد مطمئن شوم انتخاب درستی--}}
+    {{--                                            داشته‌ام.</p>--}}
 
-{{--                                        <div class="user">--}}
-{{--                                            <div class="img">--}}
-{{--                                                <img src="{{asset('site/assets/images/testimonial/2.jpg')}}" alt="user">--}}
-{{--                                            </div>--}}
-{{--                                            <div class="text">--}}
-{{--                                                <h4>ایلیا میرزایی</h4>--}}
-{{--                                                <p>گرافیست</p>--}}
-{{--                                                <ul>--}}
-{{--                                                    <li><i class="fa-solid fa-star"></i></li>--}}
-{{--                                                    <li><i class="fa-solid fa-star"></i></li>--}}
-{{--                                                    <li><i class="fa-solid fa-star"></i></li>--}}
-{{--                                                    <li><i class="fa-solid fa-star"></i></li>--}}
-{{--                                                    <li><i class="fa-solid fa-star"></i></li>--}}
-{{--                                                </ul>--}}
-{{--                                            </div>--}}
-{{--                                        </div>--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
-{{--                        </div>--}}
-{{--                        <div class="swiper-pagination"></div>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--            </div>--}}
-{{--        </div>--}}
-{{--    </section>--}}
+    {{--                                        <div class="user">--}}
+    {{--                                            <div class="img">--}}
+    {{--                                                <img src="{{asset('site/assets/images/testimonial/2.jpg')}}" alt="user">--}}
+    {{--                                            </div>--}}
+    {{--                                            <div class="text">--}}
+    {{--                                                <h4>ایلیا میرزایی</h4>--}}
+    {{--                                                <p>گرافیست</p>--}}
+    {{--                                                <ul>--}}
+    {{--                                                    <li><i class="fa-solid fa-star"></i></li>--}}
+    {{--                                                    <li><i class="fa-solid fa-star"></i></li>--}}
+    {{--                                                    <li><i class="fa-solid fa-star"></i></li>--}}
+    {{--                                                    <li><i class="fa-solid fa-star"></i></li>--}}
+    {{--                                                    <li><i class="fa-solid fa-star"></i></li>--}}
+    {{--                                                </ul>--}}
+    {{--                                            </div>--}}
+    {{--                                        </div>--}}
+    {{--                                    </div>--}}
+    {{--                                </div>--}}
+    {{--                            </div>--}}
+    {{--                        </div>--}}
+    {{--                        <div class="swiper-pagination"></div>--}}
+    {{--                    </div>--}}
+    {{--                </div>--}}
+    {{--            </div>--}}
+    {{--        </div>--}}
+    {{--    </section>--}}
 
-{{--    <section class="call-to-action-section section-base-bg py-60">--}}
-{{--        <div class="container">--}}
-{{--            <div class="row row-gap-5 justify-content-between">--}}
-{{--                <div class="col-lg-6 col-xl-5 align-self-center">--}}
-{{--                    <div class="section-title">--}}
-{{--                        <span class="sub-title right-reveal">اکنون به ما بپیوندید</span>--}}
-{{--                        <h2 class="right-reveal">دیگر نگران مسائل حقوقی خود نباشید</h2>--}}
-{{--                        <p class="right-reveal">ماموریت ما این است که با بهره‌گیری از تجربه و دانش خود بهترین نتیجه ممکن--}}
-{{--                            را برای شما رقم بزنیم.--}}
+    {{--    <section class="call-to-action-section section-base-bg py-60">--}}
+    {{--        <div class="container">--}}
+    {{--            <div class="row row-gap-5 justify-content-between">--}}
+    {{--                <div class="col-lg-6 col-xl-5 align-self-center">--}}
+    {{--                    <div class="section-title">--}}
+    {{--                        <span class="sub-title right-reveal">اکنون به ما بپیوندید</span>--}}
+    {{--                        <h2 class="right-reveal">دیگر نگران مسائل حقوقی خود نباشید</h2>--}}
+    {{--                        <p class="right-reveal">ماموریت ما این است که با بهره‌گیری از تجربه و دانش خود بهترین نتیجه ممکن--}}
+    {{--                            را برای شما رقم بزنیم.--}}
 
-{{--                        </p>--}}
-{{--                        <a href="login.html" class="btn btn--black right-reveal">--}}
-{{--                            رایگان ثبت نام کنید--}}
-{{--                            <i class="flaticon-right-arrow"></i>--}}
-{{--                        </a>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--                <div class="col-lg-6 align-self-center">--}}
-{{--                    <div class="call-to-action-section__img" dir="ltr">--}}
-{{--                        <figure class="image-effect right-reveal">--}}
-{{--                            <img src="{{asset('site/assets/images/call-to-action/1.jpg')}}" alt="action images"--}}
-{{--                                 class="img-fluid w-100">--}}
-{{--                        </figure>--}}
-{{--                        <figure class="image-effect left-reveal">--}}
-{{--                            <img src="{{asset('site/assets/images/call-to-action/2.jpg')}}" alt="action images"--}}
-{{--                                 class="img-fluid w-100">--}}
-{{--                        </figure>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--            </div>--}}
-{{--        </div>--}}
-{{--    </section>--}}
+    {{--                        </p>--}}
+    {{--                        <a href="login.html" class="btn btn--black right-reveal">--}}
+    {{--                            رایگان ثبت نام کنید--}}
+    {{--                            <i class="flaticon-right-arrow"></i>--}}
+    {{--                        </a>--}}
+    {{--                    </div>--}}
+    {{--                </div>--}}
+    {{--                <div class="col-lg-6 align-self-center">--}}
+    {{--                    <div class="call-to-action-section__img" dir="ltr">--}}
+    {{--                        <figure class="image-effect right-reveal">--}}
+    {{--                            <img src="{{asset('site/assets/images/call-to-action/1.jpg')}}" alt="action images"--}}
+    {{--                                 class="img-fluid w-100">--}}
+    {{--                        </figure>--}}
+    {{--                        <figure class="image-effect left-reveal">--}}
+    {{--                            <img src="{{asset('site/assets/images/call-to-action/2.jpg')}}" alt="action images"--}}
+    {{--                                 class="img-fluid w-100">--}}
+    {{--                        </figure>--}}
+    {{--                    </div>--}}
+    {{--                </div>--}}
+    {{--            </div>--}}
+    {{--        </div>--}}
+    {{--    </section>--}}
 
     <section class="blog-section section-one-bg py-60">
         <div class="container">
@@ -796,7 +821,8 @@
                                         </div>
                                         <a href="{{url('محتوای-آموزشی/'.$post->slug)}}">
                                             <figure class="image-effect">
-                                                <img src="{{asset('storage/'.$post->cover)}}" alt="{{$post->title}}" class="img-fluid w-100">
+                                                <img src="{{asset('storage/'.$post->cover)}}" alt="{{$post->title}}"
+                                                     class="img-fluid w-100">
                                             </figure>
                                         </a>
                                         <div class="post-type">
@@ -873,7 +899,8 @@
                                 <div class="swiper-slide">
                                     <div class="team-item">
                                         <figure class="image-effect">
-                                            <img src="{{ asset('storage/'.$emploee->image) }}" alt="{{ $emploee->fullname }}"
+                                            <img src="{{ asset('storage/'.$emploee->image) }}"
+                                                 alt="{{ $emploee->fullname }}"
                                                  class="img-fluid w-100" loading="lazy">
                                         </figure>
                                         <ul class="social">
