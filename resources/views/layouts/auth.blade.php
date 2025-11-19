@@ -45,9 +45,9 @@
 </head>
 <body>
 
-<div class="container-xxl">
+{{--<div class="container-xxl">--}}
     @yield('content')
-</div>
+{{--</div>--}}
 
 <!-- Core JS -->
 <script src="{{ asset('assets/vendor/libs/jquery/jquery.js') }}"></script>

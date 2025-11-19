@@ -11561,7 +11561,7 @@ label {
 }
 
 .copy-right__text {
-  color: hsl(var(--white)/0.8);
+  color: hsl(var(--black)/0.8);
   font-size: 1rem;
 }
 
@@ -11587,7 +11587,7 @@ label {
 }
 
 .copy-right__text a {
-  color: hsl(var(--white));
+  color: hsl(var(--black));
   font-weight: 600;
 }
 

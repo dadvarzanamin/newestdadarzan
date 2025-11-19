@@ -18,7 +18,7 @@
                             راه بهتری برای رفع نیازهای قانونی خود بیابند.
                         </p>
                         <div class="footer-email">
-                            <a href="#"><span class="__cf_email__">[email&#160;protected]</span></a>
+                            <a href="#"><span class="__cf_email__">info@dadvarzanamin.ir</span></a>
                         </div>
                         <div class="footer-phone">
                             <h4><a href="tel:09124917054">09124917054</a></h4>

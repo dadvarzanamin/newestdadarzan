@@ -9,7 +9,7 @@
                 <div class="app-brand justify-content-center mt-5">
                     <a href="{{ url('/') }}" class="app-brand-link gap-2">
                         <span class="app-brand-logo demo">
-                          <img src="{{ asset('assets/img/darklogodadvarzan.png') }}" alt="توسعه دانش بنیان سینا" width="40">
+                          <img src="{{ asset('assets/img/darklogodadvarzan.png') }}" alt="دادورزان امین" width="40">
                         </span>
                         <span class="app-brand-text demo text-heading fw-bold">دادورزان امین</span>
                     </a>
@@ -71,9 +71,16 @@
                         <div class="mb-3">
                             <button class="btn btn-primary d-grid w-100" type="submit">ورود</button>
                         </div>
-                        <div class="mb-3">
-                            <a href="{{url('login/google')}}" class="btn btn-danger d-grid w-100"><i class="fa fa-google mr-2"></i> ورود با حساب گوگل </a>
+
+                        <hr>
+
+                        <div class="mb-3 text-center">
+                            <a href="{{ url('login/google') }}" class="google-btn w-100 d-flex align-items-center justify-content-center">
+                                <img src="{{asset('../site/assets/images/logo/google-logo.png')}}" class="google-icon" alt="Google Logo">
+                                <span>ورود با حساب گوگل</span>
+                            </a>
                         </div>
+
                         <div class="mb-3">
                             <a href="{{route('otplogin')}}" class="btn btn-info d-grid w-100"><i class="fa fa-google mr-2"></i> ورود با رمز یکبارمصرف </a>
                         </div>

@@ -93,8 +93,6 @@
                                 <span><i class="mr-2 text-color"></i>سطح مهارت</span>{{$singleworkshops->level}}
                             </li>
                         </ul>
-
-
                     </div>
                 </div>
                 <div class="col-lg-7">
