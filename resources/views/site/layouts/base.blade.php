@@ -8,9 +8,9 @@
 <body>
 
 {{-- Preloader --}}
-<div id="preloader" dir="ltr">
+<div id="preloader">
     <div id="text">
-        <p>امین</p><p>دادورزان</p><p>حقوقی</p><p class="active">موسسه</p>
+        <p> موسسه </p><p> حقوقی </p><p> دادورزان </p><p class="active"> امین </p>
     </div>
 </div>
 

@@ -27,7 +27,7 @@ class GhasedakChannel
         try
         {
             $api = new GhasedakApi($apiKey);
-            $api->Verify($receptor,1,'otploginbestsheet',$code);
+            $api->Verify($receptor,1,'dadvarzanuser',$code);
 
             //$api->SendSimple($receptor,$message,$lineNumber);
         }

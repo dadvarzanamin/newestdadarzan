@@ -14,14 +14,23 @@ use Illuminate\Support\Facades\Hash;
 
 class FullRegisterController extends Controller
 {
+
+    protected function convertPersianToEnglishNumbers($string) {
+        $persianNumbers = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
+        $englishNumbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
+
+        return str_replace($persianNumbers, $englishNumbers, $string);
+    }
+
     public function register(Request $request)
     {
+
         // 1) همه‌ی قوانین داخل validate تا تمام خطاها وارد $errors شوند
         $request->validate([
-            'title'             => 'required|string|max:255',
-            'CEO'               => 'required|string|max:255',
+            'birthday'          => 'required|string|max:12',
+            'role_id'           => 'required',
+            'meli_code'         => 'required|string|max:12',
             'phone'             => 'required|string|max:20|unique:users,phone',   // یکتا
-            'email'             => 'required|email|max:255|unique:users,email',  // یکتا
             'password'          => 'required|string|min:8|confirmed',
             'terms_accepted'    => 'accepted',
         ]);
@@ -29,43 +38,39 @@ class FullRegisterController extends Controller
         DB::beginTransaction();
 
         try {
-            $user = User::create([
-                'name'            => $request->CEO,
-                'email'           => $request->email,
-                'phone'           => $request->phone,
-                'level'           => 'applicant',
-                'status'          => 4,
-                'role_id'         => 5,
-                'change_password' => 1,
-                'password'        => Hash::make($request->password),
-            ]);
 
-//            $companies = Company::create([
-//                'company_name'    => $request->title,
-//                'ceo_name'        => $request->CEO,
-//                'user_id'         => $user->id,
-//            ]);
+            $phone          = $this->convertPersianToEnglishNumbers($request->input('phone'));
+            $meli_code      = $this->convertPersianToEnglishNumbers($request->input('national_id'));
+            $birthday       = $this->convertPersianToEnglishNumbers($request->input('birthday'));
+            $birthday       = str_replace('/', '', $birthday);
 
-            $project = Product::create([
-                'title'        => $request->title,
-                'CEO'          => $request->CEO,
-                'user_id'      => $user->id,
-            ]);
+            $user = User::wherePhone($phone)->first();
+            if ($user === null) {
+                $user = User::create([
+                    'phone' => $phone,
+                    'national_id'       => $meli_code,
+                    'birthday'          => substr_replace(substr_replace($birthday, '/', 4, 0), '/', 7, 0),
+                    'level'             => 'site',
+                    'status'            => 4,
+                    'role_id'           => $request->input('role_id'),
+                    'change_password'   => 1,
+                    'password'          => Hash::make($request->password),
+                ]);
 
-            Auth::login($user);
+                Auth::login($user);
 
-            User_logs::create([
-                'user_id'    => auth()->id(),
-                'action'     => 'login',
-                'ip_address' => $request->ip(),
-                'user_agent' => $request->userAgent(),
-                'status'     => true,
-                'description'=> 'ثبت نام و ورود موفق',
-            ]);
+                User_logs::create([
+                    'user_id' => auth()->id(),
+                    'action' => 'login',
+                    'ip_address' => $request->ip(),
+                    'user_agent' => $request->userAgent(),
+                    'status' => true,
+                    'description' => 'ثبت نام و ورود موفق',
+                ]);
 
-            DB::commit();
-
-            return redirect()->route('profile')->with('success', 'ثبت‌نام با موفقیت انجام شد.');
+                DB::commit();
+            }
+            return redirect()->route('/')->with('success', 'ثبت ‌نام با موفقیت انجام شد.');
         } catch (\Exception $e) {
             DB::rollBack();
             // این خطا هم داخل $errors->any() می‌افتد

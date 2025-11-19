@@ -134,7 +134,7 @@
 
     {{--workshop section--}}
     <section>
-        <div class="container section-two-bg py-60">
+        <div class="container section-two-bg py-40">
             <div class="row justify-content-center">
                 <div class="col-lg-8">
                     <div class="section-title text-center">
@@ -732,23 +732,23 @@
 {{--        </div>--}}
 {{--    </section>--}}
 
-    <section class="call-to-action-section section-base-bg py-60">
-        <div class="container">
-            <div class="row row-gap-5 justify-content-between">
-                <div class="col-lg-6 col-xl-5 align-self-center">
-                    <div class="section-title">
-                        <span class="sub-title right-reveal">اکنون به ما بپیوندید</span>
-                        <h2 class="right-reveal">دیگر نگران مسائل حقوقی خود نباشید</h2>
-                        <p class="right-reveal">ماموریت ما این است که با بهره‌گیری از تجربه و دانش خود بهترین نتیجه ممکن
-                            را برای شما رقم بزنیم.
+{{--    <section class="call-to-action-section section-base-bg py-60">--}}
+{{--        <div class="container">--}}
+{{--            <div class="row row-gap-5 justify-content-between">--}}
+{{--                <div class="col-lg-6 col-xl-5 align-self-center">--}}
+{{--                    <div class="section-title">--}}
+{{--                        <span class="sub-title right-reveal">اکنون به ما بپیوندید</span>--}}
+{{--                        <h2 class="right-reveal">دیگر نگران مسائل حقوقی خود نباشید</h2>--}}
+{{--                        <p class="right-reveal">ماموریت ما این است که با بهره‌گیری از تجربه و دانش خود بهترین نتیجه ممکن--}}
+{{--                            را برای شما رقم بزنیم.--}}
 
-                        </p>
-                        <a href="login.html" class="btn btn--black right-reveal">
-                            رایگان ثبت نام کنید
-                            <i class="flaticon-right-arrow"></i>
-                        </a>
-                    </div>
-                </div>
+{{--                        </p>--}}
+{{--                        <a href="login.html" class="btn btn--black right-reveal">--}}
+{{--                            رایگان ثبت نام کنید--}}
+{{--                            <i class="flaticon-right-arrow"></i>--}}
+{{--                        </a>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
 {{--                <div class="col-lg-6 align-self-center">--}}
 {{--                    <div class="call-to-action-section__img" dir="ltr">--}}
 {{--                        <figure class="image-effect right-reveal">--}}
@@ -761,9 +761,9 @@
 {{--                        </figure>--}}
 {{--                    </div>--}}
 {{--                </div>--}}
-            </div>
-        </div>
-    </section>
+{{--            </div>--}}
+{{--        </div>--}}
+{{--    </section>--}}
 
     <section class="blog-section section-one-bg py-60">
         <div class="container">

@@ -9,9 +9,9 @@
                 <div class="app-brand justify-content-center mt-5">
                     <a href="{{ url('/') }}" class="app-brand-link gap-2">
                         <span class="app-brand-logo demo">
-                          <img src="{{ asset('assets/img/darklogodadvarzan.png') }}" alt="دادورزان امین" width="40">
+                          <img src="{{ asset('assets/img/darklogodadvarzan.png') }}" alt="موسسه حقوقی دادورزان امین" width="40">
                         </span>
-                        <span class="text-white fw-bold">دادورزان امین</span>
+                        <span class="text-white fw-bold">موسسه حقوقی دادورزان امین</span>
                     </a>
                 </div>
 

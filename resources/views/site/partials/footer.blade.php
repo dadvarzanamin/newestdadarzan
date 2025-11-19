@@ -5,8 +5,7 @@
                 <div class="col-lg-4 col-md-8">
                     <div class="footer-widget__item text-center text-lg-end">
                         <a href="{{ route('/') }}" class="d-block">
-                            <img src="{{ asset('site/assets/images/logo/darklogodadvarzan.png') }}" style="max-width: 60px"
-                                 alt="logo">
+                            <img src="{{ asset('site/assets/images/logo/darklogodadvarzan.png') }}" style="max-width: 60px" alt="موسسه حقوقی دادورزان امین">
                         </a>
                         <br>
                         <p>موسسه حقوقی دادورزان امین</p>
