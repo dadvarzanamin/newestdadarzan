@@ -366,9 +366,9 @@ class IndexController extends Controller
         }
         $submenus       = Submenu::select('id', 'title', 'slug', 'menu_id')->whereStatus(4)->whereType('site')->get();
 
-        $emploees       = Emploee::whereSlug($slug)->first();
+        $contract = Product::where('slug', $slug)->first();
 
-        return view('site.pages.single-contract')->with(compact('menus', 'thispage', 'submenus', 'emploees'));
+        return view('site.pages.single-contract')->with(compact('menus', 'thispage', 'submenus', 'contract'));
     }
 
 
