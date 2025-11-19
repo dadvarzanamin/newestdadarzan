@@ -30,7 +30,7 @@
                                     <h4 class="">{{$item}}</h4>
                                 @endforeach
                             @endif
-                            <img src="{{asset($emploees->image)}}" alt="blog images">
+                            <img src="{{asset('storage/' . $emploees->image)}}" alt="blog images">
 
 {{--                            <figure class="image-effect blog-dt-img1">--}}
 {{--                                <img src="{{asset($emploees->image)}}" alt="blog images" class="img-fluid w-100">--}}

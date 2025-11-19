@@ -78,19 +78,19 @@
                             <li class="d-flex align-items-center justify-content-between">
                                 <span>
                                     <i class="mr-2 text-color"></i>مدت زمان</span>
-                                {{$singleworkshops->duration}}
+{{--                                {{$singleworkshops->duration}}--}}
                                 ساعت
                             </li>
                             <li class="d-flex align-items-center justify-content-between">
                                 <span>
                                     <i class="mr-2 text-color"></i>نوع برگزاری : </span>
-                                {{implode("," , json_decode($singleworkshops->type))}}
+{{--                                {{implode("," , json_decode($singleworkshops->type))}}--}}
                             </li>
                             <li class="d-flex align-items-center justify-content-between">
                                 <span><i class="mr-2 text-color"></i>آزمون ورودی : </span> ندارد
                             </li>
                             <li class="d-flex align-items-center justify-content-between">
-                                <span><i class="mr-2 text-color"></i>سطح مهارت</span>{{$singleworkshops->level}}
+{{--                                <span><i class="mr-2 text-color"></i>سطح مهارت</span>{{$singleworkshops->level}}--}}
                             </li>
                         </ul>
                     </div>
@@ -152,7 +152,7 @@
                             <h4>3,600,000تومان</h4>
                         </div>
                         <div class="product-content">
-                            {!! $contracts->description !!}
+{{--                            {!! $contracts->description !!}--}}
                             <div class="product-details-footer d-flex flex-wrap gap-4 mt-4 ">
                                 <a href="#" class="btn btn--base">خرید</a>
 {{--                                <a href="#" class="btn btn--border">اضافه کردن به سبد خرید</a>--}}

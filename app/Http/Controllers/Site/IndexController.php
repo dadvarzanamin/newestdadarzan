@@ -297,6 +297,7 @@ class IndexController extends Controller
 
         return view('site.pages.posts')->with(compact('menus', 'thispage', 'submenus' , 'posts'));
     }
+
     public function singlepost(Request $request , $slug)
     {
         $url = $request->segments();
@@ -315,6 +316,7 @@ class IndexController extends Controller
 
         return view('site.pages.single-post')->with(compact('menus', 'thispage', 'submenus', 'posts'));
     }
+
     public function singleworkshop(Request $request , $slug)
     {
         $url = $request->segments();
@@ -332,6 +334,43 @@ class IndexController extends Controller
 
         return view('site.pages.single-workshop')->with(compact('menus', 'thispage', 'submenus', 'singleworkshops'));
     }
+
+    public function emploeeresume(Request $request , $slug)
+    {
+        $url = $request->segments();
+        $menus = Menu::select('id', 'title', 'slug', 'submenu', 'priority')->orderBy('priority')->whereStatus(4)->whereType('site')->get();
+        if (count($url) == 1) {
+            $thispage = Menu::select('id', 'title', 'slug')->whereStatus(4)->whereType('site')->whereSlug($url[0])->first();
+        } elseif (count($url) > 1) {
+            $thispage = Submenu::select('id', 'title', 'slug')->whereStatus(4)->whereType('site')->whereSlug($url[1])->first();
+        }elseif (count($url) == 0) {
+            $thispage = Menu::select('id', 'title', 'slug')->whereStatus(4)->whereType('site')->whereSlug('/')->first();
+        }
+        $submenus       = Submenu::select('id', 'title', 'slug', 'menu_id')->whereStatus(4)->whereType('site')->get();
+
+        $emploees       = Emploee::whereSlug($slug)->first();
+
+        return view('site.pages.single-team')->with(compact('menus', 'thispage', 'submenus', 'emploees'));
+    }
+
+    public function singlecontract(Request $request , $slug)
+    {
+        $url = $request->segments();
+        $menus = Menu::select('id', 'title', 'slug', 'submenu', 'priority')->orderBy('priority')->whereStatus(4)->whereType('site')->get();
+        if (count($url) == 1) {
+            $thispage = Menu::select('id', 'title', 'slug')->whereStatus(4)->whereType('site')->whereSlug($url[0])->first();
+        } elseif (count($url) > 1) {
+            $thispage = Submenu::select('id', 'title', 'slug')->whereStatus(4)->whereType('site')->whereSlug($url[1])->first();
+        }elseif (count($url) == 0) {
+            $thispage = Menu::select('id', 'title', 'slug')->whereStatus(4)->whereType('site')->whereSlug('/')->first();
+        }
+        $submenus       = Submenu::select('id', 'title', 'slug', 'menu_id')->whereStatus(4)->whereType('site')->get();
+
+        $emploees       = Emploee::whereSlug($slug)->first();
+
+        return view('site.pages.single-contract')->with(compact('menus', 'thispage', 'submenus', 'emploees'));
+    }
+
 
 
 }
