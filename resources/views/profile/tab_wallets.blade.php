@@ -65,7 +65,7 @@
                         }
                     },
                     columns: [
-                        {data: 'referenceId'    , name: 'referenceId'            },
+                        {data: 'referenceId'    , name: 'referenceId'   },
                         {data: 'type'           , name: 'type'          },
                         {data: 'amount'         , name: 'amount'        },
                         {data: 'description'    , name: 'description'   },
