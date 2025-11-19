@@ -12,7 +12,7 @@
                         <h2 class="breadcrumb__title">نمونه قراردادها</h2>
                         <ul class="breadcrumb__list">
                             <li class="breadcrumb__item">
-                                <a href="index.html"> خانه</a>
+                                <a href="{{url('/')}}"> خانه</a>
                             </li>
                             <li class="breadcrumb__item">
                                 <i class="fa-solid fa-arrow-left"></i>
@@ -70,93 +70,6 @@
                                 </button>
                             </form>
                         </div>
-
-{{--                        <!-- AI Models Filter -->--}}
-{{--                        <div class="filter-box">--}}
-{{--                            <h6>مدل های هوش مصنوعی</h6>--}}
-{{--                            <div class="filter-check d-grid row-gap-1 mt-3">--}}
-{{--                                <div class="form-check">--}}
-{{--                                    <input class="form-check-input" type="checkbox" id="میدجرنی">--}}
-{{--                                    <label class="form-check-label" for="میدجرنی">میدجرنی</label>--}}
-{{--                                </div>--}}
-{{--                                <div class="form-check">--}}
-{{--                                    <input class="form-check-input" type="checkbox" id="nightCafe">--}}
-{{--                                    <label class="form-check-label" for="nightCafe">نایت کافی</label>--}}
-{{--                                </div>--}}
-{{--                                <div class="form-check">--}}
-{{--                                    <input class="form-check-input" type="checkbox" id="dalle">--}}
-{{--                                    <label class="form-check-label" for="dalle">دال ای</label>--}}
-{{--                                </div>--}}
-{{--                                <div class="form-check">--}}
-{{--                                    <input class="form-check-input" type="checkbox" id="leonardoAi">--}}
-{{--                                    <label class="form-check-label" for="leonardoAi">لئوناردو</label>--}}
-{{--                                </div>--}}
-{{--                                <div class="form-check">--}}
-{{--                                    <input class="form-check-input" type="checkbox" id="stableDiffusion">--}}
-{{--                                    <label class="form-check-label" for="stableDiffusion">انتشار پایدار</label>--}}
-{{--                                </div>--}}
-{{--                                <div class="form-check">--}}
-{{--                                    <input class="form-check-input" type="checkbox" id="gptgptPrompts">--}}
-{{--                                    <label class="form-check-label" for="gptgptPrompts">جی پی تی</label>--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
-{{--                        </div>--}}
-
-{{--                        <!-- Category Filter -->--}}
-{{--                        <div class="filter-box">--}}
-{{--                            <h6>دسته بندی</h6>--}}
-{{--                            <div class="filter-check d-grid row-gap-1 mt-3">--}}
-{{--                                <div class="form-check">--}}
-{{--                                    <input class="form-check-input" type="checkbox" id="cartoons">--}}
-{{--                                    <label class="form-check-label" for="cartoons">کارتون ها</label>--}}
-{{--                                </div>--}}
-{{--                                <div class="form-check">--}}
-{{--                                    <input class="form-check-input" type="checkbox" id="nft">--}}
-{{--                                    <label class="form-check-label" for="nft">NFT</label>--}}
-{{--                                </div>--}}
-{{--                                <div class="form-check">--}}
-{{--                                    <input class="form-check-input" type="checkbox" id="buildings">--}}
-{{--                                    <label class="form-check-label" for="buildings">ساختمان ها</label>--}}
-{{--                                </div>--}}
-{{--                                <div class="form-check">--}}
-{{--                                    <input class="form-check-input" type="checkbox" id="animals">--}}
-{{--                                    <label class="form-check-label" for="animals">حیوانات</label>--}}
-{{--                                </div>--}}
-{{--                                <div class="form-check">--}}
-{{--                                    <input class="form-check-input" type="checkbox" id="illustrations">--}}
-{{--                                    <label class="form-check-label" for="illustrations">تصاویر</label>--}}
-{{--                                </div>--}}
-{{--                                <div class="form-check">--}}
-{{--                                    <input class="form-check-input" type="checkbox" id="art">--}}
-{{--                                    <label class="form-check-label" for="art">هنر</label>--}}
-{{--                                </div>--}}
-{{--                                <div class="form-check">--}}
-{{--                                    <input class="form-check-input" type="checkbox" id="3d">--}}
-{{--                                    <label class="form-check-label" for="3d">سه بعدی</label>--}}
-{{--                                </div>--}}
-{{--                                <div class="form-check">--}}
-{{--                                    <input class="form-check-input" type="checkbox" id="wildlife">--}}
-{{--                                    <label class="form-check-label" for="wildlife">حیات وحش</label>--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
-{{--                        </div>--}}
-
-{{--                        <!-- Price Filter -->--}}
-{{--                        <div class="filter-box">--}}
-{{--                            <h6>قیمت</h6>--}}
-{{--                            <div class="range_container pt-3">--}}
-{{--                                <p>بازه قیمتی</p>--}}
-{{--                                <div class="sliders_control pt-3">--}}
-{{--                                    <input class="fromSlider" type="range" min="0" max="800" value="35">--}}
-{{--                                    <input class="toSlider" type="range" min="0" max="800" value="600">--}}
-{{--                                </div>--}}
-{{--                                <div class="form_control">--}}
-{{--                                        <span>--}}
-{{--                                            تومان<span class="fromInput">۳۵۰</span> - تومان<span class="toInput">۶۰۰۰</span>--}}
-{{--                                        </span>--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
-{{--                        </div>--}}
                     </div>
 
                 </div>
@@ -167,14 +80,14 @@
                             <div class="explore-item">
                                 <div class="explore-item-header d-flex align-items-center justify-content-between">
                                     <div class="explore-title">
-                                        <img src="{{asset('site/assets/images/logo/logodadvarzan.png')}}" alt="user">
+                                        <img src="{{asset('storage/'.$contract->image)}}" alt="user">
                                     </div>
 
                                 </div>
                                 <div class="explore-img">
                                     <div class="featured-price">{{$contract->price == 0 ? 'رایگان' : number_format($contract->price)}}</div>
                                     <figure class="image-effect">
-                                        <img src="{{asset('storage/'.$contract->image)}}" alt="explore images"
+                                        <img src="{{asset('storage/'.$contract->cover)}}" alt="explore images"
                                              class="img-fluid w-100">
                                     </figure>
                                     <div class="heart-content">

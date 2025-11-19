@@ -39,7 +39,7 @@
 
                         <div class="form-floating form-floating-outline mb-3">
                             <input type="text" class="form-control @error('phone') is-invalid @enderror" id="phone" name="phone" placeholder="شماره موبایل" value="{{ old('phone') }}" autocomplete="off" required>
-                            <label for="phone">شماره موبایل</label>
+{{--                            <label for="phone">شماره موبایل</label>--}}
                             @error('phone')
                             <div class="invalid-feedback d-block">{{ $message }}</div>
                             @enderror
@@ -47,7 +47,7 @@
 
                         <div class="form-floating form-floating-outline mb-3">
                             <input type="text" class="form-control @error('national_id') is-invalid @enderror" id="national_id" name="national_id" placeholder=" کد ملی" value="{{ old('national_id') }}" autocomplete="off" required>
-                            <label for="national_id">کد ملی</label>
+{{--                            <label for="national_id">کد ملی</label>--}}
                             @error('national_id')
                             <div class="invalid-feedback d-block">{{ $message }}</div>
                             @enderror
@@ -55,7 +55,7 @@
 
                         <div class="form-floating form-floating-outline mb-3">
                             <input type="text" data-jdp class="form-control @error('birthday') is-invalid @enderror" id="birthday" name="birthday" placeholder="تاریخ تولد" value="{{ old('birthday') }}" autocomplete="off" required>
-                            <label for="birthday">تاریخ تولد</label>
+{{--                            <label for="birthday">تاریخ تولد</label>--}}
                             @error('birthday')
                             <div class="invalid-feedback d-block">{{ $message }}</div>
                             @enderror
@@ -65,7 +65,7 @@
                             <select name="role_id" class="form-control" required>
                                 <option value="">انتخاب کنید</option>
                                 @foreach(\App\Models\Role::select('id' , 'title_fa')->whereIn('id' , [5,6,7])->get() as $type)
-                                    <option value="{{$type->id}}" {{ old('role_id') == $type->id ? 'selected' : '' }}>{{$type->title_fa}}</option>
+                                    <option class="text-black" value="{{$type->id}}" {{ old('role_id') == $type->id ? 'selected' : '' }}>{{$type->title_fa}}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -75,7 +75,7 @@
                                 <div class="input-group input-group-merge">
                                     <div class="form-floating form-floating-outline">
                                         <input type="password" class="form-control @error('password') is-invalid @enderror" id="password" name="password" placeholder="رمز عبور" required>
-                                        <label for="password">رمز عبور</label>
+{{--                                        <label for="password">رمز عبور</label>--}}
                                         @error('password')
                                         <div class="invalid-feedback d-block">{{ $message }}</div>
                                         @enderror
@@ -90,7 +90,7 @@
                                 <div class="input-group input-group-merge">
                                     <div class="form-floating form-floating-outline">
                                         <input type="password" class="form-control @error('password_confirmation') is-invalid @enderror" id="password_confirmation" name="password_confirmation" placeholder="تأیید رمز عبور" required>
-                                        <label for="password_confirmation">تکرار رمز عبور</label>
+{{--                                        <label for="password_confirmation">تکرار رمز عبور</label>--}}
                                         @error('password_confirmation')
                                         <div class="invalid-feedback d-block">{{ $message }}</div>
                                         @enderror
@@ -103,7 +103,7 @@
                         <div class="mb-3 d-flex justify-content-between">
                             <div class="form-check">
                                 <input class="form-check-input @error('terms_accepted') is-invalid @enderror" type="checkbox" id="terms-accepted" name="terms_accepted" {{ old('terms_accepted') ? 'checked' : '' }} required>
-                                <label class="form-check-label" for="terms-accepted">
+                                <label class="form-check-label text-white" for="terms-accepted">
                                     <a href="#" data-bs-toggle="modal" data-bs-target="#termsModal">شرایط و قوانین</a> را با دقت مطالعه نموده‌ام.
                                 </label>
                                 @error('terms_accepted')
@@ -118,7 +118,7 @@
                     </form>
 
                     <p class="text-center">
-                        <span>حساب کاربری دارید؟</span>
+                        <span class="text-white">حساب کاربری دارید؟</span>
                         <a href="{{ route('login') }}">
                             <span>ورود به حساب</span>
                         </a>
