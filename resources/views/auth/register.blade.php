@@ -1,6 +1,5 @@
 @extends('layouts.auth')
 @section('title', 'ایجاد حساب ')
-
 @section('content')
     <div class="authentication-wrapper authentication-basic container-p-y">
         <div class="authentication-inner py-4">
@@ -39,17 +38,25 @@
                         @csrf
 
                         <div class="form-floating form-floating-outline mb-3">
-                            <input type="text" class="form-control @error('phone') is-invalid @enderror" id="phone" name="phone" placeholder="شماره موبایل" value="{{ old('phone') }}" required>
-{{--                            <label for="phone">شماره موبایل</label>--}}
+                            <input type="text" class="form-control @error('phone') is-invalid @enderror" id="phone" name="phone" placeholder="شماره موبایل" value="{{ old('phone') }}" autocomplete="off" required>
+                            <label for="phone">شماره موبایل</label>
                             @error('phone')
                             <div class="invalid-feedback d-block">{{ $message }}</div>
                             @enderror
                         </div>
 
                         <div class="form-floating form-floating-outline mb-3">
-                            <input type="text" class="form-control @error('title') is-invalid @enderror" id="national_id" name="national_id" placeholder=" کد ملی" value="{{ old('title') }}" required>
-{{--                            <label for="title">کد ملی</label>--}}
-                            @error('title')
+                            <input type="text" class="form-control @error('national_id') is-invalid @enderror" id="national_id" name="national_id" placeholder=" کد ملی" value="{{ old('national_id') }}" autocomplete="off" required>
+                            <label for="national_id">کد ملی</label>
+                            @error('national_id')
+                            <div class="invalid-feedback d-block">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <div class="form-floating form-floating-outline mb-3">
+                            <input type="text" data-jdp class="form-control @error('birthday') is-invalid @enderror" id="birthday" name="birthday" placeholder="تاریخ تولد" value="{{ old('birthday') }}" autocomplete="off" required>
+                            <label for="birthday">تاریخ تولد</label>
+                            @error('birthday')
                             <div class="invalid-feedback d-block">{{ $message }}</div>
                             @enderror
                         </div>
@@ -58,7 +65,7 @@
                             <select name="role_id" class="form-control" required>
                                 <option value="">انتخاب کنید</option>
                                 @foreach(\App\Models\Role::select('id' , 'title_fa')->whereIn('id' , [5,6,7])->get() as $type)
-                                    <option class="text-black" value="{{$type->id}}" {{ old('role_id') == $type->id ? 'selected' : '' }}>{{$type->title_fa}}</option>
+                                    <option value="{{$type->id}}" {{ old('role_id') == $type->id ? 'selected' : '' }}>{{$type->title_fa}}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -68,7 +75,7 @@
                                 <div class="input-group input-group-merge">
                                     <div class="form-floating form-floating-outline">
                                         <input type="password" class="form-control @error('password') is-invalid @enderror" id="password" name="password" placeholder="رمز عبور" required>
-{{--                                        <label for="password">رمز عبور</label>--}}
+                                        <label for="password">رمز عبور</label>
                                         @error('password')
                                         <div class="invalid-feedback d-block">{{ $message }}</div>
                                         @enderror
@@ -83,7 +90,7 @@
                                 <div class="input-group input-group-merge">
                                     <div class="form-floating form-floating-outline">
                                         <input type="password" class="form-control @error('password_confirmation') is-invalid @enderror" id="password_confirmation" name="password_confirmation" placeholder="تأیید رمز عبور" required>
-{{--                                        <label for="password_confirmation">تکرار رمز عبور</label>--}}
+                                        <label for="password_confirmation">تکرار رمز عبور</label>
                                         @error('password_confirmation')
                                         <div class="invalid-feedback d-block">{{ $message }}</div>
                                         @enderror
@@ -96,7 +103,7 @@
                         <div class="mb-3 d-flex justify-content-between">
                             <div class="form-check">
                                 <input class="form-check-input @error('terms_accepted') is-invalid @enderror" type="checkbox" id="terms-accepted" name="terms_accepted" {{ old('terms_accepted') ? 'checked' : '' }} required>
-                                <label class="form-check-label text-white" for="terms-accepted">
+                                <label class="form-check-label" for="terms-accepted">
                                     <a href="#" data-bs-toggle="modal" data-bs-target="#termsModal">شرایط و قوانین</a> را با دقت مطالعه نموده‌ام.
                                 </label>
                                 @error('terms_accepted')
@@ -111,7 +118,7 @@
                     </form>
 
                     <p class="text-center">
-                        <span class="text-white">حساب کاربری دارید؟</span>
+                        <span>حساب کاربری دارید؟</span>
                         <a href="{{ route('login') }}">
                             <span>ورود به حساب</span>
                         </a>
@@ -272,7 +279,53 @@
 
 @endsection
 
-@section('scripts')
+@section('script')
+    <link rel="stylesheet" href="{{'https://unpkg.com/@majidh1/jalalidatepicker/dist/jalalidatepicker.min.css'}}">
+    <script type="text/javascript" src="{{'https://unpkg.com/@majidh1/jalalidatepicker/dist/jalalidatepicker.min.js'}}"></script>
+
+    <script>
+        jalaliDatepicker.startWatch();
+
+        document.querySelector("[data-jdp-miladi-input]").addEventListener("jdp:change", function (e) {
+            var miladiInput = document.getElementById(this.getAttribute("data-jdp-miladi-input"));
+            if (!this.value) {
+                miladiInput.value = "";
+                return;
+            }
+            var date = this.value.split("/");
+            miladiInput.value = jalali_to_gregorian(date[0], date[1], date[2]).join("/")
+        });
+
+        function jalali_to_gregorian(jy, jm, jd) {
+            jy = Number(jy);
+            jm = Number(jm);
+            jd = Number(jd);
+            var gy = (jy <= 979) ? 621 : 1600;
+            jy -= (jy <= 979) ? 0 : 979;
+            var days = (365 * jy) + ((parseInt(jy / 33)) * 8) + (parseInt(((jy % 33) + 3) / 4))
+                + 78 + jd + ((jm < 7) ? (jm - 1) * 31 : ((jm - 7) * 30) + 186);
+            gy += 400 * (parseInt(days / 146097));
+            days %= 146097;
+            if (days > 36524) {
+                gy += 100 * (parseInt(--days / 36524));
+                days %= 36524;
+                if (days >= 365) days++;
+            }
+            gy += 4 * (parseInt((days) / 1461));
+            days %= 1461;
+            gy += parseInt((days - 1) / 365);
+            if (days > 365) days = (days - 1) % 365;
+            var gd = days + 1;
+            var sal_a = [0, 31, ((gy % 4 == 0 && gy % 100 != 0) || (gy % 400 == 0)) ? 29 : 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+            var gm
+            for (gm = 0; gm < 13; gm++) {
+                var v = sal_a[gm];
+                if (gd <= v) break;
+                gd -= v;
+            }
+            return [gy, gm, gd];
+        }
+    </script>
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             const togglePasswordElements = document.querySelectorAll('.form-password-toggle');
@@ -291,8 +344,6 @@
             });
         });
     </script>
-
-
     <script>
         @if (session('success'))
         toastr.success(@json(session('success')));

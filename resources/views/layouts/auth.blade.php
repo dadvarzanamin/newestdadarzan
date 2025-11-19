@@ -2,11 +2,7 @@
     $theme = session('theme', 'theme-default');
 @endphp
     <!DOCTYPE html>
-<html lang="fa" dir="rtl"
-      class="light-style customizer-hide"
-      data-theme="{{ $theme }}"
-      data-assets-path="{{ asset('assets/') }}/"
-      data-template="vertical-menu-template">
+<html lang="fa" dir="rtl" class="light-style customizer-hide" data-theme="{{ $theme }}" data-assets-path="{{ asset('assets/') }}/" data-template="vertical-menu-template">
 <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -72,7 +68,7 @@
 <script src="{{ asset('assets/js/main.js') }}"></script>
 <script src="{{ asset('assets/js/pages-auth.js') }}"></script>
 
-@stack('scripts')
+@yield('script')
 
 </body>
 </html>

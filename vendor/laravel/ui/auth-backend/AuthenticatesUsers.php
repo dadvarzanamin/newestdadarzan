@@ -110,7 +110,7 @@ trait AuthenticatesUsers
         if ($user->level === 'admin') {
             return redirect()->route('dashboard');
         }else{
-            return redirect()->route('profile');
+            return redirect()->route('/');
         }
     }
 

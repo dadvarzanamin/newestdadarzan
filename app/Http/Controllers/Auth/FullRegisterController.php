@@ -29,7 +29,7 @@ class FullRegisterController extends Controller
         $request->validate([
             'birthday'          => 'required|string|max:12',
             'role_id'           => 'required',
-            'meli_code'         => 'required|string|max:12',
+            'national_id'       => 'required|string|max:12',
             'phone'             => 'required|string|max:20|unique:users,phone',   // یکتا
             'password'          => 'required|string|min:8|confirmed',
             'terms_accepted'    => 'accepted',
@@ -37,10 +37,10 @@ class FullRegisterController extends Controller
 
         DB::beginTransaction();
 
-        try {
+
 
             $phone          = $this->convertPersianToEnglishNumbers($request->input('phone'));
-            $meli_code      = $this->convertPersianToEnglishNumbers($request->input('national_id'));
+            $national_id    = $this->convertPersianToEnglishNumbers($request->input('national_id'));
             $birthday       = $this->convertPersianToEnglishNumbers($request->input('birthday'));
             $birthday       = str_replace('/', '', $birthday);
 
@@ -48,7 +48,7 @@ class FullRegisterController extends Controller
             if ($user === null) {
                 $user = User::create([
                     'phone' => $phone,
-                    'national_id'       => $meli_code,
+                    'national_id'       => $national_id,
                     'birthday'          => substr_replace(substr_replace($birthday, '/', 4, 0), '/', 7, 0),
                     'level'             => 'site',
                     'status'            => 4,
@@ -71,11 +71,12 @@ class FullRegisterController extends Controller
                 DB::commit();
             }
             return redirect()->route('/')->with('success', 'ثبت ‌نام با موفقیت انجام شد.');
-        } catch (\Exception $e) {
-            DB::rollBack();
-            // این خطا هم داخل $errors->any() می‌افتد
-            return back()->withErrors(['system' => 'خطا در ذخیره اطلاعات. لطفاً دوباره تلاش کنید.'])->withInput();
-        }
+//        try {
+//        } catch (\Exception $e) {
+//            DB::rollBack();
+//            // این خطا هم داخل $errors->any() می‌افتد
+//            return back()->withErrors(['system' => 'خطا در ذخیره اطلاعات. لطفاً دوباره تلاش کنید.'])->withInput();
+//        }
     }
     public function update(Request $request, $id)
     {
