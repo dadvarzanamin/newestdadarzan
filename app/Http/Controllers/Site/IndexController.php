@@ -37,7 +37,7 @@ class IndexController extends Controller
     {
 
         $url = $request->segments();
-        $menus = Menu::select('id', 'title', 'slug', 'submenu', 'priority')->orderBy('priority')->whereStatus(4)->whereType('site')->get();
+        $menus = Menu::select('id', 'title', 'slug', 'submenu', 'priority', 'mega_menu')->orderBy('priority')->whereStatus(4)->whereType('site')->get();
         if (count($url) == 1) {
             $thispage = Menu::select('id', 'title', 'slug')->whereStatus(4)->whereType('site')->whereSlug($url[0])->first();
         } elseif (count($url) > 1) {
@@ -45,14 +45,19 @@ class IndexController extends Controller
         }elseif (count($url) == 0) {
             $thispage = Menu::select('id', 'title', 'slug')->whereStatus(4)->whereType('site')->whereSlug('/')->first();
         }
-        $submenus       = Submenu::select('id', 'title', 'slug', 'menu_id')->whereStatus(4)->whereType('site')->get();
+        $megacounts = DB::table('mega_menus')->selectRaw('COUNT(*) as count, menu_id')
+            ->groupBy('menu_id')
+            ->get()
+            ->toArray();
+        $megamenus      = DB::table('mega_menus')->get();
+        $submenus       = Submenu::select('id', 'title', 'slug', 'menu_id', 'megamenu_id')->whereStatus(4)->whereType('site')->get();
 
         $products       = Product::orderBy('id' , 'DESC')->get();
         $emploees       = Emploee::whereStatus(4)->orderBy('priority')->get();
         $posts          = Content::whereMenu_id(65)->whereSubmenu_id(74)->whereStatus(4)->orderBy('id' , 'DESC')->limit(6)->get();
         $customers      = Customer::whereStatus(4)->get();
 
-        return view('site.pages.index')->with(compact('menus', 'thispage', 'submenus' , 'products' , 'emploees' , 'posts' , 'customers'));
+        return view('site.pages.index')->with(compact('menus', 'thispage', 'submenus' , 'products' , 'emploees' , 'megacounts' , 'megamenus' , 'posts' , 'customers'));
     }
 
     public function contract(Request $request)

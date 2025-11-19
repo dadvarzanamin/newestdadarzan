@@ -41,10 +41,46 @@
                 <a href="{{ route('login') }}" class="btn btn--border">ورود</a>
                 <a href="{{ route('register') }}" class="btn btn--base">ثبت نام</a>
             </div>
+            <style>
+                .mega-menu-has {
+                    position: static !important;
+                }
+
+                .mega-menu {
+                    width: 100%;
+                    max-width: 860px;
+                    margin: 0 auto;
+                    padding: 20px !important;
+
+                    direction: rtl;
+                    text-align: right;
+                }
+
+                .mega-menu ul,
+                .mega-menu li {
+                    text-align: right;
+                }
+
+                .mega-menu h5 {
+                    text-align: right;
+                }
+
+                .mega-menu a {
+                    display: block;
+                    text-align: right;
+                }
+
+                .dropdown-menu {
+                    direction: rtl;
+                    text-align: right;
+                }
+
+
+            </style>
             <div class="offcanvas-body align-items-center">
                 <ul class="navbar-nav justify-content-center flex-grow-1">
                     @foreach($menus as $menu)
-                        {{-- اگر منو زیرمنو نداشت --}}
+
                         @if(!$menu->submenu)
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ url($menu->slug) }}">
@@ -53,27 +89,41 @@
                             </li>
                             @continue
                         @endif
-                        {{-- اگر مگا منو باشد --}}
+
                         @if($menu->mega_menu)
                             <li class="nav-item dropdown mega-menu-has">
                                 <a href="#" class="nav-link">
                                     {{ $menu->title }} <i class="la la-angle-down fs-12"></i>
                                 </a>
-                                <div class="dropdown-menu mega-menu p-3" style="max-width: 760px;">
+
+                                <div class="dropdown-menu mega-menu p-3">
                                     <ul class="row g-3">
+
                                         @php
-                                            $menuMegaItems = $megamenus->where('menu_id', $menu->id);
-                                            $columns = $megacounts->firstWhere('menu_id', $menu->id)['count'] ?? 1;
+                                            // تعداد ستون‌ها
+                                            $columns = 1;
+                                            foreach ($megacounts as $megacount) {
+                                                if ($megacount->menu_id == $menu->id) {
+                                                    $columns = $megacount->count;
+                                                    break;
+                                                }
+                                            }
                                             $colClass = 12 / $columns;
+
+                                            // فقط مگا منوهای مربوط به همین menu
+                                            $menuMegaItems = $megamenus->where('menu_id', $menu->id);
                                         @endphp
+
                                         @foreach($menuMegaItems as $megaItem)
                                             <li class="col-lg-{{ $colClass }}">
                                                 <h5 class="border-bottom pb-2 mb-3">{{ $megaItem->title }}</h5>
+
                                                 @php
                                                     $submenuItems = $submenus
                                                         ->where('menu_id', $menu->id)
                                                         ->where('megamenu_id', $megaItem->id);
                                                 @endphp
+
                                                 @foreach($submenuItems as $submenu)
                                                     <a href="{{ url($menu->slug.'/'.$submenu->slug) }}" class="d-block mb-1">
                                                         {{ $submenu->title }}
@@ -81,10 +131,11 @@
                                                 @endforeach
                                             </li>
                                         @endforeach
+
                                     </ul>
                                 </div>
                             </li>
-                            {{-- اگر مگا منو نبود --}}
+
                         @else
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
@@ -101,8 +152,10 @@
                                 </ul>
                             </li>
                         @endif
+
                     @endforeach
                 </ul>
+
             </div>
         </div>
     </div>
