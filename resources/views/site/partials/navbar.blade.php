@@ -44,19 +44,62 @@
             <div class="offcanvas-body align-items-center">
                 <ul class="navbar-nav justify-content-center flex-grow-1">
                     @foreach($menus as $menu)
-                        @if($menu->submenu == 1)
+                        {{-- اگر منو زیرمنو نداشت --}}
+                        @if(!$menu->submenu)
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ url($menu->slug) }}">
+                                    <span>{{ $menu->title }}</span>
+                                </a>
+                            </li>
+                            @continue
+                        @endif
+                        {{-- اگر مگا منو باشد --}}
+                        @if($menu->mega_menu)
+                            <li class="nav-item dropdown mega-menu-has">
+                                <a href="#" class="nav-link">
+                                    {{ $menu->title }} <i class="la la-angle-down fs-12"></i>
+                                </a>
+                                <div class="dropdown-menu mega-menu p-3" style="max-width: 760px;">
+                                    <ul class="row g-3">
+                                        @php
+                                            $menuMegaItems = $megamenus->where('menu_id', $menu->id);
+                                            $columns = $megacounts->firstWhere('menu_id', $menu->id)['count'] ?? 1;
+                                            $colClass = 12 / $columns;
+                                        @endphp
+                                        @foreach($menuMegaItems as $megaItem)
+                                            <li class="col-lg-{{ $colClass }}">
+                                                <h5 class="border-bottom pb-2 mb-3">{{ $megaItem->title }}</h5>
+                                                @php
+                                                    $submenuItems = $submenus
+                                                        ->where('menu_id', $menu->id)
+                                                        ->where('megamenu_id', $megaItem->id);
+                                                @endphp
+                                                @foreach($submenuItems as $submenu)
+                                                    <a href="{{ url($menu->slug.'/'.$submenu->slug) }}" class="d-block mb-1">
+                                                        {{ $submenu->title }}
+                                                    </a>
+                                                @endforeach
+                                            </li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            </li>
+                            {{-- اگر مگا منو نبود --}}
+                        @else
                             <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">{{$menu->title}}</a>
+                                <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
+                                    {{ $menu->title }}
+                                </a>
                                 <ul class="dropdown-menu fade-down">
-                                    @foreach($submenus as $submenu)
-                                        @if($submenu->menu_id == $menu->id)
-                                            <li><a class="dropdown-item" href="{{ url($menu->slug.'/'.$submenu->slug) }}">{{$submenu->title}}</a></li>
-                                        @endif
+                                    @foreach($submenus->where('menu_id', $menu->id) as $submenu)
+                                        <li>
+                                            <a class="dropdown-item" href="{{ url($menu->slug.'/'.$submenu->slug) }}">
+                                                {{ $submenu->title }}
+                                            </a>
+                                        </li>
                                     @endforeach
                                 </ul>
                             </li>
-                        @elseif($menu->submenu == 0)
-                            <li class="nav-item"><a class="nav-link" href="{{ url($menu->slug) }}"><span>{{$menu->title}}</span></a></li>
                         @endif
                     @endforeach
                 </ul>
