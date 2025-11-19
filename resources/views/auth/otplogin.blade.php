@@ -16,7 +16,7 @@
                 </div>
 
                 <div class="card-body mt-2">
-                    <p class="mb-4 text-center">شماره موبایلی که با آن ثبت نام کرده اید را وارد کنید</p>
+                    <p class="mb-4 text-center text-white">شماره موبایلی که با آن ثبت نام کرده اید را وارد کنید</p>
 
                     @include('partials.alerts')
 
@@ -36,18 +36,20 @@
                         @csrf
                         <div class="form-floating form-floating-outline mb-3">
                             <input type="text" class="form-control @error('phone') is-invalid @enderror" id="phone" name="phone" placeholder="شماره موبایل" value="{{ old('phone') }}" autofocus required>
-                            <label for="phone">شماره موبایل</label>
+{{--                            <label for="phone">شماره موبایل</label>--}}
                             @error('phone')
                             <div class="invalid-feedback d-block">{{ $message }}</div>
                             @enderror
                         </div>
                         <div class="mb-3">
-                            <button class="btn btn-primary d-grid w-100" type="submit">ارسال</button>
+                            <button class="glass-btn-base glass-btn-primary w-100" type="submit">
+                                ارسال
+                            </button>
                         </div>
                     </form>
 
                     <p class="text-center">
-                        <a href="{{ route('register') }}">
+                        <a class="text-white" href="{{ route('register') }}">
                             <span>برای ایجاد حساب کلیک کنید</span>
                         </a>
                     </p>

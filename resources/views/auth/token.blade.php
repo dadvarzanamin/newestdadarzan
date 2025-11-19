@@ -16,7 +16,7 @@
                 </div>
 
                 <div class="card-body mt-2">
-                    <p class="mb-4 text-center">کد ارسال شده را وارد کنید</p>
+                    <p class="mb-4 text-center text-white">کد ارسال شده را وارد کنید</p>
 
                     {{-- Flash messages (success/info/warn/error) --}}
                     @include('partials.alerts')
@@ -38,7 +38,7 @@
                         @csrf
                         <div class="form-floating form-floating-outline mb-3">
                             <input type="text" class="form-control @error('code') is-invalid @enderror" id="code" name="code" placeholder="کد پیامک شده" value="{{ old('code') }}" autofocus required>
-                            <label for="code">کد پیامک شده</label>
+{{--                            <label for="code">کد پیامک شده</label>--}}
                             @error('code')
                             <div class="invalid-feedback d-block">{{ $message }}</div>
                             @enderror

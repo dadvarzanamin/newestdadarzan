@@ -17,7 +17,6 @@
 
                 <div class="card-body mt-2">
                     <h4 class="mb-2 fw-semibold"></h4>
-{{--                    <p class="mb-4 text-center">(بِست شیت)</p>--}}
 
                     {{-- Flash messages (success/info/warn/error) --}}
                     @include('partials.alerts')
@@ -39,7 +38,7 @@
                         @csrf
                         <div class="form-floating form-floating-outline mb-3">
                             <input type="text" class="form-control @error('email') is-invalid @enderror" id="email" name="email" placeholder="ایمیل" value="{{ old('email') }}" autofocus required>
-                            <label for="email">ایمیل</label>
+{{--                            <label for="email">ایمیل</label>--}}
                             @error('email')
                             <div class="invalid-feedback d-block">{{ $message }}</div>
                             @enderror
@@ -50,7 +49,7 @@
                                 <div class="input-group input-group-merge">
                                     <div class="form-floating form-floating-outline">
                                         <input type="password" id="password" class="form-control @error('password') is-invalid @enderror" name="password" placeholder="رمز عبور" required>
-                                        <label for="password">رمز عبور</label>
+{{--                                        <label for="password">رمز عبور</label>--}}
                                         @error('password')
                                         <div class="invalid-feedback d-block">{{ $message }}</div>
                                         @enderror
@@ -63,9 +62,9 @@
                         <div class="mb-3 d-flex justify-content-between">
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" id="remember-me" name="remember" {{ old('remember') ? 'checked' : '' }}>
-                                <label class="form-check-label" for="remember-me">مرا به خاطر بسپار</label>
+                                <label class="form-check-label text-white" for="remember-me">مرا به خاطر بسپار</label>
                             </div>
-                            <a href="{{ route('password.request') }}">فراموشی رمز عبور؟</a>
+                            <a class="text-white" href="{{ route('password.request') }}">فراموشی رمز عبور؟</a>
                         </div>
                         <div class="auth-buttons d-flex gap-3 mb-3">
                             <button class="glass-btn-base glass-btn-primary w-50" type="submit">
@@ -87,7 +86,7 @@
                     </form>
 
                     <p class="text-center">
-                        <a href="{{ route('register') }}">
+                        <a class="text-white" href="{{ route('register') }}">
                             <span>برای ایجاد حساب کلیک کنید</span>
                         </a>
                     </p>
