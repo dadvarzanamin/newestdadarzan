@@ -50,56 +50,23 @@ class ProfileController extends Controller
 
     public function userdata(Request $request)
     {
-        if ($request->ajax()) {
-            $data = User::leftjoin('roles' , 'roles.id' , '=','users.role_id' )
-                ->where('users.id' , Auth::user()->id)
-                ->select('users.id' ,'users.name' ,'users.level' ,'users.national_id' ,'users.father_name' ,
-                    'users.email' ,'users.phone' ,'users.gender' ,'users.postalcode' ,'users.status' ,'users.address' , 'roles.title_fa as role_name')
-                ->get();
+            if ($request->ajax()) {
 
-            return Datatables::of($data)
-                ->addColumn('id', function ($data) {
-                    return ($data->id);
-                })
-                ->addColumn('name', function ($data) {
-                    return ($data->name?? '');
-                })
-                ->addColumn('userlevel', function ($data) {
-                    if ($data->level == "admin") {
-                        return "مدیر (سرمایه گذار)";
-                    } elseif ($data->level == "applicant") {
-                        return "مدیرعامل (سرمایه پذیر)";
-                    }
-                })
-                ->addColumn('national_id', function ($data) {
-                    return ($data->national_id ?? '');
-                })
-                ->addColumn('father_name', function ($data) {
-                    return ($data->father_name?? '');
-                })
-                ->addColumn('email', function ($data) {
-                    return ($data->email?? '');
-                })
-                ->addColumn('phone', function ($data) {
-                    return ($data->phone?? '');
-                })
-                ->addColumn('gender', function ($data) {
-                    return ($data->gender?? '');
-                })
-                ->addColumn('postalcode', function ($data) {
-                    return ($data->postalcode?? '');
-                })
-                ->addColumn('status', function ($data) {
-                    return ($data->status?? '');
-                })
-                ->addColumn('role_name', function ($data) {
-                    return ($data->role_name?? '');
-                })
-                ->addColumn('address', function ($data) {
-                    return ($data->address?? '');
-                })
-                ->make(true);
-        }
+                $data = User::leftJoin('roles', 'roles.id', '=', 'users.role_id')
+                    ->where('users.id', Auth::id())
+                    ->select(
+                        'users.*',
+                        'roles.title_fa as role_name'
+                    )
+                    ->get();
+
+                return DataTables::of($data)
+                    ->addColumn('card', function ($row) {
+                        return view('profile.user-card', compact('row'))->render();
+                    })
+                    ->rawColumns(['card'])
+                    ->make(true);
+            }
     }
 
     public function companydata(Request $request)

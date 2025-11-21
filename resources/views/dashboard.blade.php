@@ -198,12 +198,16 @@
                                                     @foreach($users as $user)
                                                         <tr>
                                                             <td>
-                                                                @if($user->gender == 1)
-                                                                    <img src="{{ asset('assets/img/avatars/1.png') }}" class="w-px-40 h-auto rounded-circle" />
-                                                                @elseif($user->gender == 2)
-                                                                    <img src="{{ asset('assets/img/avatars/8.png') }}" class="w-px-40 h-auto rounded-circle" />
+                                                                @if($user->image)
+                                                                    <img data-src="{{ $user->image }}" class="w-px-40 h-auto rounded-circle" />
                                                                 @else
-                                                                    <img src="{{ asset('assets/img/avatars/1.png') }}" class="w-px-40 h-auto rounded-circle" />
+                                                                    @if($user->gender == 1)
+                                                                        <img src="{{ asset('assets/img/avatars/1.png') }}" class="w-px-40 h-auto rounded-circle" />
+                                                                    @elseif($user->gender == 2)
+                                                                        <img src="{{ asset('assets/img/avatars/8.png') }}" class="w-px-40 h-auto rounded-circle" />
+                                                                    @else
+                                                                        <img src="{{ asset('assets/img/avatars/1.png') }}" class="w-px-40 h-auto rounded-circle" />
+                                                                   @endif
                                                                 @endif
                                                             </td>
                                                             <td>{{ $user->name }}</td>
