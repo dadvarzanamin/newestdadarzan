@@ -78,12 +78,7 @@
                         @foreach($contracts as $contract)
                         <div class="content-box top-reveal col-xl-4 col-lg-6 col-md-6 ">
                             <div class="explore-item">
-                                <div class="explore-item-header d-flex align-items-center justify-content-between">
-                                    <div class="explore-title">
-                                        <img src="{{asset('storage/'.$contract->image)}}" alt="user">
-                                    </div>
 
-                                </div>
                                 <div class="explore-img">
                                     <div class="featured-price">{{$contract->price == 0 ? 'رایگان' : number_format($contract->price)}}</div>
                                     <figure class="image-effect">
