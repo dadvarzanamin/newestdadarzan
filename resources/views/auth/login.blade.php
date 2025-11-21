@@ -64,7 +64,6 @@
                                 <input class="form-check-input" type="checkbox" id="remember-me" name="remember" {{ old('remember') ? 'checked' : '' }}>
                                 <label class="form-check-label text-white" for="remember-me">مرا به خاطر بسپار</label>
                             </div>
-                            <a class="text-white" href="{{ route('password.request') }}">فراموشی رمز عبور؟</a>
                         </div>
                         <div class="auth-buttons d-flex gap-3 mb-3">
                             <button class="glass-btn-base glass-btn-primary w-50" type="submit">
