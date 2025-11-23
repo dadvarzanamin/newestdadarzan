@@ -9067,8 +9067,8 @@ label {
   font-size: 1.125rem;
   font-weight: 500;
   color: hsl(var(--black));
-  display: -webkit-box;
-  display: -ms-flexbox;
+  /*display: -webkit-box;*/
+  /*display: -ms-flexbox;*/
   /*display: flex;*/
   -webkit-box-align: center;
   -ms-flex-align: center;
@@ -11046,7 +11046,7 @@ label {
     content: "\f107";
     font-weight: 900;
     font-family: "Font Awesome 6 free";
-    margin-left: auto;
+    /*margin-left: auto;*/
   }
 }
 
