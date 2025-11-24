@@ -1,8 +1,8 @@
 @extends('layouts.base')
-@section('title', 'مدیریت منوی داشبورد')
+@section('title', 'مدیریت اعضا شرکت')
 @section('style')
     <link rel="stylesheet" href="{{ asset('assets/vendor/css/rtl/dataTables.dataTables.min.css') }}"/>
-    <link rel="stylesheet" href="{{'https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css'}}" />
+    <link rel="stylesheet" href="{{ asset('assets/vendor/css/rtl/select2.min.css')}}" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
 @endsection
 @section('content')
@@ -36,7 +36,7 @@
     </div>
 
     <!-- Delete Modal -->
-        <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content text-center">
                     <div class="modal-header border-bottom-0">

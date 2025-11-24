@@ -22,7 +22,7 @@ class SiteuserController extends Controller
         $users          = User::select('users.id' , 'users.name' , 'users.email' , 'users.phone' , 'users.status' , 'users.level' , 'users.birthday' , 'users.national_id' , 'users.role_id' , 'roles.title_fa', 'users.gender')
                                 ->leftjoin('role_user' , 'role_user.user_id' , '=' , 'users.id')
                                 ->leftjoin('roles' , 'roles.id' , '=' , 'role_user.role_id')
-                                ->where('users.level','=','admin')->get();
+                                ->where('users.level','=','site')->get();
         $thispage       = [
             'title'   => 'مدیریت  کاربران داشبورد ',
             'list'    => 'لیست  کاربران داشبورد ',
@@ -36,7 +36,7 @@ class SiteuserController extends Controller
         if ($request->ajax()) {
             $data = User::leftjoin('roles' , 'roles.id' , '=' , 'users.role_id')
                 ->select('users.id' , 'users.name' , 'users.email' , 'users.phone' , 'roles.title_fa' , 'users.status')
-                ->where('users.level','=','admin')->get();
+                ->where('users.level','=','site')->get();
 
             return Datatables::of($data)
                 ->addColumn('name', function ($data) {

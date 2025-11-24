@@ -535,7 +535,7 @@
                         <div class="col-md-4 col-12 border-start">
                             <div class="card-header">
                                 <div class="d-flex justify-content-between">
-                                    <h5 class="mb-1">لیست پروژه ها</h5>
+                                    <h5 class="mb-1">لیست کارگاه ها</h5>
                                     <div class="dropdown">
                                         <button class="btn p-0" type="button" id="projectTimeline" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                             <i class="mdi mdi-dots-vertical mdi-24px"></i>
@@ -552,19 +552,25 @@
                                     پروژه در حال اجرا </small>
                             </div>
                             <div class="card-body">
-{{--                                @foreach($projects->take(7) as $project)--}}
-{{--                                <div class="d-flex align-items-center mb-3 pb-1">--}}
-{{--                                    <div class="avatar">--}}
-{{--                                        <div class="rounded bg-lighter d-flex align-items-center h-px-30">--}}
-{{--                                            <img src="{{asset('storage/'.$project->logo)}}" alt="credit-card" width="30">--}}
-{{--                                        </div>--}}
-{{--                                    </div>--}}
-{{--                                    <div class="ms-3 d-flex flex-column">--}}
-{{--                                        <h6 class="mb-1 fw-semibold">{{$project->title}}</h6>--}}
-{{--                                        <small class="text-muted"> درصد پیشرفت {{round(($project->total_amount / $totalPaid) * 100)}} % </small>--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
-{{--                                @endforeach--}}
+                                @foreach(DB::table('invoices')->leftjoin('products' ,'products.id' ,'=' , 'invoices.product_id')
+                                           ->select(DB::raw('COUNT(invoices.id) as user_count'),DB::raw('SUM(invoices.final_price) as total_amount') , 'products.title' , 'products.item1 as teacher_name', 'products.cover')
+                                           ->Where('products.product_type' , 'workshop')
+                                           ->where('invoices.price_status' , 4)
+                                           ->groupBy('products.id', 'products.title', 'products.item1', 'products.cover')
+                                           ->get() as $workshop)
+
+                                <div class="d-flex align-items-center mb-3 pb-1">
+                                    <div class="avatar">
+                                        <div class="rounded bg-lighter d-flex align-items-center h-px-30">
+                                            <img src="{{asset('storage/'.$workshop->cover)}}" alt="credit-card" width="30">
+                                        </div>
+                                    </div>
+                                    <div class="ms-3 d-flex flex-column">
+                                        <h6 class="mb-1 fw-semibold">{{$workshop->title}}</h6>
+                                        <small class="text-muted"> {{$workshop->user_count}}</small>
+                                    </div>
+                                </div>
+                                @endforeach
                             </div>
                         </div>
                     </div>

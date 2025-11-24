@@ -1,7 +1,5 @@
 @extends('site.layouts.base')
-
 @section('title', 'موسسه حقوقی دادورزان امین')
-
 @push('page_styles')
     <style>
         .team-slider {
@@ -38,16 +36,6 @@
         .workshop-slider {
             direction: rtl;
         }
-
-        /*.workshop-slider .swiper-slide {*/
-        /*    height: auto;*/
-        /*}*/
-
-        /*.workshop-slider .swiper-slide {*/
-        /*    width: unset !important;*/
-        /*    box-sizing: border-box;*/
-        /*}*/
-
 
         .workshop-slider .swiper-slide > * {
             margin-left: 0;

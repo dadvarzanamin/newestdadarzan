@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Dashboard\Menu_panel;
 use App\Models\Dashboard\Submenu_panel;
 use App\Models\Emploee;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Str;
@@ -19,17 +20,17 @@ class EmploeeController extends Controller
     {
 
         $thispage       = [
-            'title'   => 'مدیریت منو اعضا',
-            'list'    => 'لیست منو اعضا',
-            'add'     => 'افزودن منو اعضا',
-            'create'  => 'ایجاد منو اعضا',
-            'enter'   => 'ورود منو اعضا',
-            'edit'    => 'ویرایش منو اعضا',
-            'delete'  => 'حذف منو اعضا',
+            'title'   => 'مدیریت  اعضا',
+            'list'    => 'لیست  اعضا',
+            'add'     => 'افزودن  اعضا',
+            'create'  => 'ایجاد  اعضا',
+            'enter'   => 'ورود  اعضا',
+            'edit'    => 'ویرایش  اعضا',
+            'delete'  => 'حذف  اعضا',
         ];
 
         if ($request->ajax()) {
-            $data = Emploee::select('id' , 'fullname', 'image', 'side' , 'status', 'priority')->orderBy('priority')->get();
+            $data = Emploee::select('id' , 'fullname', 'image', 'side' , 'status', 'priority')->get();
 
             return Datatables::of($data)
                 ->addColumn('fullname', function ($data) {
@@ -75,33 +76,18 @@ class EmploeeController extends Controller
 
     }
 
-    public function create()
-    {
-        $thispage       = [
-            'title'         => 'مدیریت اعضا',
-            'list_title'    => 'لیست اعضا',
-            'add_title'     => 'افزودن اعضا',
-            'create_title'  => 'ایجاد اعضا',
-            'enter_title'   => 'ورود اعضا',
-            'edit_title'    => 'ویرایش اعضا',
-        ];
-        $menupanels         = Menu_panel::whereStatus(4)->get();
-        $submenupanels      = Submenu_panel::whereStatus(4)->get();
-        $emploees           = Emploee::all();
-
-        return view('Admin.emploees.create')
-            ->with(compact(['menupanels' , 'submenupanels', 'emploees' , 'thispage']));
-
-    }
-
     public function store(Request $request)
     {
         try{
+
+            $priority = Emploee::max('id');
+
             $emploees = new Emploee();
 
             $emploees->fullname    = $request->input('fullname');
             $emploees->side        = $request->input('side');
-            $emploees->phone       = $request->input('mobile');
+            $emploees->phone       = $request->input('phone');
+            $emploees->priority    = $priority + 1;
             $emploees->whatsapp    = $request->input('whatsapp');
             $emploees->instagram   = $request->input('instagram');
             $emploees->twitter     = $request->input('twitter');
@@ -109,16 +95,6 @@ class EmploeeController extends Controller
             $emploees->description = $request->input('description');
             if($request->input('positions')) {
                 $emploees->positions = json_encode(explode("،", $request->input('positions')));
-            }
-            if($request->hasfile('image')) {
-                $file = $request->file('image');
-                $imagePath  =public_path("emploee");
-                $imagelink  ="emploee";
-                $filename = Str::random(30) . "." . $file->clientExtension();
-                $newImage = Image::make($file);
-                $newImage->fit(300, 300);
-                $emploees->image = $imagelink . '/' . $filename;
-                $newImage->save($imagePath . '/' . $filename);
             }
             $result       = $emploees->save();
 
@@ -150,35 +126,16 @@ class EmploeeController extends Controller
 
     public function edit($id)
     {
-        $thispage       = [
-            'title'         => 'مدیریت اعضا',
-            'list_title'    => 'لیست اعضا',
-            'add_title'     => 'افزودن اعضا',
-            'create_title'  => 'ایجاد اعضا',
-            'enter_title'   => 'ورود اعضا',
-            'edit_title'    => 'ویرایش اعضا',
-        ];
-        $emploees       = Emploee::whereId($id)->first();
-        $idemploee      = Emploee::pluck('priority')->toArray();
-        $countemploee   = Emploee::count();
-        $s              = $countemploee + 5;
-        $values = range(1, $s);
-        //$values = array_values(array_diff($values , $idemploee));
-        //$idemploees = json_decode(Emploee::select('priority')->get()->toJson(), true);
+        $emploee = Emploee::find($id);
 
-        $menupanels     = Menu_panel::whereStatus(4)->get();
-        $submenupanels  = Submenu_panel::whereStatus(4)->get();
-
-        return view('Admin.emploees.edit')
-            ->with(compact(['menupanels' , 'submenupanels', 'emploees' , 'thispage' , 'idemploee' ,'values']));
+        return view('panel.partials.edit-form-emploee', compact('emploee'));
 
     }
 
     public function update(Request $request , $id)
     {
-
         try{
-            $emploees = Emploee::findOrfail($id);
+            $emploees = Emploee::find($id);
             $emploees->fullname    = $request->input('fullname');
             $emploees->side        = $request->input('side');
             $emploees->phone       = $request->input('phone');
@@ -191,33 +148,36 @@ class EmploeeController extends Controller
             if($request->input('positions')) {
                 $emploees->positions = json_encode(explode("،", $request->input('positions')));
             }
-            if($request->hasfile('image')) {
-                $file = $request->file('image');
-                $imagePath  =public_path("emploee");
-                $imagelink  ="emploee";
-                $filename = Str::random(30) . "." . $file->clientExtension();
-                $newImage = Image::make($file);
-                $newImage->fit(300, 300);
-                $emploees->image = $imagelink . '/' . $filename;
-                $newImage->save($imagePath . '/' . $filename);
-            }
             $result = $emploees->update();
-            if ($result == true) {
-                Alert::success('عملیات موفق', 'اطلاعات با موفقیت ثبت شد')->autoclose(3000);
+                if ($result == true) {
+                    $success = true;
+                    $flag    = 'success';
+                    $subject = 'عملیات موفق';
+                    $message = 'اطلاعات با موفقیت ثبت شد';
+                }
+                else {
+                    $success = false;
+                    $flag    = 'error';
+                    $subject = 'عملیات نا موفق';
+                    $message = 'اطلاعات ثبت نشد، لطفا مجددا تلاش نمایید';
+                }
+
+            } catch (Exception $e) {
+
+                $success = false;
+                $flag    = 'error';
+                $subject = 'خطا در ارتباط با سرور';
+                //$message = strchr($e);
+                $message = 'اطلاعات ثبت نشد،لطفا بعدا مجدد تلاش نمایید ';
             }
-            else {
-                Alert::error('عملیات نا موفق', 'اطلاعات ثبت نشد، لطفا مجددا تلاش نمایید')->autoclose(3000);
-            }
-        } catch (Exception $e) {
-            Alert::error('خطا در ارتباط با سرور', 'اطلاعات ثبت نشد، لطفا مجددا تلاش نمایید')->autoclose(3000);
-        }
-        return Redirect::back();
+
+            return response()->json(['success'=>$success , 'subject' => $subject, 'flag' => $flag, 'message' => $message]);
     }
 
-    public function deleteemploees(Request $request)
+    public function destroy($id)
     {
         try{
-            $emploees = Emploee::findorfail($request->input('id'));
+            $emploees = Emploee::findorfail($id);
             $result = $emploees->delete();
             if ($result == true) {
                 $success = true;
