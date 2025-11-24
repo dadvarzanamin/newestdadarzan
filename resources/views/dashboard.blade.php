@@ -170,15 +170,15 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="card-info mt-4 pt-1" data-bs-toggle="modal" data-bs-target="#usersModal" style="cursor: pointer;">
-                            <p class="text-muted">تعداد کاربران</p>
-                            <h5 class="mb-2">{{ DB::table('users')->whereLevel('site')->count() }}</h5>
+                        <div class="card-info mt-4 pt-1" data-bs-toggle="modal" data-bs-target="#lawyersModal" style="cursor: pointer;">
+                            <p class="text-muted">تعداد وکلا</p>
+                            <h5 class="mb-2">{{ DB::table('users')->whereRole_id(5)->count() }}</h5>
                         </div>
-                        <div class="modal fade" id="usersModal" tabindex="-1" aria-labelledby="usersModalLabel" aria-hidden="true">
+                        <div class="modal fade" id="lawyersModal" tabindex="-1" aria-labelledby="lawyersModalLabel" aria-hidden="true">
                             <div class="modal-dialog modal-lg">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title" id="usersModalLabel">لیست کاربران</h5>
+                                        <h5 class="modal-title" id="lawyersModalLabel">لیست وکلا</h5>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="بستن"></button>
                                     </div>
                                     <div class="modal-body">
@@ -195,7 +195,7 @@
                                                     </tr>
                                                     </thead>
                                                     <tbody>
-                                                    @foreach($users as $user)
+                                                    @foreach(DB::table('users')->whereRole_id(5)->get() as $user)
                                                         <tr>
                                                             <td>
                                                                 @if($user->image)
@@ -244,18 +244,17 @@
                             {{--    <i class="mdi mdi-chevron-up text-success"></i>--}}
                             {{--</div>--}}
                         </div>
-                        <div class="card-info mt-4 pt-1" data-bs-toggle="modal" data-bs-target="#totalprojectsModal" style="cursor: pointer;">
-                            <p class="text-muted"> تعداد قراردادها </p>
-                            <h5 class="mb-2">
-{{--                                {{DB::table('projects')->count()}}--}}
-                            </h5>
+                        <div class="card-info mt-4 pt-1" data-bs-toggle="modal" data-bs-target="#clientsModal" style="cursor: pointer;">
+                            <p class="text-muted"> تعداد موکلین </p>
+                            <h5 class="mb-2">{{ DB::table('users')->whereRole_id(4)->count() }}</h5>
+
                             {{--<div class="badge bg-label-secondary rounded-pill">4 ماه پیش</div>--}}
                         </div>
-                        <div class="modal fade" id="totalprojectsModal" tabindex="-1" aria-labelledby="totalprojectsModalLabel" aria-hidden="true">
+                        <div class="modal fade" id="clientsModal" tabindex="-1" aria-labelledby="clientsModalLabel" aria-hidden="true">
                             <div class="modal-dialog modal-lg">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title" id="totalprojectsModalLabel"> تعداد کل طرح</h5>
+                                        <h5 class="modal-title" id="clientsModalLabel">لیست موکلین</h5>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="بستن"></button>
                                     </div>
                                     <div class="modal-body">
@@ -264,21 +263,35 @@
                                                 <table class="table table-sm table-bordered" style="border-collapse: collapse;">
                                                     <thead class="table-light" style="position: sticky; top: 0; z-index: 10;">
                                                     <tr>
-                                                        <th class="py-3">نام طرح </th>
-                                                        <th class="py-3">نام مدیرعامل </th>
-                                                        <th class="py-3">درصد پیشرفت</th>
+                                                        <th class="py-3">تصویر </th>
+                                                        <th class="py-3">نام کاربری </th>
+                                                        <th class="py-3">ایمیل</th>
+                                                        <th class="py-3">نقش</th>
+                                                        <th class="py-3">وضعیت</th>
                                                     </tr>
                                                     </thead>
                                                     <tbody>
-{{--                                                    @foreach($projectis as $project)--}}
-{{--                                                        <tr>--}}
-{{--                                                            <td>--}}
-{{--                                                               {{$project->title}}--}}
-{{--                                                            </td>--}}
-{{--                                                            <td>{{ $project->CEO }}</td>--}}
-{{--                                                            <td>{{round(($project->invest_step * 100) / 20)}} %</td>--}}
-{{--                                                        </tr>--}}
-{{--                                                    @endforeach--}}
+                                                    @foreach(DB::table('users')->whereRole_id(4)->get() as $user)
+                                                        <tr>
+                                                            <td>
+                                                                @if($user->image)
+                                                                    <img data-src="{{ $user->image }}" class="w-px-40 h-auto rounded-circle" />
+                                                                @else
+                                                                    @if($user->gender == 1)
+                                                                        <img src="{{ asset('assets/img/avatars/1.png') }}" class="w-px-40 h-auto rounded-circle" />
+                                                                    @elseif($user->gender == 2)
+                                                                        <img src="{{ asset('assets/img/avatars/8.png') }}" class="w-px-40 h-auto rounded-circle" />
+                                                                    @else
+                                                                        <img src="{{ asset('assets/img/avatars/1.png') }}" class="w-px-40 h-auto rounded-circle" />
+                                                                    @endif
+                                                                @endif
+                                                            </td>
+                                                            <td>{{ $user->name }}</td>
+                                                            <td>{{ $user->email }}</td>
+                                                            <td>{{ $user->level == 'admin' ? 'مدیر' : ($user->level == 'applicant' ? 'سرمایه‌پذیر' : 'نامشخص') }}</td>
+                                                            <td>فعال</td>
+                                                        </tr>
+                                                    @endforeach
                                                     </tbody>
                                                 </table>
                                             </div>
@@ -304,17 +317,15 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="card-info mt-4 pt-1" data-bs-toggle="modal" data-bs-target="#activeprojectsModal" style="cursor: pointer;">
-                            <p class="text-muted">تعداد کارگاه ها</p>
-                            <h5 class="mb-2">
-{{--                                {{DB::table('projects')->where('invest_step' , '>=' , 1)->where('invest_step', '<>', 20)->count()}}--}}
-                            </h5>
+                        <div class="card-info mt-4 pt-1" data-bs-toggle="modal" data-bs-target="#studentsModal" style="cursor: pointer;">
+                            <p class="text-muted">تعداد دانشپذیران</p>
+                            <h5 class="mb-2">{{ DB::table('users')->whereRole_id(6)->count() }}</h5>
                         </div>
-                        <div class="modal fade" id="activeprojectsModal" tabindex="-1" aria-labelledby="activeprojectsModalLabel" aria-hidden="true">
+                        <div class="modal fade" id="studentsModal" tabindex="-1" aria-labelledby="studentsModalLabel" aria-hidden="true">
                             <div class="modal-dialog modal-lg">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title" id="activeprojectsModalLabel">تعداد طرح جاری</h5>
+                                        <h5 class="modal-title" id="studentsModalLabel">لیست دانشپذیران</h5>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="بستن"></button>
                                     </div>
                                     <div class="modal-body">
@@ -323,21 +334,35 @@
                                                 <table class="table table-sm table-bordered" style="border-collapse: collapse;">
                                                     <thead class="table-light" style="position: sticky; top: 0; z-index: 10;">
                                                     <tr>
-                                                        <th class="py-3">نام طرح </th>
-                                                        <th class="py-3">نام مدیرعامل </th>
-                                                        <th class="py-3">درصد پیشرفت</th>
+                                                        <th class="py-3">تصویر </th>
+                                                        <th class="py-3">نام کاربری </th>
+                                                        <th class="py-3">ایمیل</th>
+                                                        <th class="py-3">نقش</th>
+                                                        <th class="py-3">وضعیت</th>
                                                     </tr>
                                                     </thead>
                                                     <tbody>
-{{--                                                        @foreach($projectis as $project)--}}
-{{--                                                            @if($project->invest_step >= 1 && $project->invest_step <> 20)--}}
-{{--                                                                <tr>--}}
-{{--                                                                    <td>{{$project->title}}</td>--}}
-{{--                                                                    <td>{{ $project->CEO }}</td>--}}
-{{--                                                                    <td>{{round(($project->invest_step * 100) / 20)}} %</td>--}}
-{{--                                                                </tr>--}}
-{{--                                                            @endif--}}
-{{--                                                      @endforeach--}}
+                                                    @foreach(DB::table('users')->whereRole_id(6)->get() as $user)
+                                                        <tr>
+                                                            <td>
+                                                                @if($user->image)
+                                                                    <img data-src="{{ $user->image }}" class="w-px-40 h-auto rounded-circle" />
+                                                                @else
+                                                                    @if($user->gender == 1)
+                                                                        <img src="{{ asset('assets/img/avatars/1.png') }}" class="w-px-40 h-auto rounded-circle" />
+                                                                    @elseif($user->gender == 2)
+                                                                        <img src="{{ asset('assets/img/avatars/8.png') }}" class="w-px-40 h-auto rounded-circle" />
+                                                                    @else
+                                                                        <img src="{{ asset('assets/img/avatars/1.png') }}" class="w-px-40 h-auto rounded-circle" />
+                                                                    @endif
+                                                                @endif
+                                                            </td>
+                                                            <td>{{ $user->name }}</td>
+                                                            <td>{{ $user->email }}</td>
+                                                            <td>{{ $user->level == 'admin' ? 'مدیر' : ($user->level == 'applicant' ? 'سرمایه‌پذیر' : 'نامشخص') }}</td>
+                                                            <td>فعال</td>
+                                                        </tr>
+                                                    @endforeach
                                                     </tbody>
                                                 </table>
                                             </div>
@@ -363,17 +388,17 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="card-info mt-4 pt-1" data-bs-toggle="modal" data-bs-target="#endprojectsModal" style="cursor: pointer;">
-                            <p class="text-muted">تعداد استعلام های فعال</p>
+                        <div class="card-info mt-4 pt-1" data-bs-toggle="modal" data-bs-target="#contractsModal" style="cursor: pointer;">
+                            <p class="text-muted">تعداد نمونه قرارداد</p>
                             <h5 class="mb-2">
-{{--                                {{DB::table('projects')->Where('invest_step' , '>=' , 20)->count()}}--}}
+                                {{DB::table('products')->Where('product_type' , 'contract')->where('status' , 4)->count()}}
                             </h5>
                         </div>
-                        <div class="modal fade" id="endprojectsModal" tabindex="-1" aria-labelledby="endprojectsModalLabel" aria-hidden="true">
+                        <div class="modal fade" id="contractsModal" tabindex="-1" aria-labelledby="contractsModalLabel" aria-hidden="true">
                             <div class="modal-dialog modal-lg">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title" id="endprojectsModalLabel">تعداد طرح خاتمه یافته</h5>
+                                        <h5 class="modal-title" id="contractsModalLabel">تعداد طرح خاتمه یافته</h5>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="بستن"></button>
                                     </div>
                                     <div class="modal-body">
@@ -382,21 +407,19 @@
                                                 <table class="table table-sm table-bordered" style="border-collapse: collapse;">
                                                     <thead class="table-light" style="position: sticky; top: 0; z-index: 10;">
                                                     <tr>
-                                                        <th class="py-3">نام طرح </th>
-                                                        <th class="py-3">نام مدیرعامل </th>
-                                                        <th class="py-3">درصد پیشرفت</th>
+                                                        <th class="py-3"> عنوان </th>
+                                                        <th class="py-3"> مبلغ </th>
+                                                        <th class="py-3"> تعداد کلیک </th>
                                                     </tr>
                                                     </thead>
                                                     <tbody>
-{{--                                                    @foreach($projectis as $project)--}}
-{{--                                                        @if($project->invest_step == 20)--}}
-{{--                                                            <tr>--}}
-{{--                                                                <td>{{$project->title}}</td>--}}
-{{--                                                                <td>{{ $project->CEO }}</td>--}}
-{{--                                                                <td>{{round(($project->invest_step * 100) / 20)}} %</td>--}}
-{{--                                                            </tr>--}}
-{{--                                                        @endif--}}
-{{--                                                    @endforeach--}}
+                                                    @foreach(DB::table('products')->Where('product_type' , 'contract')->where('status' , 4)->get() as $contract)
+                                                        <tr>
+                                                            <td>{{$contract->title}}</td>
+                                                            <td>{{$contract->price}}</td>
+                                                            <td>{{$contract->count_click}} </td>
+                                                        </tr>
+                                                    @endforeach
                                                     </tbody>
                                                 </table>
                                             </div>
@@ -423,9 +446,9 @@
                             </div>
                         </div>
                         <div class="card-info mt-4 pt-1" data-bs-toggle="modal" data-bs-target="#rejectprojectsModal" style="cursor: pointer;">
-                            <p class="text-muted">تعداد طرح رد شده</p>
+                            <p class="text-muted">تعداد کارگاه ها</p>
                             <h5 class="mb-2">
-{{--                                {{DB::table('projects')->where('invest_step' , '==', 0)->count()}}--}}
+                                {{DB::table('products')->Where('product_type' , 'workshop')->count()}}
                             </h5>
                         </div>
                         <div class="modal fade" id="rejectprojectsModal" tabindex="-1" aria-labelledby="rejectprojectsModalLabel" aria-hidden="true">
@@ -441,21 +464,26 @@
                                                 <table class="table table-sm table-bordered" style="border-collapse: collapse;">
                                                     <thead class="table-light" style="position: sticky; top: 0; z-index: 10;">
                                                     <tr>
-                                                        <th class="py-3">نام طرح </th>
-                                                        <th class="py-3">نام مدیرعامل </th>
-                                                        <th class="py-3">درصد پیشرفت</th>
+                                                        <th class="py-3">نام کارگاه</th>
+                                                        <th class="py-3">نام استاد</th>
+                                                        <th class="py-3">تعداد ثبت نامی</th>
+                                                        <th class="py-3">مبلغ دریافتی</th>
                                                     </tr>
                                                     </thead>
                                                     <tbody>
-{{--                                                    @foreach($projectis as $project)--}}
-{{--                                                        @if($project->invest_step == 0)--}}
-{{--                                                            <tr>--}}
-{{--                                                                <td>{{$project->title}}</td>--}}
-{{--                                                                <td>{{ $project->CEO }}</td>--}}
-{{--                                                                <td>{{round(($project->invest_step * 100) / 20)}} %</td>--}}
-{{--                                                            </tr>--}}
-{{--                                                        @endif--}}
-{{--                                                    @endforeach--}}
+                                                    @foreach(DB::table('invoices')->leftjoin('products' ,'products.id' ,'=' , 'invoices.product_id')
+                                                                 ->select(DB::raw('COUNT(invoices.id) as user_count'),DB::raw('SUM(invoices.final_price) as total_amount') , 'products.title' , 'products.item1 as teacher_name')
+                                                                 ->Where('products.product_type' , 'workshop')
+                                                                 ->where('invoices.price_status' , 4)
+                                                                 ->groupBy('products.id', 'products.title', 'products.item1')
+                                                                 ->get() as $workshop)
+                                                        <tr>
+                                                            <td>{{$workshop->title}}</td>
+                                                            <td>{{$workshop->teacher_name }}</td>
+                                                            <td>{{$workshop->user_count }}</td>
+                                                            <td>{{$workshop->total_amount > 0 ? number_format($workshop->total_amount) : 'رایگان' }}</td>
+                                                        </tr>
+                                                    @endforeach
                                                     </tbody>
                                                 </table>
                                             </div>
@@ -482,10 +510,8 @@
                             </div>
                         </div>
                         <div class="card-info mt-4 pt-1">
-                            <p class="text-muted">مجموع پرداختی های کارگاه ها</p>
-                            <h5 class="mb-2">
-{{--                                {{number_format(DB::table('finances')->sum('amount'))}}--}}
-                            </h5>
+                            <p class="text-muted">تعداد پست ها</p>
+                            {{DB::table('posts')->Where('status' , 4)->count()}}
                         </div>
                     </div>
                 </div>
@@ -548,7 +574,7 @@
             <div class="col-lg-6 col-md-6 col-12">
                 <div class="card h-100 border-0 shadow-sm rounded-4">
                     <div class="card-header d-flex align-items-center justify-content-between bg-white rounded-top-4">
-                        <h6 class="card-title m-0 me-2 fw-bold">تاریخچه پرداخت</h6>
+                        <h6 class="card-title m-0 me-2 fw-bold">موجودی کیف پول ها</h6>
                         <div class="dropdown">
                             <button class="btn p-0" type="button" id="paymentHistory" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="mdi mdi-dots-vertical mdi-24px"></i>
@@ -564,28 +590,26 @@
                     <div class="card-body py-0">
                         <div class="payment-scroll">
                             <ul class="list-group list-group-flush">
-{{--                                @foreach($finances as $finance)--}}
-{{--                                    <li class="list-group-item px-3 py-3 payment-item d-flex align-items-center gap-3">--}}
-{{--                                        --}}{{-- Logo --}}
-{{--                                        <div class="payment-logo rounded-3 d-flex align-items-center justify-content-center flex-shrink-0">--}}
-{{--                                            <img src="{{ asset('storage/'.$finance->logo) }}" alt="logo" width="28" height="28" class="rounded-2">--}}
-{{--                                        </div>--}}
+                                @foreach($wallets as $wallet)
+                                    <li class="list-group-item px-3 py-3 payment-item d-flex align-items-center gap-3">
 
-{{--                                        --}}{{-- Texts --}}
-{{--                                        <div class="flex-grow-1 min-w-0">--}}
-{{--                                            <div class="d-flex justify-content-between align-items-center">--}}
-{{--                                                <div class="text-truncate fw-semibold">{{ $finance->title }}</div>--}}
+                                        <div class="payment-logo rounded-3 d-flex align-items-center justify-content-center flex-shrink-0">
+                                            <img src="{{$wallet->gender == 2 ? asset('assets/img/avatars/8.png') : asset('assets/img/avatars/1.png')}}" alt="user" width="28" height="28" class="rounded-2">
+                                        </div>
+
+                                        <div class="flex-grow-1 min-w-0">
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <div class="text-truncate fw-semibold">{{ $wallet->name }}</div>
 {{--                                                <div class="small text-muted ms-2">{{ $finance->date }}</div>--}}
-{{--                                            </div>--}}
-{{--                                        </div>--}}
+                                            </div>
+                                        </div>
 
-{{--                                        --}}{{-- Amount --}}
-{{--                                        <div class="text-end">--}}
-{{--                                            <div class="fw-semibold">{{ number_format($finance->amount) }} <span class="text-muted small">تومان</span></div>--}}
-{{--                                            <div class="text-muted small">{{ number_format($finance->amount) }}</div>--}}
-{{--                                        </div>--}}
-{{--                                    </li>--}}
-{{--                                @endforeach--}}
+                                        <div class="text-end">
+                                            <div class="fw-semibold">{{ number_format($wallet->balance) }} <span class="text-muted small">تومان</span></div>
+{{--                                            <div class="text-muted small">{{ number_format($wallet->balance) }}</div>--}}
+                                        </div>
+                                    </li>
+                                @endforeach
                             </ul>
                         </div>
                     </div>
@@ -667,60 +691,60 @@
                     <div class="card-body py-0">
                         <div class="user-scroll">
                             <ul class="list-group list-group-flush">
-{{--                                @foreach($users as $user)--}}
-{{--                                    @php--}}
-{{--                                        $avatar = $user->gender == 2--}}
-{{--                                          ? asset('assets/img/avatars/8.png')--}}
-{{--                                          : asset('assets/img/avatars/1.png');--}}
+                                @foreach($users as $user)
+                                    @php
+                                        $avatar = $user->gender == 2
+                                          ? asset('assets/img/avatars/8.png')
+                                          : asset('assets/img/avatars/1.png');
 
-{{--                                        $roleLabel = $user->level === 'admin' ? 'مدیر'--}}
-{{--                                                    : ($user->level === 'applicant' ? 'سرمایه‌پذیر' : 'نامشخص');--}}
+                                        $roleLabel = $user->level === 'admin' ? 'مدیر'
+                                                    : ($user->level === 'applicant' ? 'سرمایه‌پذیر' : 'نامشخص');
 
-{{--                                        $statusLabel = 'فعال';--}}
-{{--                                        $statusTone  = 'success'; // در صورت نیاز از فیلد وضعیت بخوانید--}}
+                                        $statusLabel = 'فعال';
+                                        $statusTone  = 'success'; // در صورت نیاز از فیلد وضعیت بخوانید
 
-{{--                                        $lastSeen = ($user->lastLogin && $user->lastLogin->created_at)--}}
-{{--                                          ? jdate($user->lastLogin->created_at)->format('Y/m/d ساعت H:i')--}}
-{{--                                          : 'ورود ثبت نشده';--}}
-{{--                                    @endphp--}}
+                                        $lastSeen = ($user->lastLogin && $user->lastLogin->created_at)
+                                          ? jdate($user->lastLogin->created_at)->format('Y/m/d ساعت H:i')
+                                          : 'ورود ثبت نشده';
+                                    @endphp
 
-{{--                                    <li class="list-group-item px-3 py-3 border-0 border-bottom user-item"--}}
-{{--                                        data-name="{{ Str::lower($user->name) }}"--}}
-{{--                                        data-email="{{ Str::lower($user->email) }}">--}}
+                                    <li class="list-group-item px-3 py-3 border-0 border-bottom user-item"
+                                        data-name="{{ Str::lower($user->name) }}"
+                                        data-email="{{ Str::lower($user->email) }}">
 
-{{--                                        <div class="d-flex align-items-center gap-3">--}}
-{{--                                            <!-- Avatar -->--}}
-{{--                                            <div class="user-avatar rounded-circle overflow-hidden flex-shrink-0">--}}
-{{--                                                <img src="{{ $avatar }}" alt="avatar" width="44" height="44">--}}
-{{--                                            </div>--}}
+                                        <div class="d-flex align-items-center gap-3">
+                                            <!-- Avatar -->
+                                            <div class="user-avatar rounded-circle overflow-hidden flex-shrink-0">
+                                                <img src="{{ $avatar }}" alt="avatar" width="44" height="44">
+                                            </div>
 
-{{--                                            <!-- Main info -->--}}
-{{--                                            <div class="flex-grow-1 min-w-0">--}}
-{{--                                                <div class="d-flex justify-content-between align-items-center">--}}
-{{--                                                    <div class="min-w-0">--}}
-{{--                                                        <div class="fw-semibold text-truncate" title="{{ $user->name }}">{{ $user->name }}</div>--}}
-{{--                                                        <div class="small text-muted text-truncate" title="{{ $user->email }}">{{ $user->email }}</div>--}}
-{{--                                                    </div>--}}
-{{--                                                    <div class="text-end ms-2">--}}
-{{--                      <span class="badge role-badge me-1--}}
-{{--                        {{ $user->level==='admin' ? 'role-admin' : ($user->level==='applicant' ? 'role-applicant' : 'role-unknown') }}">--}}
-{{--                        {{ $roleLabel }}--}}
-{{--                      </span>--}}
-{{--                                                        <span class="pill pill-{{ $statusTone }}">{{ $statusLabel }}</span>--}}
-{{--                                                    </div>--}}
-{{--                                                </div>--}}
+                                            <!-- Main info -->
+                                            <div class="flex-grow-1 min-w-0">
+                                                <div class="d-flex justify-content-between align-items-center">
+                                                    <div class="min-w-0">
+                                                        <div class="fw-semibold text-truncate" title="{{ $user->name }}">{{ $user->name }}</div>
+                                                        <div class="small text-muted text-truncate" title="{{ $user->email }}">{{ $user->email }}</div>
+                                                    </div>
+                                                    <div class="text-end ms-2">
+                                                    <span class="badge role-badge me-1
+                                                      {{ $user->level==='admin' ? 'role-admin' : ($user->level==='applicant' ? 'role-applicant' : 'role-unknown') }}">
+                                                      {{ $roleLabel }}
+                                                    </span>
+                                                        <span class="pill pill-{{ $statusTone }}">{{ $statusLabel }}</span>
+                                                    </div>
+                                                </div>
 
-{{--                                                <div class="d-flex justify-content-between align-items-center mt-2 small text-muted">--}}
-{{--                    <span class="d-flex align-items-center gap-1">--}}
-{{--                      <i class="mdi mdi-clock-outline mdi-18px"></i> آخرین ورود:--}}
-{{--                    </span>--}}
-{{--                                                    <span class="text-end">{{ $lastSeen }}</span>--}}
-{{--                                                </div>--}}
-{{--                                            </div>--}}
-{{--                                        </div>--}}
+                                                <div class="d-flex justify-content-between align-items-center mt-2 small text-muted">
+                                                    <span class="d-flex align-items-center gap-1">
+                                                      <i class="mdi mdi-clock-outline mdi-18px"></i> آخرین ورود:
+                                                    </span>
+                                                    <span class="text-end">{{ $lastSeen }}</span>
+                                                </div>
+                                            </div>
+                                        </div>
 
-{{--                                    </li>--}}
-{{--                                @endforeach--}}
+                                    </li>
+                                @endforeach
                             </ul>
                         </div>
                     </div>

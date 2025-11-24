@@ -10,6 +10,7 @@ use App\Models\MenuPanel;
 use App\Models\Product;
 use App\Models\SubmenuPanel;
 use App\Models\User;
+use App\Models\Wallet;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -34,7 +35,12 @@ class IndexController extends Controller
             ->select('id', 'name', 'email', 'gender')
             ->get();
 
-        return view('dashboard')->with(compact(['thispage' , 'users']));
+        $wallets = Wallet::leftjoin('users', 'wallets.user_id', '=', 'users.id')
+        ->select('users.name', 'wallets.balance', 'users.gender')
+        ->orderBy('wallets.balance', 'desc')
+        ->get();
+
+        return view('dashboard')->with(compact(['thispage' , 'users' , 'wallets']));
     }
     public function getcities($stateId)
     {
