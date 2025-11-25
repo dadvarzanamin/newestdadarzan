@@ -3,153 +3,8 @@
 @section('style')
 <link rel="stylesheet" href="{{ asset('assets/vendor/css/rtl/dataTables.dataTables.min.css') }}"/>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.3/dropzone.min.css"/>
-    <style>
-        /* اسکرول تمیز و با ارتفاع کنترل‌شده */
-        .payment-scroll{
-            max-height: 400px;
-            overflow-y: auto;
-            padding: .25rem 0;
-            scrollbar-width: thin;
-        }
-        .payment-scroll::-webkit-scrollbar { width: 6px; }
-        .payment-scroll::-webkit-scrollbar-thumb {
-            background: rgba(0,0,0,.12);
-            border-radius: 8px;
-        }
-
-        /* آیتم‌ها */
-        .payment-item{
-            border: 0 !important;
-            border-bottom: 1px solid rgba(0,0,0,.06) !important;
-            transition: background .2s ease, transform .2s ease;
-        }
-        .payment-item:last-child{ border-bottom: 0 !important; }
-        .payment-item:hover{
-            background: #fafafa;
-            transform: translateY(-1px);
-        }
-
-        /* لوگو */
-        .payment-logo{
-            width: 40px; height: 40px;
-            background: #f3f4f6;
-        }
-
-        /* متن‌های طولانی را دو خطی کنید (اختیاری) */
-        .text-truncate{
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-        }
-
-        /* گوشه‌های کارت نرم‌تر */
-        .card.rounded-4, .rounded-top-4{ border-radius: 1rem !important; }
-
-        :root{
-            --bg-card: #ffffff;
-            --bg-soft: #f5f7fb;
-            --text-muted: #6b7280;
-            --ring: rgba(15, 23, 42, .06);
-
-            /* accent palette */
-            --primary-100:#eef2ff; --primary-400:#818cf8; --primary-500:#6366f1; --primary-600:#4f46e5;
-            --info-100:#e0f2fe;    --info-400:#60a5fa;    --info-500:#3b82f6;    --info-600:#2563eb;
-            --warn-100:#fff7ed;    --warn-400:#fb923c;    --warn-500:#f97316;    --warn-600:#ea580c;
-        }
-
-        .dark, [data-theme="dark"]{
-            --bg-card: #0b1220;
-            --bg-soft: #0f172a;
-            --text-muted: #9aa3b2;
-            --ring: rgba(148, 163, 184, .12);
-        }
-
-        .portfolio-card{
-            background: var(--bg-card);
-            transition: box-shadow .25s ease, transform .25s ease;
-            box-shadow: 0 6px 18px var(--ring) !important;
-        }
-        .portfolio-card:hover{ transform: translateY(-2px); }
-
-        .portfolio-scroll{
-            max-height: 400px; overflow-y: auto; scrollbar-width: thin;
-        }
-        .portfolio-scroll::-webkit-scrollbar{ width: 6px; }
-        .portfolio-scroll::-webkit-scrollbar-thumb{ background: rgba(0,0,0,.12); border-radius: 8px; }
-
-        .portfolio-item{ background: transparent; transition: background .2s ease, transform .2s ease; }
-        .portfolio-item:hover{ background: var(--bg-soft); transform: translateY(-1px); }
-        .portfolio-item:last-child{ border-bottom: 0 !important; }
-
-        .tone-dot{
-            width:10px; height:10px; border-radius:50%;
-            box-shadow: 0 0 0 4px rgba(0,0,0,.04) inset;
-        }
-        .tone-primary{ background: var(--primary-500); }
-        .tone-info{    background: var(--info-500); }
-        .tone-warning{ background: var(--warn-500); }
-
-        .pill{
-            display:inline-block; padding:.15rem .5rem; border-radius: 999px;
-            font-weight: 600; line-height: 1; letter-spacing:.2px;
-        }
-        .pill-primary{ background: color-mix(in oklab, var(--primary-100) 70%, #fff 30%); color: var(--primary-600); }
-        .pill-info{    background: color-mix(in oklab, var(--info-100) 70%, #fff 30%);    color: var(--info-600); }
-        .pill-warning{ background: color-mix(in oklab, var(--warn-100) 70%, #fff 30%);    color: var(--warn-600); }
-
-        .progress.sleek{
-            height: 8px; border-radius: 14px; background: rgba(0,0,0,.06);
-            overflow: hidden;
-            box-shadow: inset 0 1px 3px rgba(0,0,0,.04);
-        }
-        .progress.sleek .progress-bar{ border-radius: 14px; transition: width .45s cubic-bezier(.22,.61,.36,1); }
-
-        .progress .bar-primary{
-            background-image: linear-gradient(90deg, var(--primary-400), var(--primary-600));
-        }
-        .progress .bar-info{
-            background-image: linear-gradient(90deg, var(--info-400), var(--info-600));
-        }
-        .progress .bar-warning{
-            background-image: linear-gradient(90deg, var(--warn-400), var(--warn-600));
-        }
-
-        /* گردی‌ها */
-        .rounded-4, .rounded-top-4{ border-radius: 16px !important; }
-
-        .user-card { box-shadow: 0 6px 18px rgba(15,23,42,.06) !important; }
-        .rounded-top-4, .rounded-4 { border-radius: 16px !important; }
-
-        .user-scroll{
-            max-height: 400px; overflow-y: auto; scrollbar-width: thin;
-        }
-        .user-scroll::-webkit-scrollbar{ width: 6px; }
-        .user-scroll::-webkit-scrollbar-thumb{ background: rgba(0,0,0,.12); border-radius: 8px; }
-
-        .user-item{
-            transition: background .2s ease, transform .2s ease;
-            border-bottom: 1px solid rgba(0,0,0,.06) !important;
-        }
-        .user-item:last-child{ border-bottom: 0 !important; }
-        .user-item:hover{ background: #fafafa; transform: translateY(-1px); }
-
-        .user-avatar{ width: 44px; height: 44px; background: #f3f4f6; }
-        .user-avatar img{ width: 100%; height: 100%; object-fit: cover; }
-
-        /* Badge نقش‌ها */
-        .role-badge{ font-weight: 600; border-radius: 999px; padding: .25rem .55rem; }
-        .role-admin{ background: rgba(99,102,241,.12); color:#4f46e5; }
-        .role-applicant{ background: rgba(56,189,248,.14); color:#0ea5e9; }
-        .role-unknown{ background: rgba(148,163,184,.18); color:#475569; }
-
-        /* وضعیت (pill) */
-        .pill{ display:inline-block; padding:.18rem .6rem; border-radius:999px; font-weight:700; line-height:1; }
-        .pill-success{ background: rgba(34,197,94,.14); color:#16a34a; }
-        .pill-danger{  background: rgba(239,68,68,.12); color:#dc2626; }
-        .pill-warning{ background: rgba(245,158,11,.14); color:#d97706; }
-
-    </style>
 @endsection
+
 @section('content')
 
     <div class="row gy-4 mb-4">
@@ -520,62 +375,162 @@
 
         <div class="row gy-4">
 
-            <div class="col-lg-12 col-md-12 col-12">
+            <!-- Line Chart -->
+            <div class="col-12">
                 <div class="card">
-                    <div class="row">
-                        <div class="col-md-8 col-12">
-                            <div class="card-header">
-                                <h5 class="mb-1">کارگاه ها</h5>
-                                <small class="mb-0 text-body">مجموع کارگاه های برگزار شده</small>
-                            </div>
-                            <div class="card-body px-2">
-                                <div id="projectTimelineChart"></div>
-                            </div>
+                    <div class="card-header d-flex justify-content-between">
+                        <div>
+                            <h5 class="card-title mb-1">فروش کارگاه ها</h5>
+                            <small class="text-muted primary-font">مجموع فروش هر کارگاه</small>
                         </div>
-                        <div class="col-md-4 col-12 border-start">
-                            <div class="card-header">
-                                <div class="d-flex justify-content-between">
-                                    <h5 class="mb-1">لیست کارگاه ها</h5>
-                                    <div class="dropdown">
-                                        <button class="btn p-0" type="button" id="projectTimeline" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <i class="mdi mdi-dots-vertical mdi-24px"></i>
-                                        </button>
-                                        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="projectTimeline">
-                                            <a class="dropdown-item" href="javascript:void(0);">نوسازی</a>
-                                            <a class="dropdown-item" href="javascript:void(0);">اشتراک گذاری</a>
-                                            <a class="dropdown-item" href="javascript:void(0);">بروزرسانی</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <small class="text-body mb-0">
-{{--                                    {{DB::table('projects')->where('invest_step' , '>=' , 1)->count()}}--}}
-                                    پروژه در حال اجرا </small>
-                            </div>
-                            <div class="card-body">
-                                @foreach(DB::table('invoices')->leftjoin('products' ,'products.id' ,'=' , 'invoices.product_id')
-                                           ->select(DB::raw('COUNT(invoices.id) as user_count'),DB::raw('SUM(invoices.final_price) as total_amount') , 'products.title' , 'products.item1 as teacher_name', 'products.cover')
-                                           ->Where('products.product_type' , 'workshop')
-                                           ->where('invoices.price_status' , 4)
-                                           ->groupBy('products.id', 'products.title', 'products.item1', 'products.cover')
-                                           ->get() as $workshop)
-
-                                <div class="d-flex align-items-center mb-3 pb-1">
-                                    <div class="avatar">
-                                        <div class="rounded bg-lighter d-flex align-items-center h-px-30">
-                                            <img src="{{asset('storage/'.$workshop->cover)}}" alt="credit-card" width="30">
-                                        </div>
-                                    </div>
-                                    <div class="ms-3 d-flex flex-column">
-                                        <h6 class="mb-1 fw-semibold">{{$workshop->title}}</h6>
-                                        <small class="text-muted"> {{$workshop->user_count}}</small>
-                                    </div>
-                                </div>
-                                @endforeach
-                            </div>
+                        <div class="d-sm-flex d-none align-items-center primary-font">
+                            <h5 class="fw-bold mb-0 me-3">1,300,000 تومان</h5>
+                            <span class="badge bg-label-secondary">
+                      <i class="bx bx-down-arrow-alt bx-xs text-danger"></i>
+                      <span class="align-middle">20%</span>
+                    </span>
                         </div>
+                    </div>
+                    <div class="card-body">
+                        <div id="lineChart"></div>
                     </div>
                 </div>
             </div>
+            <!-- /Line Chart -->
+
+            <div class="col-lg-12 col-md-12 col-12">
+                <div class="card">
+
+                    <div class="row g-0">
+
+                        <div class="col-md-7 col-12">
+                            <div class="card-header border-0 pb-1 pb-md-2">
+                                <div class="d-flex align-items-center justify-content-between">
+                                    <div>
+                                        <h5 class="mb-1 d-flex align-items-center">
+                                            <i class="mdi mdi-chart-areaspline ms-1"></i>
+                                            کارگاه‌ها
+                                        </h5>
+                                        <small class="mb-0 text-body">
+                                            مجموع کارگاه‌های برگزار شده
+                                        </small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body px-2 pt-0">
+                                <div id="projectTimelineChart"></div>
+                            </div>
+                        </div>
+
+                        {{-- سمت راست: لیست کارگاه‌ها --}}
+                        <div class="col-md-5 col-12 border-start">
+                            <div class="card-header border-0 pb-2 pt-3 pt-md-4">
+                                <div class="d-flex justify-content-between align-items-start">
+                                    <div>
+                                        <h5 class="mb-1 d-flex align-items-center">
+                                            <i class="mdi mdi-teach ms-1"></i>
+                                            لیست کارگاه‌ها
+                                        </h5>
+{{--                                        <small class="text-body mb-0 d-block">--}}
+{{--                                            پروژه در حال اجرا--}}
+{{--                                        </small>--}}
+                                    </div>
+
+                                    <div class="dropdown">
+                                        <button class="btn btn-icon p-0" type="button"
+                                                id="projectTimeline"
+                                                data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <i class="mdi mdi-dots-vertical mdi-24px"></i>
+                                        </button>
+                                        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="projectTimeline">
+                                            <a class="dropdown-item" href="javascript:void(0);">
+                                                <i class="mdi mdi-refresh ms-1"></i> نوسازی
+                                            </a>
+                                            <a class="dropdown-item" href="javascript:void(0);">
+                                                <i class="mdi mdi-share-variant ms-1"></i> اشتراک‌گذاری
+                                            </a>
+                                            <a class="dropdown-item" href="javascript:void(0);">
+                                                <i class="mdi mdi-update ms-1"></i> بروزرسانی
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card-body pt-2">
+
+                                @foreach(
+                                    DB::table('invoices')
+                                        ->leftJoin('products' ,'products.id' ,'=' , 'invoices.product_id')
+                                        ->select(
+                                            DB::raw('COUNT(invoices.id) as user_count'),
+                                            DB::raw('SUM(invoices.final_price) as total_amount'),
+                                            'products.title',
+                                            'products.item1 as teacher_name',
+                                            'products.cover'
+                                        )
+                                        ->where('products.product_type' , 'workshop')
+                                        ->where('invoices.price_status' , 4)
+                                        ->groupBy('products.id', 'products.title', 'products.item1', 'products.cover')
+                                        ->get() as $workshop
+                                )
+
+                                    <div class="workshop-item d-flex align-items-center mb-3">
+
+                                        {{-- بخش تصویر 16:9 وسط‌چین --}}
+                                        <div class="workshop-thumb ms-3 ml-2">
+                                            <img src="{{ asset('storage/'.$workshop->cover) }}" alt="{{ $workshop->title }}">
+                                        </div>
+
+                                        {{-- بخش متن --}}
+                                        <div class="flex-grow-1">
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <h6 class="fw-semibold workshop-title" title="{{ $workshop->title }}">
+                                                    {{ $workshop->title }}
+                                                </h6>
+
+                                                <span class="chip chip-sm participant-chip">
+                {{ $workshop->user_count }} نفر
+            </span>
+                                            </div>
+
+                                            @if(!empty($workshop->teacher_name))
+                                                <small class="text-muted d-block mt-1">
+                                                    مدرس: {{ $workshop->teacher_name }}
+                                                </small>
+                                            @endif
+
+                                            <small class="text-muted d-block mt-1">
+                                                مجموع فروش:
+                                                <span class="fw-semibold">
+                {{ number_format($workshop->total_amount) }} تومان
+            </span>
+                                            </small>
+                                        </div>
+
+                                    </div>
+                                @endforeach
+
+                                @if(
+                                    DB::table('invoices')
+                                        ->leftJoin('products' ,'products.id' ,'=' , 'invoices.product_id')
+                                        ->where('products.product_type' , 'workshop')
+                                        ->where('invoices.price_status' , 4)
+                                        ->count() === 0
+                                )
+                                    <div class="text-center py-4">
+                                        <i class="mdi mdi-calendar-blank-outline d-block mb-2 mdi-24px text-muted"></i>
+                                        <span class="text-muted small d-block">هنوز کارگاهی ثبت نشده است.</span>
+                                    </div>
+                                @endif
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
 
             <div class="col-lg-6 col-md-6 col-12">
                 <div class="card h-100 border-0 shadow-sm rounded-4">

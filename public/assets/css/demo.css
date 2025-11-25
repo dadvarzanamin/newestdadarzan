@@ -109,3 +109,205 @@
   text-align: center;
   margin-top: 1.25rem;
 }
+
+     /* اسکرول تمیز و با ارتفاع کنترل‌شده */
+ .payment-scroll{
+     max-height: 400px;
+     overflow-y: auto;
+     padding: .25rem 0;
+     scrollbar-width: thin;
+ }
+.payment-scroll::-webkit-scrollbar { width: 6px; }
+.payment-scroll::-webkit-scrollbar-thumb {
+    background: rgba(0,0,0,.12);
+    border-radius: 8px;
+}
+
+/* آیتم‌ها */
+.payment-item{
+    border: 0 !important;
+    border-bottom: 1px solid rgba(0,0,0,.06) !important;
+    transition: background .2s ease, transform .2s ease;
+}
+.payment-item:last-child{ border-bottom: 0 !important; }
+.payment-item:hover{
+    background: #fafafa;
+    transform: translateY(-1px);
+}
+
+/* لوگو */
+.payment-logo{
+    width: 40px; height: 40px;
+    background: #f3f4f6;
+}
+
+/* متن‌های طولانی را دو خطی کنید (اختیاری) */
+.text-truncate{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* گوشه‌های کارت نرم‌تر */
+.card.rounded-4, .rounded-top-4{ border-radius: 1rem !important; }
+
+:root{
+    --bg-card: #ffffff;
+    --bg-soft: #f5f7fb;
+    --text-muted: #6b7280;
+    --ring: rgba(15, 23, 42, .06);
+
+    /* accent palette */
+    --primary-100:#eef2ff; --primary-400:#818cf8; --primary-500:#6366f1; --primary-600:#4f46e5;
+    --info-100:#e0f2fe;    --info-400:#60a5fa;    --info-500:#3b82f6;    --info-600:#2563eb;
+    --warn-100:#fff7ed;    --warn-400:#fb923c;    --warn-500:#f97316;    --warn-600:#ea580c;
+}
+
+.dark, [data-theme="dark"]{
+    --bg-card: #0b1220;
+    --bg-soft: #0f172a;
+    --text-muted: #9aa3b2;
+    --ring: rgba(148, 163, 184, .12);
+}
+
+.portfolio-card{
+    background: var(--bg-card);
+    transition: box-shadow .25s ease, transform .25s ease;
+    box-shadow: 0 6px 18px var(--ring) !important;
+}
+.portfolio-card:hover{ transform: translateY(-2px); }
+
+.portfolio-scroll{
+    max-height: 400px; overflow-y: auto; scrollbar-width: thin;
+}
+.portfolio-scroll::-webkit-scrollbar{ width: 6px; }
+.portfolio-scroll::-webkit-scrollbar-thumb{ background: rgba(0,0,0,.12); border-radius: 8px; }
+
+.portfolio-item{ background: transparent; transition: background .2s ease, transform .2s ease; }
+.portfolio-item:hover{ background: var(--bg-soft); transform: translateY(-1px); }
+.portfolio-item:last-child{ border-bottom: 0 !important; }
+
+.tone-dot{
+    width:10px; height:10px; border-radius:50%;
+    box-shadow: 0 0 0 4px rgba(0,0,0,.04) inset;
+}
+.tone-primary{ background: var(--primary-500); }
+.tone-info{    background: var(--info-500); }
+.tone-warning{ background: var(--warn-500); }
+
+.pill{
+    display:inline-block; padding:.15rem .5rem; border-radius: 999px;
+    font-weight: 600; line-height: 1; letter-spacing:.2px;
+}
+.pill-primary{ background: color-mix(in oklab, var(--primary-100) 70%, #fff 30%); color: var(--primary-600); }
+.pill-info{    background: color-mix(in oklab, var(--info-100) 70%, #fff 30%);    color: var(--info-600); }
+.pill-warning{ background: color-mix(in oklab, var(--warn-100) 70%, #fff 30%);    color: var(--warn-600); }
+
+.progress.sleek{
+    height: 8px; border-radius: 14px; background: rgba(0,0,0,.06);
+    overflow: hidden;
+    box-shadow: inset 0 1px 3px rgba(0,0,0,.04);
+}
+.progress.sleek .progress-bar{ border-radius: 14px; transition: width .45s cubic-bezier(.22,.61,.36,1); }
+
+.progress .bar-primary{
+    background-image: linear-gradient(90deg, var(--primary-400), var(--primary-600));
+}
+.progress .bar-info{
+    background-image: linear-gradient(90deg, var(--info-400), var(--info-600));
+}
+.progress .bar-warning{
+    background-image: linear-gradient(90deg, var(--warn-400), var(--warn-600));
+}
+
+/* گردی‌ها */
+.rounded-4, .rounded-top-4{ border-radius: 16px !important; }
+
+.user-card { box-shadow: 0 6px 18px rgba(15,23,42,.06) !important; }
+.rounded-top-4, .rounded-4 { border-radius: 16px !important; }
+
+.user-scroll{
+    max-height: 400px; overflow-y: auto; scrollbar-width: thin;
+}
+.user-scroll::-webkit-scrollbar{ width: 6px; }
+.user-scroll::-webkit-scrollbar-thumb{ background: rgba(0,0,0,.12); border-radius: 8px; }
+
+.user-item{
+    transition: background .2s ease, transform .2s ease;
+    border-bottom: 1px solid rgba(0,0,0,.06) !important;
+}
+.user-item:last-child{ border-bottom: 0 !important; }
+.user-item:hover{ background: #fafafa; transform: translateY(-1px); }
+
+.user-avatar{ width: 44px; height: 44px; background: #f3f4f6; }
+.user-avatar img{ width: 100%; height: 100%; object-fit: cover; }
+
+/* Badge نقش‌ها */
+.role-badge{ font-weight: 600; border-radius: 999px; padding: .25rem .55rem; }
+.role-admin{ background: rgba(99,102,241,.12); color:#4f46e5; }
+.role-applicant{ background: rgba(56,189,248,.14); color:#0ea5e9; }
+.role-unknown{ background: rgba(148,163,184,.18); color:#475569; }
+
+/* وضعیت (pill) */
+.pill{ display:inline-block; padding:.18rem .6rem; border-radius:999px; font-weight:700; line-height:1; }
+.pill-success{ background: rgba(34,197,94,.14); color:#16a34a; }
+.pill-danger{  background: rgba(239,68,68,.12); color:#dc2626; }
+.pill-warning{ background: rgba(245,158,11,.14); color:#d97706; }
+
+
+     /* تصویر 16:9 کاملاً وسط */
+ .workshop-thumb {
+     margin-left: 8px;
+     width: 110px;
+     aspect-ratio: 16/9;
+     overflow: hidden;
+     border-radius: 8px;
+     background: #f1f1f1;
+     display: flex;
+     align-items: center;
+     justify-content: center;
+ }
+
+.workshop-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+/* عنوان کارگاه‌ها یک‌خطی + سه‌نقطه */
+.workshop-title {
+    font-size: 0.9rem;
+    max-width: 180px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* چیپ تعداد نفر، کوچک و ثابت */
+.participant-chip {
+    padding: 0 8px !important;
+    height: 24px !important;
+    line-height: 24px !important;
+    background: #ececec !important;
+    font-size: 0.75rem !important;
+}
+
+/* فاصله آیتم‌ها منظم */
+.workshop-item {
+    padding-bottom: 8px;
+    border-bottom: 1px solid #eef0f3;
+}
+
+.workshop-item:last-child {
+    border-bottom: none;
+}
+
+/* hover زیبا و مینیمال */
+.workshop-item:hover {
+    background: #fafafa;
+    border-radius: 8px;
+    transition: 0.2s ease;
+    padding: 6px;
+}
+
