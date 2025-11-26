@@ -86,10 +86,10 @@
                             </div>
                             <div class="col-12 col-md-4">
                                 <div class="form-floating form-floating-outline">
-                                    <select name="menupanel_id" id="menupanel_id" class="form-control">
+                                    <select name="menusite_id" id="menusite_id" class="form-control">
                                         <option value="" selected>انتخاب کنید</option>
-                                        @foreach($menupanels as $menupanel)
-                                            <option value="{{$menupanel->id}}">{{$menupanel->label}}</option>
+                                        @foreach(DB::table('menus')->whereType('site')->whereSubmenu(1)->whereStatus(4)->get() as $menusite)
+                                            <option value="{{$menusite->id}}">{{$menusite->label}}</option>
                                         @endforeach
                                     </select>
                                     <label for="menupanel_id">انتخاب زیر منو</label>

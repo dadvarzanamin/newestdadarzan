@@ -146,7 +146,7 @@
             var table = $('.yajra-datatable').DataTable({
                 processing: true,
                 serverSide: true,
-                order: [4, 'DESC'],
+                order: [3, 'asc'],
                 ajax: "{{route(request()->segment(2).'.index')}}",
                 columns: [
                     {data: 'image'      , name: 'image'     },

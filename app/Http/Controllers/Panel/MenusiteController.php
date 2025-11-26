@@ -26,7 +26,7 @@ class MenusiteController extends Controller
         ];
 
         if ($request->ajax()) {
-            $data = Menu::select('id' ,'priority', 'title','label', 'slug', 'status' , 'class' , 'controller')->where('type' , 'site')->orderBy('priority')->get();
+            $data = Menu::select('id' ,'priority', 'title','label', 'slug', 'status' , 'class' , 'controller')->where('type' , 'site')->get();
 
             return Datatables::of($data)
                 ->addColumn('id', function ($data) {
