@@ -26,6 +26,14 @@
                 <label for="instagram">آدرس پیج اینستاگرام</label>
             </div>
         </div>
+        <div class="col-12 col-md-6">
+            <div class="input-group mb-3">
+                <input type="text" name="image" class="form-control" value="{{ $emploee->image }}" id="image_{{ $emploee->id }}" readonly placeholder="انتخاب فایل تصویر  {{ $emploee->id }}">
+                <button class="btn btn-outline-secondary file-selector" type="button" data-record-id="{{ $emploee->id }}" data-input-id="image_{{ $emploee->id }}">
+                    انتخاب فایل
+                </button>
+            </div>
+        </div>
         <div class="col-12 col-md-4">
             <div class="form-floating form-floating-outline">
                 <select name="status" id="status" class="form-control">

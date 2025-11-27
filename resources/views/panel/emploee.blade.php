@@ -3,6 +3,8 @@
 @section('style')
     <link rel="stylesheet" href="{{ asset('assets/vendor/css/rtl/dataTables.dataTables.min.css') }}"/>
     <link rel="stylesheet" href="{{ asset('assets/vendor/css/rtl/select2.min.css')}}" />
+    <link rel="stylesheet" href="{{ asset('assets/vendor/css/rtl/dropzone.min.css') }}"/>
+
     <meta name="csrf-token" content="{{ csrf_token() }}">
 @endsection
 @section('content')
@@ -66,52 +68,46 @@
                         {{csrf_field()}}
                         <div class="col-12 col-md-4">
                             <div class="form-floating form-floating-outline">
-                                <input required type="text" class="form-control" id="label" name="label"
-                                       placeholder="نام  منو داشبورد فارسی" >
-                                <label for="label">نام  منو داشبورد فارسی</label>
-                                <div class="invalid-feedback" id="labelFeedback">نام  منو داشبورد فارسی اجباری می باشد.</div>
+                                <input required type="text" class="form-control" id="fullname" name="fullname"
+                                       placeholder="نام و نام خانوادگی" >
+                                <label for="fullname">نام و نام خانوادگی</label>
+                                <div class="invalid-feedback" id="fullnameFeedback">نام و نام خانوادگی اجباری می باشد.</div>
                             </div>
                         </div>
                         <div class="col-12 col-md-4">
                             <div class="form-floating form-floating-outline">
-                                <input required type="text" class="form-control" id="title" name="title"
-                                       placeholder="نام  منو داشبورد" >
-                                <label for="title">نام  منو داشبورد</label>
-                                <div class="invalid-feedback" id="titleFeedback">نام  منو داشبورد اجباری می باشد.</div>
+                                <input required type="text" class="form-control" id="side" name="side"
+                                       placeholder="سمت" >
+                                <label for="side">سمت</label>
+                                <div class="invalid-feedback" id="sideFeedback">سمت اجباری می باشد.</div>
                             </div>
                         </div>
                         <div class="col-12 col-md-4">
                             <div class="form-floating form-floating-outline">
-                                <select name="submenu" id="submenu" class="form-control">
-                                    <option value="1" >دارد</option>
-                                    <option value="0" >ندارد</option>
-                                </select>
-                                <label for="submenu">زیر  منو داشبورد</label>
+                                <input required type="text" class="form-control" id="phone" name="phone"
+                                       placeholder="شماره موبایل">
+                                <label for="phone">شماره موبایل</label>
+                                <div class="invalid-feedback" id="phoneFeedback">شماره موبایل اجباری می باشد.</div>
                             </div>
                         </div>
                         <div class="col-12 col-md-4">
                             <div class="form-floating form-floating-outline">
-                                <input required type="text" class="form-control" id="class" name="class"
-                                       placeholder="کلاس داشبورد">
-                                <label for="class">کلاس داشبورد</label>
-                                <div class="invalid-feedback" id="classFeedback">کلاس داشبورد اجباری می باشد.</div>
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-4">
-                            <div class="form-floating form-floating-outline">
-                                <input required type="text" class="form-control" id="controller" name="controller"
-                                       placeholder="کنترلر داشبورد" >
-                                <label for="controller">کنترلر داشبورد</label>
-                                <div class="invalid-feedback" id="controllerFeedback">کنترلر داشبورد اجباری می باشد.</div>
+                                <input required type="text" class="form-control" id="instagram" name="instagram"
+                                       placeholder="آدرس پیج اینستاگرام" >
+                                <label for="instagram">آدرس پیج اینستاگرام</label>
+                                <div class="invalid-feedback" id="instagramFeedback">آدرس پیج اینستاگرام اجباری می باشد.</div>
                             </div>
                         </div>
                         <div class="col-12 col-md-4">
                             <div class="form-floating form-floating-outline">
                                 <select name="status" id="status" class="form-control">
-                                    <option value="4" >نمایش</option>
-                                    <option value="0">عدم نمایش</option>
+                                    <option value="0" >لغو</option>
+                                    <option value="1" >غیر فعال</option>
+                                    <option value="2" >تکمیل ظرفیت</option>
+                                    <option value="3" >پایان یافته</option>
+                                    <option value="4" selected>فعال</option>
                                 </select>
-                                <label for="status">نمایش/عدم نمایش</label>
+                                <label for="status">وضعیت نمایش</label>
                             </div>
                         </div>
                         <div class="text-end">
@@ -136,6 +132,45 @@
             </div>
         </div>
     </div>
+    <!-- Media Modal -->
+    <div class="modal fade" id="uploadModal" tabindex="-1" aria-labelledby="uploadModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="uploadModalLabel"> بارگزاری </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="بستن"></button>
+                </div>
+                <div class="modal-body">
+                    <form method="POST" action="{{ route('storemedia') }}" enctype="multipart/form-data" class="dropzone" id="fileUploadZone" style="min-height: 200px; border-style: dashed; border: 2px dashed #ccc; padding: 20px; margin-bottom: 30px;">
+                        <input type="hidden" name="record_id"   id="recordIdInput"  >
+                        <input type="hidden" name="subject_id"  id="subjectIdInput" >
+                        <input type="hidden" name="title"       id="fileTitleInput" >
+                        <div class="dz-message text-center text-muted">
+                            <div class="mb-3">
+                                <i class="bi bi-cloud-arrow-up" style="font-size: 3rem;"></i>
+                            </div>
+                            <h5 class="fw-bold mb-2">برای آپلود فایل، کلیک کنید یا فایل را بکشید اینجا</h5>
+                            <p class="small text-secondary mb-0">فرمت‌های مجاز: JPG, PNG, PDF, MP4, DOCX (حداکثر 40 مگابایت)</p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- مودال پیش نمایش عمومی -->
+    <div class="modal fade" id="fileModal" tabindex="-1" aria-labelledby="fileModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">پیش نمایش فایل</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="بستن"></button>
+                </div>
+                <div class="modal-body text-center" id="previewContent">
+                </div>
+            </div>
+        </div>
+    </div>
+
 @endsection
 @section('script')
     <script src="{{asset('assets/vendor/js/dataTables.min.js')}}"></script>
@@ -161,6 +196,96 @@
                 }
             });
 
+        });
+    </script>
+    <script>
+        //تبدیل اعداد با جدا کننده
+        document.addEventListener('DOMContentLoaded', function () {
+            document.addEventListener('input', function (e) {
+                if (!e.target.matches('input.numeric')) return;
+                const input = e.target;
+
+                const selStart = input.selectionStart;
+                const rawBefore = input.value;
+                const digitsLeft = rawBefore.slice(0, selStart).replace(/[^0-9]/g, '').length;
+
+                let unformatted = rawBefore.replace(/[^0-9]/g, '');
+                if (!unformatted) { input.value = ''; return; }
+
+                const formatted = unformatted.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+
+                input.value = formatted;
+
+                let pos = 0, digitsCount = 0;
+                while (pos < formatted.length && digitsCount < digitsLeft) {
+                    if (/\d/.test(formatted[pos])) digitsCount++;
+                    pos++;
+                }
+                input.setSelectionRange(pos, pos);
+            });
+        });
+    </script>
+
+    <script>
+        Dropzone.autoDiscover = false;
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const fileFormSelector = "#fileUploadZone";
+
+            const dz = new Dropzone(fileFormSelector, {
+                url: "{{ route('storemedia') }}",
+                headers: {'X-CSRF-TOKEN': "{{ csrf_token() }}"},
+                maxFilesize: 20,
+                acceptedFiles: 'image/*,video/*,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+                dictDefaultMessage: "فایل‌ها را اینجا رها کنید یا کلیک کنید برای انتخاب",
+                init: function () {
+                    this.on("sending", function (file, xhr, formData) {
+                        formData.append("record_id", document.getElementById('recordIdInput').value);
+                        formData.append("subject_id", document.getElementById('subjectIdInput').value);
+                        formData.append("title", document.getElementById('fileTitleInput').value);
+                    });
+                    this.on("success", function (file, response) {
+                        const extension = file.name.split('.').pop().toLowerCase();
+                        previewFile(response.file_path.replace(/^\/+/, ''), extension);
+                        showToast("✅ فایل با موفقیت آپلود شد");
+                        this.removeFile(file);
+                    });
+                    this.on("error", function (file, response) {
+                        showToast("❌ خطا در آپلود فایل", "danger");
+                    });
+                }
+            });
+
+            $(document).on('click', '.upload-btn', function () {
+                let recordId = $(this).data('id');
+                let subjectId = $(this).data('subject');
+                let title = $(this).data('title');
+
+                $('#recordIdInput').val(recordId);
+                $('#subjectIdInput').val(subjectId);
+                $('#fileTitleInput').val(title);
+
+                dz.removeAllFiles(true);
+                $('#uploadModal').modal('show');
+            });
+        });
+    </script>
+    <script>
+        //انتخاب و مدیریت فایل های یک پروژه
+        document.addEventListener('click', function (e) {
+            if (e.target.classList.contains('file-selector')) {
+                e.preventDefault();
+
+                const recordId = e.target.dataset.recordId;
+                const inputId = e.target.dataset.inputId;
+                const url = "{{ route('selectfile') }}?record_id=" + recordId;
+
+                window.open(url, 'FileManager', 'width=800,height=600');
+
+                window.setFileUrl = function (fileUrl) {
+                    document.getElementById(inputId).value = fileUrl;
+                };
+            }
         });
     </script>
 @endsection

@@ -67,6 +67,8 @@ class EmploeeController extends Controller
                     if (auth()->user()->can('can-access', ['emploee', 'delete'])) {
                         $actionBtn .= '<button type="button" class="btn btn-sm btn-icon btn-outline-danger mx-1 delete-btn" data-id="'.$data->id.'"><i class="mdi mdi-delete-outline"></i></button>';
                     }
+                    $actionBtn .= '<button class="btn btn-sm btn-icon btn-image mx-1 upload-btn" data-id="'.$data->id.'"><i class="mdi mdi-file-document-multiple-outline"></i></button>';
+
                     return $actionBtn;
                 })
                 ->rawColumns(['action' , 'image'])
