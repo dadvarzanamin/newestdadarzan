@@ -67,7 +67,10 @@ class EmploeeController extends Controller
                     if (auth()->user()->can('can-access', ['emploee', 'delete'])) {
                         $actionBtn .= '<button type="button" class="btn btn-sm btn-icon btn-outline-danger mx-1 delete-btn" data-id="'.$data->id.'"><i class="mdi mdi-delete-outline"></i></button>';
                     }
-                    $actionBtn .= '<button class="btn btn-sm btn-icon btn-image mx-1 upload-btn" data-id="'.$data->id.'"><i class="mdi mdi-file-document-multiple-outline"></i></button>';
+//                    $actionBtn .= '<button class="btn btn-sm btn-icon btn-image mx-1 upload-btn" data-id="'.$data->id.'" data-subject="1"><i class="mdi mdi-file-document-multiple-outline"></i></button>';
+                    $subject_id = 1;
+                    $title = 'تصویر کاربر';
+                    $actionBtn .= '<button class="btn btn-sm btn-icon btn-image mx-1 upload-btn" data-id="'.$data->id.'" data-subject="'.$subject_id.'" data-title="'.$title.'"><i class="mdi mdi-file-document-multiple-outline"></i></button>';
 
                     return $actionBtn;
                 })
@@ -90,14 +93,12 @@ class EmploeeController extends Controller
             $emploees->side        = $request->input('side');
             $emploees->phone       = $request->input('phone');
             $emploees->priority    = $priority + 1;
-            $emploees->whatsapp    = $request->input('whatsapp');
             $emploees->instagram   = $request->input('instagram');
-            $emploees->twitter     = $request->input('twitter');
             $emploees->status      = $request->input('status');
             $emploees->description = $request->input('description');
-            if($request->input('positions')) {
-                $emploees->positions = json_encode(explode("،", $request->input('positions')));
-            }
+//            if($request->input('positions')) {
+//                $emploees->positions = json_encode(explode("،", $request->input('positions')));
+//            }
             $result       = $emploees->save();
 
             if ($result == true) {
@@ -142,14 +143,13 @@ class EmploeeController extends Controller
             $emploees->side        = $request->input('side');
             $emploees->phone       = $request->input('phone');
             $emploees->priority    = $request->input('priority');
-            $emploees->whatsapp    = $request->input('whatsapp');
             $emploees->instagram   = $request->input('instagram');
-            $emploees->twitter     = $request->input('twitter');
             $emploees->status      = $request->input('status');
             $emploees->description = $request->input('description');
-            if($request->input('positions')) {
-                $emploees->positions = json_encode(explode("،", $request->input('positions')));
-            }
+            $emploees->image       = $request->input('image');
+//            if($request->input('positions')) {
+//                $emploees->positions = json_encode(explode("،", $request->input('positions')));
+//            }
             $result = $emploees->update();
                 if ($result == true) {
                     $success = true;

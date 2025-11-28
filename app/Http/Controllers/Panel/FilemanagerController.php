@@ -4,10 +4,6 @@ namespace App\Http\Controllers\Panel;
 
 use App\Http\Controllers\Controller;
 use App\Models\MediaFile;
-use App\Models\Menu;
-use App\Models\Product;
-use App\Models\subject_file;
-use App\Models\Submenu;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -30,7 +26,10 @@ class FilemanagerController extends Controller
         ];
 
         if ($request->ajax()) {
-            $data = MediaFile::all();
+            $data = MediaFile::leftjoin('projects', 'projects.id', '=', 'media_files.project_id')
+                ->leftjoin('subject_files', 'subject_files.id', '=', 'media_files.subject_id')
+                ->select('media_files.id' , 'media_files.file_path' , 'media_files.name' , 'media_files.original_name' , 'media_files.type' , 'media_files.size' , 'media_files.updated_at' , 'projects.title' , 'subject_files.title as step')->get();
+
             return Datatables::of($data)
                 ->addColumn('file_path', function ($data) {
                     $fileUrl = asset('storage/' . $data->file_path);
@@ -45,24 +44,17 @@ class FilemanagerController extends Controller
                         return '<a href="' . $fileUrl . '">' . $data->original_name . '</a>';
                     }
                 })
-                ->addColumn('title', function ($data) {
-                    return ($data->title);
+                ->addColumn('name', function ($data) {
+                    return ($data->name);
+                })
+                ->addColumn('step', function ($data) {
+                    return ($data->step);
                 })
                 ->addColumn('original_name', function ($data) {
                     return ($data->original_name);
                 })
-                ->addColumn('status', function ($data) {
-                    if ($data->status == "0") {
-                        return "لغو ";
-                    } elseif ($data->status == "1") {
-                        return "غیر فعال";
-                    } elseif ($data->status == "2") {
-                        return "تکمیل ظرفیت";
-                    } elseif ($data->status == "3") {
-                        return "پایان یافته";
-                    } elseif ($data->status == "4") {
-                        return "فعال";
-                    }
+                ->addColumn('title', function ($data) {
+                    return ($data->title);
                 })
                 ->addColumn('type', function ($data) {
                     return match ($data->type) {
@@ -107,7 +99,7 @@ class FilemanagerController extends Controller
                 ->rawColumns(['action' ,'file_path'])
                 ->make(true);
         }
-        return view('panel.file')->with(compact(['thispage']));
+        return view('panel.file_manager')->with(compact(['thispage']));
     }
 
     public function store(Request $request)
@@ -126,7 +118,6 @@ class FilemanagerController extends Controller
         $extension      = $file->getClientOriginalExtension();
         $size           = $file->getSize();
         $project_id     = $request->input('record_id');
-        $company_id     = $request->input('record_id');
         $mime = $request->file('file')->getMimeType();
 
         $type = match (true) {
@@ -160,7 +151,6 @@ class FilemanagerController extends Controller
             'file_path'     => $path,
             'size'          => $size,
             'project_id'    => $project_id,
-            'company_id'    => $company_id,
             'mime'          => $mime,
             'user_id'       => Auth::user()->id,
         ]);
@@ -169,9 +159,9 @@ class FilemanagerController extends Controller
     }
 
     public function edit($id){
-        $mediafile     = MediaFile::whereId($id)->first();
+        $mediafile      = MediaFile::whereId($id)->first();
         $subject_files  = subject_file::all();
-        $companies      = Product::select('id','title')->get();
+        $companies      = Project::select('id','title')->get();
 
         return view('panel.partials.edit-form-filemanager', compact('mediafile', 'subject_files' , 'companies'));
 
@@ -238,32 +228,6 @@ class FilemanagerController extends Controller
         $file->delete();
 
         return response()->json(['message' => 'Deleted successfully']);
-    }
-
-    public function filestatus(Request $request)
-    {
-        try{
-        $file           = MediaFile::whereId($request->input('id'))->first();
-        $file->status   = $request->input('status');
-        $result         = $file->save();
-        if ($result) {
-            $success = true;
-            $flag = 'success';
-            $subject = 'عملیات موفق';
-            $message = 'اطلاعات با موفقیت پاک شد';
-        }elseif($result != true) {
-            $success = false;
-            $flag    = 'error';
-            $subject = 'عملیات نا موفق';
-            $message = 'اطلاعات زیرمنو ثبت نشد، لطفا مجددا تلاش نمایید';
-        }
-    } catch (Exception $e) {
-        $success = false;
-        $flag    = 'error';
-        $subject = 'خطا در ارتباط با سرور';
-        $message = 'اطلاعات پاک نشد،لطفا بعدا مجدد تلاش نمایید ';
-        }
-    return response()->json(['success'=>$success , 'subject' => $subject, 'flag' => $flag, 'message' => $message]);
     }
 
     public function update(Request $request , $id)

@@ -42,7 +42,7 @@ Route::middleware('admin')->namespace('App\Http\Controllers\Panel')->group(funct
     Route::resource('panel/submenupanel' , 'SubmenupanelController');
     Route::resource('panel/paneluser'    , 'PaneluserController');
     Route::resource('panel/roleuser'     , 'RoleuserController');
-    Route::resource('panel/file'         , 'FilemanagerController');
+    Route::resource('panel/filemanager'  , 'FilemanagerController');
     Route::resource('panel/offer'        , 'OfferController');
     Route::resource('panel/content'      , 'ContentController');
     Route::resource('panel/product'      , 'ProductController');

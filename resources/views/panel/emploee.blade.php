@@ -64,7 +64,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="بستن"></button>
                 </div>
                 <div class="modal-body">
-                    <form id="addform" data-type="create" method="POST" class="row g-4 mb-4" action="{{ route('menupanel.store') }}">
+                    <form id="addform" data-type="create" method="POST" class="row g-4 mb-4" action="{{ route('emploee.store') }}">
                         {{csrf_field()}}
                         <div class="col-12 col-md-4">
                             <div class="form-floating form-floating-outline">
@@ -84,7 +84,7 @@
                         </div>
                         <div class="col-12 col-md-4">
                             <div class="form-floating form-floating-outline">
-                                <input required type="text" class="form-control" id="phone" name="phone"
+                                <input type="text" class="form-control" id="phone" name="phone"
                                        placeholder="شماره موبایل">
                                 <label for="phone">شماره موبایل</label>
                                 <div class="invalid-feedback" id="phoneFeedback">شماره موبایل اجباری می باشد.</div>
@@ -92,7 +92,7 @@
                         </div>
                         <div class="col-12 col-md-4">
                             <div class="form-floating form-floating-outline">
-                                <input required type="text" class="form-control" id="instagram" name="instagram"
+                                <input type="text" class="form-control" id="instagram" name="instagram"
                                        placeholder="آدرس پیج اینستاگرام" >
                                 <label for="instagram">آدرس پیج اینستاگرام</label>
                                 <div class="invalid-feedback" id="instagramFeedback">آدرس پیج اینستاگرام اجباری می باشد.</div>
@@ -108,6 +108,12 @@
                                     <option value="4" selected>فعال</option>
                                 </select>
                                 <label for="status">وضعیت نمایش</label>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-12">
+                            <div class="form-floating form-floating-outline">
+                                <textarea name="description" id="description" class="form-control" cols="30" rows="30" style="min-height: 100px"></textarea>
+                                <label for="class">معرفی</label>
                             </div>
                         </div>
                         <div class="text-end">
@@ -240,9 +246,9 @@
                 dictDefaultMessage: "فایل‌ها را اینجا رها کنید یا کلیک کنید برای انتخاب",
                 init: function () {
                     this.on("sending", function (file, xhr, formData) {
-                        formData.append("record_id", document.getElementById('recordIdInput').value);
+                        formData.append("record_id" , document.getElementById('recordIdInput').value);
                         formData.append("subject_id", document.getElementById('subjectIdInput').value);
-                        formData.append("title", document.getElementById('fileTitleInput').value);
+                        formData.append("title"     , document.getElementById('fileTitleInput').value);
                     });
                     this.on("success", function (file, response) {
                         const extension = file.name.split('.').pop().toLowerCase();
