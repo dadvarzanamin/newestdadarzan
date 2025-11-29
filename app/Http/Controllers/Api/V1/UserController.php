@@ -14,9 +14,11 @@ use App\Models\APP\lawsuit;
 use App\Models\APP\legalAdvice;
 use App\Models\APP\tokil;
 use App\Models\Dashboard\Estelam;
+use App\Models\Product;
 use App\Models\Profile\City;
 use App\Models\Profile\EstelamToken;
 use App\Models\Profile\State;
+use App\Models\Role;
 use App\Models\TypeUser;
 use App\Models\User;
 use App\Notifications\ActiveCode as ActiveCodeNotification;
@@ -88,7 +90,7 @@ class UserController extends Controller
     }
 
     public function getregister(){
-        $typeuser           = TypeUser::select('id','title_fa as title')->where('id','>','3')->get()->toArray();
+        $typeuser           = Role::select('id','title_fa as title')->where('id','>','3')->get()->toArray();
 
         //$citis              = City::select('id as city_id','title as city' , 'state_id')->get()->toArray();
         //$state              = State::select('id as state_id','title as state')->get()->toArray();
@@ -132,18 +134,7 @@ class UserController extends Controller
             ], 409);
         }
 
-        // دریافت توکن سرویس
-        $tokenRow = EstelamToken::select('token', 'appname')->first();
-        if (!$tokenRow) {
-            return response()->json([
-                'isSuccess'   => false,
-                'message'     => 'تنظیمات سرویس در دسترس نیست',
-                'errors'      => true,
-                'status_code' => 500,
-            ], 500);
-        }
-
-        $shahkar = Estelam::find(17);
+        $shahkar = Product::whereProduct_type('estelam')->whereProduct_id(17)->first();
         if (!$shahkar) {
             return response()->json([
                 'isSuccess'   => false,
@@ -154,16 +145,16 @@ class UserController extends Controller
         }
 
         $headers = [
-            'token:' . $tokenRow->token,
-            'appname:' . $tokenRow->appname,
+            'token:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2Njc3ZWZiYjk0Y2Y1YjIwOTFkOTIxOTQiLCJ1dWlkIjoiNGFiMWFlZDUtYjkzMi00MThjLWE1MzgtYTQ2MDViYzllMjI1IiwiaWF0IjoxNzU3OTYyNTQ5fQ.ZwQkIapimf9N4T7vAC6WspNwC1VlMe2QHLORV6SWiUI',
+            'appname:hosseindbk',
             'Content-Type: application/json',
         ];
 
         // درخواست به شاهکار
-        $responseShahkar = $this->sendCurlRequest($shahkar->action_route, $shahkar->method, $headers, [
-            "mobileNumber" => $phone,
-            "nationalCode" => $nid,
-        ]);
+//        $responseShahkar = $this->sendCurlRequest($shahkar->action_route, $shahkar->method, $headers, [
+//            "mobileNumber" => $phone,
+//            "nationalCode" => $nid,
+//        ]);
 
         if (!isset($responseShahkar['isSuccess']) || $responseShahkar['isSuccess'] === false) {
             return response()->json([

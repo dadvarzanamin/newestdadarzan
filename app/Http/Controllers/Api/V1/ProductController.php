@@ -12,6 +12,7 @@ use App\Models\APP\tokil;
 use App\Models\Contract;
 use App\Models\Dashboard\Estelam;
 use App\Models\Invoice;
+use App\Models\Product;
 use App\Models\Profile\EstelamToken;
 use App\Models\Profile\Workshop;
 use App\Models\Profile\Workshopsign;
@@ -321,7 +322,7 @@ class ProductController extends Controller
 
     public function getcontract(Request $request)
     {
-        $contracts = Contract::all();
+        $contracts = Product::whereProduct_type('contract')->get();
         if ($contracts) {
             return response()->json(
                 ['isSuccess' => true,
@@ -492,7 +493,7 @@ class ProductController extends Controller
     }
 
     public function purchase_contract(Request $request){
-        $contract = Contract::whereId($request->input('contract_id'))->first();
+        $contract = Product::whereId($request->input('product_id'))->whereProduct_type('contract')->first();
         if ($contract->paid_type == 'nonfree') {
             $user = auth()->user();
             $wallet = $user->wallet;
@@ -523,7 +524,7 @@ class ProductController extends Controller
                 $withdrawResult     = $walletController->withdraw($withdrawRequest);
 
                 if ($withdrawResult->getData()->isSuccess === true) {
-                    $result = Contract::whereId($request->input('contract_id'))->first();
+                    $result = Product::whereId($request->input('product_id'))->whereProduct_type('contract')->first();
                     return response()->json(
                         ['isSuccess' => true,
                             'message' => 'پرداخت با موفقیت انجام شد',
