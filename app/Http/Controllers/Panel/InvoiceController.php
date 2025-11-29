@@ -84,7 +84,10 @@ class InvoiceController extends Controller
     {
         if ($request->ajax()) {
             $data = Invoice::
-                leftjoin('products', 'products.product_id', '=', 'invoices.product_id')
+                leftJoin('products', function ($join) {
+                    $join->on('products.product_id', '=', 'invoices.product_id')
+                         ->on('products.product_type', '=', 'invoices.product_type');
+                })
                 ->select('invoices.id','invoices.product_type','invoices.product_price','invoices.final_price','invoices.price_status as status', 'products.title as product_name')
                 ->where('invoices.user_id' , Auth::user()->id)
                 ->get();

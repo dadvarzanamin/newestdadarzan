@@ -37,6 +37,7 @@
                     <thead>
                     <tr class="table-light">
                         <th>سریال تراکنش</th>
+                        <th>کد رهگیری</th>
                         <th>نوع تراکنش</th>
                         <th>مبلغ</th>
                         <th>توضیحات</th>
@@ -65,6 +66,7 @@
                         }
                     },
                     columns: [
+                        {data: 'id'             , name: 'id'   },
                         {data: 'referenceId'    , name: 'referenceId'   },
                         {data: 'type'           , name: 'type'          },
                         {data: 'amount'         , name: 'amount'        },
@@ -72,8 +74,8 @@
                         {data: 'status'         , name: 'status'        },
                     ],
                     order: [[0, 'desc']],
-                    paging: false,
-                    searching: false,
+                    paging: true,
+                    searching: true,
                     info: false,
                     language: {
                         url: "{{ asset('assets/vendor/js/fa.json') }}"
