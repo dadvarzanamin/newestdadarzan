@@ -21,7 +21,7 @@
             <label for="subject_id">انتخاب نوع فایل</label>
         </div>
     </div>
-    <div class="text-end">
+    <div class="text-center">
         <button type="submit" id="editsubmit_{{$mediafile->id}}" class="btn btn-primary" >ذخیره اطلاعات</button>
     </div>
 </form>

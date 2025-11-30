@@ -150,7 +150,7 @@
                 serverSide: true,
                 ajax: "{{route(request()->segment(2).'.index')}}",
                 columns: [
-                    {data: 'id'             , name: 'id'            },
+                    {data: 'id'             , name: 'id',className: 'text-center'            },
                     {data: 'title'          , name: 'title'         },
                     {data: 'menu_title'     , name: 'menu_title'    },
                     {data: 'submenu_title'  , name: 'submenu_title' },
@@ -159,8 +159,8 @@
                     {data: 'image'          , name: 'image'         },
                     {data: 'video'          , name: 'video'         },
                     {data: 'aparat'         , name: 'aparat'        },
-                    {data: 'status'         , name: 'status'        },
-                    {data: 'action'         , name: 'action', orderable: true, searchable: true},
+                    {data: 'status'         , name: 'status',className: 'text-center'        },
+                    {data: 'action'         , name: 'action', orderable: true, searchable: true,className: 'text-center'},
                 ],
                 language: {
                     url: "{{asset('assets/vendor/js/fa.json')}}"

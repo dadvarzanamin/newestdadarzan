@@ -147,7 +147,7 @@
             <label for="description">معرفی طرح</label>
         </div>
     </div>
-    <div class="text-end">
+    <div class="text-center">
         <button type="submit" id="editsubmit_{{$project->id}}" class="btn btn-primary" >ذخیره اطلاعات</button>
     </div>
 </form>

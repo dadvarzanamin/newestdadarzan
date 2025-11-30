@@ -13,7 +13,7 @@
             </div>
 
             <div class="table-responsive">
-                <style> table{margin: 0 auto;width: 100% !important;clear: both;border-collapse: collapse;table-layout: fixed;word-wrap:break-word;} .dt-layout-start{margin-right: 0 !important;} .dt-layout-end{margin-left: 0 !important;}</style>
+                <style> table{margin: 0 auto;width: 100% !important;clear: both;border-collapse: collapse;table-layout: auto;word-wrap:break-word;} .dt-layout-start{margin-right: 0 !important;} .dt-layout-end{margin-left: 0 !important;}</style>
                 <table id="sample1" class="table table-striped table-bordered yajra-datatable">
                     <thead>
                     <tr class="table-light">
@@ -147,13 +147,13 @@
                 order:[0 , 'DESC'],
                 ajax: "{{route(request()->segment(2).'.index')}}",
                 columns: [
-                    {data: 'id'            , name: 'id'             },
+                    {data: 'id'            , name: 'id', className: "text-center"             },
                     {data: 'name'          , name: 'name'           },
                     {data: 'product_name'  , name: 'product_name'   },
-                    {data: 'product_type'  , name: 'product_type'   },
+                    {data: 'product_type'  , name: 'product_type', className: "text-center"   },
                     {data: 'product_price' , name: 'product_price'  },
                     {data: 'final_price'   , name: 'final_price'    },
-                    {data: 'status'        , name: 'status', orderable: true, searchable: true },
+                    {data: 'status'        , name: 'status', orderable: true, searchable: true, className: "text-center" },
                 ],
                 language: {
                     url: "{{asset('assets/vendor/js/fa.json')}}"

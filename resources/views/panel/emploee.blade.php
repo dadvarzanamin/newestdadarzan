@@ -5,6 +5,16 @@
     <link rel="stylesheet" href="{{ asset('assets/vendor/css/rtl/select2.min.css')}}" />
     <link rel="stylesheet" href="{{ asset('assets/vendor/css/rtl/dropzone.min.css') }}"/>
 
+    <style>
+        .avatar-column img {
+            border-radius: 24px;
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+        }
+
+    </style>
+
     <meta name="csrf-token" content="{{ csrf_token() }}">
 @endsection
 @section('content')
@@ -18,7 +28,7 @@
             </div>
 
             <div class="table-responsive">
-                <style> table{margin: 0 auto;width: 100% !important;clear: both;border-collapse: collapse;table-layout: fixed;word-wrap:break-word;} .dt-layout-start{margin-right: 0 !important;} .dt-layout-end{margin-left: 0 !important;}</style>
+                <style> table{margin: 0 auto;width: 100% !important;clear: both;border-collapse: collapse;table-layout: auto;word-wrap:break-word;} .dt-layout-start{margin-right: 0 !important;} .dt-layout-end{margin-left: 0 !important;}</style>
                 <table id="sample1" class="table table-striped table-bordered yajra-datatable">
                     <thead>
                     <tr class="table-light">
@@ -190,12 +200,12 @@
                 order: [3, 'asc'],
                 ajax: "{{route(request()->segment(2).'.index')}}",
                 columns: [
-                    {data: 'image'      , name: 'image'     },
+                    {data: 'image'      , name: 'image', className: 'avatar-column text-center'   },
                     {data: 'fullname'   , name: 'fullname'  },
                     {data: 'side'       , name: 'side'      },
-                    {data: 'priority'   , name: 'priority'  },
-                    {data: 'status'     , name: 'status'    },
-                    {data: 'action'     , name: 'action', orderable: true, searchable: true},
+                    {data: 'priority'   , name: 'priority',className: 'text-center'  },
+                    {data: 'status'     , name: 'status',className: 'text-center'    },
+                    {data: 'action'     , name: 'action', orderable: true, searchable: true,className: 'text-center'},
                 ],
                 language: {
                     url: "{{asset('assets/vendor/js/fa.json')}}"

@@ -4,7 +4,7 @@
     <link rel="stylesheet" href="{{ asset('assets/vendor/css/rtl/dataTables.dataTables.min.css') }}"/>
     <link rel="stylesheet" href="{{'https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css'}}" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <style> table{margin: 0 auto;width: 100% !important;clear: both;border-collapse: collapse;table-layout: fixed;word-wrap:break-word;} .dt-layout-start{margin-right: 0 !important;} .dt-layout-end{margin-left: 0 !important;}</style>
+    <style> table{margin: 0 auto;width: 100% !important;clear: both;border-collapse: collapse;table-layout: auto;word-wrap:break-word;} .dt-layout-start{margin-right: 0 !important;} .dt-layout-end{margin-left: 0 !important;}</style>
 @endsection
 @section('content')
     <div class="card">
@@ -13,7 +13,7 @@
                 <h5 class="card-title mb-0">{{$thispage['list']}}</h5>
             </div>
             <div class="table-responsive">
-                <table id="sample1" class="table table-striped table-bordered yajra-datatable">
+                <table id="sample1" class="table table-striped table-bordered yajra-datatable ">
                     <thead>
                     <tr class="table-light">
                         <th>اولویت نمایش</th>
@@ -42,12 +42,12 @@
                 order: [0, 'DESC'],
                 ajax: "{{route(request()->segment(2).'.index')}}",
                 columns: [
-                    {data: 'id'             , name: 'id'            },
-                    {data: 'name'           , name: 'name'          },
-                    {data: 'type'           , name: 'type'          },
-                    {data: 'amount'         , name: 'amount'        },
-                    {data: 'description'    , name: 'description'   },
-                    {data: 'status'         , name: 'status'        },
+                    {data: 'id'             , name: 'id',className: 'text-center'            },
+                    {data: 'name'           , name: 'name',className: 'text-center'          },
+                    {data: 'type'           , name: 'type',className: 'text-center'          },
+                    {data: 'amount'         , name: 'amount',className: 'text-center'        },
+                    {data: 'description'    , name: 'description',className: 'text-center'   },
+                    {data: 'status'         , name: 'status',className: 'text-center'        },
                 ],
                 language: {
                     url: "{{asset('assets/vendor/js/fa.json')}}"

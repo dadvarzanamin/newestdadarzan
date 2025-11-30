@@ -17,7 +17,7 @@
             </div>
 
             <div class="table-responsive">
-                <style> table{margin: 0 auto;width: 100% !important;clear: both;border-collapse: collapse;table-layout: fixed;word-wrap:break-word;} .dt-layout-start{margin-right: 0 !important;} .dt-layout-end{margin-left: 0 !important;}</style>
+                <style> table{margin: 0 auto;width: 100% !important;clear: both;border-collapse: collapse;table-layout: auto;word-wrap:break-word;} .dt-layout-start{margin-right: 0 !important;} .dt-layout-end{margin-left: 0 !important;}</style>
                 <table id="sample1" class="table table-striped table-bordered yajra-datatable">
                 <thead>
                     <tr class="table-light">
@@ -57,6 +57,7 @@
             </div>
         </div>
     </div>
+
     <!-- Add Modal -->
     <div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-xl modal-dialog-centered">
@@ -128,6 +129,7 @@
             </div>
         </div>
     </div>
+
     <!-- Edit Modal -->
     <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-xl modal-dialog-centered">
@@ -154,15 +156,15 @@
                 serverSide: true,
                 ajax: "{{ route(request()->segment(2) . '.index') }}",
                 columns: [
-                    {data: 'id'         , name: 'id'},
+                    {data: 'id'         , name: 'id', className: 'text-center'},
                     {data: 'label'      , name: 'label'},
                     {data: 'title'      , name: 'title'},
                     {data: 'slug'       , name: 'slug'},
                     {data: 'menu'       , name: 'menu'},
                     {data: 'class'      , name: 'class'},
                     {data: 'controller' , name: 'controller'},
-                    {data: 'status'     , name: 'status'},
-                    {data: 'action'     , name: 'action', orderable: true, searchable: true},
+                    {data: 'status'     , name: 'status', className: 'text-center'},
+                    {data: 'action'     , name: 'action', orderable: true, searchable: true, className: 'text-center'},
                 ],
                 language: {
                     url: "{{asset('assets/vendor/js/fa.json')}}"

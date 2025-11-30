@@ -2,9 +2,24 @@
 @section('title', 'مدیریت منوی داشبورد')
 @section('style')
     <link rel="stylesheet" href="{{ asset('assets/vendor/css/rtl/dataTables.dataTables.min.css') }}"/>
-    <link rel="stylesheet" href="{{'https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css'}}" />
+    <link rel="stylesheet" href="{{'https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css'}}"/>
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <style> table{margin: 0 auto;width: 100% !important;clear: both;border-collapse: collapse;table-layout: fixed;word-wrap:break-word;} .dt-layout-start{margin-right: 0 !important;} .dt-layout-end{margin-left: 0 !important;}</style>
+    <style> table {
+            margin: 0 auto;
+            width: 100% !important;
+            clear: both;
+            border-collapse: collapse;
+            table-layout: fixed;
+            word-wrap: break-word;
+        }
+
+        .dt-layout-start {
+            margin-right: 0 !important;
+        }
+
+        .dt-layout-end {
+            margin-left: 0 !important;
+        }</style>
 @endsection
 @section('content')
     <div class="card">
@@ -39,9 +54,9 @@
                 order: [2, 'DESC'],
                 ajax: "{{route(request()->segment(2).'.index')}}",
                 columns: [
-                    {data: 'id'             , name: 'id'            },
-                    {data: 'name'           , name: 'name'          },
-                    {data: 'balance'        , name: 'balance'       },
+                    {data: 'id', name: 'id', className: "text-center", width: '10%'},
+                    {data: 'name', name: 'name'},
+                    {data: 'balance', name: 'balance', className: "text-center"},
                 ],
                 language: {
                     url: "{{asset('assets/vendor/js/fa.json')}}"
