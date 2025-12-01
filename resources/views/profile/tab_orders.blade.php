@@ -34,6 +34,7 @@
                         }
                     },
                     columns: [
+                        {data: 'id'             , name: 'id'  },
                         {data: 'product_name'   , name: 'product_name'  },
                         {data: 'product_type'   , name: 'product_type'  },
                         {data: 'product_price'  , name: 'product_price' },
@@ -41,8 +42,8 @@
                         {data: 'status'         , name: 'status'        },
                     ],
                     order: [[0, 'desc']],
-                    paging: false,
-                    searching: false,
+                    paging: true,
+                    searching: true,
                     info: false,
                     language: {
                         url: "{{ asset('assets/vendor/js/fa.json') }}"

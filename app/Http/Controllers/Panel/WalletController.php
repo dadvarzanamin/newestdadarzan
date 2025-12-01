@@ -55,11 +55,14 @@ class WalletController extends Controller
     {
         if ($request->ajax()) {
             $data = DB::table('wallet_transactions')
-                ->select('wallet_transactions.referenceId' , 'wallet_transactions.type','wallet_transactions.amount' , 'wallet_transactions.description', 'wallet_transactions.status')
+                ->select('wallet_transactions.id' ,'wallet_transactions.referenceId' , 'wallet_transactions.type','wallet_transactions.amount' , 'wallet_transactions.description', 'wallet_transactions.status')
                 ->where('wallet_transactions.user_id' , Auth::user()->id)
                 ->get();
 
             return Datatables::of($data)
+                ->addColumn('id', function ($data) {
+                    return ($data->id);
+                })
                 ->addColumn('referenceId', function ($data) {
                     return ($data->referenceId);
                 })

@@ -45,7 +45,7 @@
                 <label for="submenu">وضعیت کد تخفیف</label>
             </div>
         </div>
-        <div class="text-end">
+        <div class="text-center">
             <button type="submit" class="btn btn-primary">ذخیره اطلاعات</button>
         </div>
     </form>

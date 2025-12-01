@@ -58,7 +58,7 @@
                 <label for="class">معرفی</label>
             </div>
         </div>
-        <div class="text-end">
+        <div class="text-center">
             <button type="submit" id="editsubmit_{{$emploee->id}}" class="btn btn-primary" >ذخیره اطلاعات</button>
         </div>
     </form>

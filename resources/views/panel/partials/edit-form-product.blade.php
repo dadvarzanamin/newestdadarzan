@@ -141,7 +141,7 @@
                 <label for="class">توضیحات طولانی</label>
             </div>
         </div>
-        <div class="text-end">
+        <div class="text-center">
             <button type="submit" id="editsubmit_{{$product->id}}" class="btn btn-primary" >ذخیره اطلاعات</button>
         </div>
     </form>

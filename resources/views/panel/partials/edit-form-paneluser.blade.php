@@ -71,7 +71,7 @@
                 <input type="password" name="password_confirmation" id="password_confirmation_{{$user->id}}" class="form-control">
             </div>
         </div>
-        <div class="text-end">
+    <div class="text-center">
             <button type="submit" id="editsubmit_{{$user->id}}" class="btn btn-primary" >ذخیره اطلاعات</button>
         </div>
     </form>

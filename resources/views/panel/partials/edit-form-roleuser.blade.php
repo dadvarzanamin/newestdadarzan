@@ -30,7 +30,7 @@
                 </select>
             </div>
         </div>
-        <div class="text-end">
+    <div class="text-center">
             <button type="submit" id="editsubmit_{{$role->id}}" class="btn btn-primary" >ذخیره اطلاعات</button>
         </div>
     </form>
