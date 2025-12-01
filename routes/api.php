@@ -18,7 +18,7 @@ use App\Http\Controllers\Api\v1\IndexController;
     Route::GET('v1/getarticle'          , [App\Http\Controllers\Api\V1\IndexController::class   , 'getarticle']);
     Route::GET('v1/workshops'           , [App\Http\Controllers\Api\V1\ProductController::class , 'workshops']);
 
-Route::middleware('auth:api')->group(function () {
+Route::middleware('auth.jwt')->group(function () {
 
     Route::get('v1/index'               , [App\Http\Controllers\Api\V1\IndexController::class        , 'index']);
     Route::post('v1/discountcheck'      , [App\Http\Controllers\Api\V1\IndexController::class        , 'discountcheck']);

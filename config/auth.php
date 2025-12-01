@@ -40,10 +40,6 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
-        'panel' => [
-            'driver' => 'session',
-            'provider' => 'panel_users',
-        ],
         'api' => [
             'driver' => 'jwt',
             'provider' => 'users',
@@ -71,10 +67,6 @@ return [
         'users' => [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
-        ],
-        'panel_users' => [
-            'driver' => 'eloquent',
-            'model' => App\Models\User::class, // یا هر مدل دلخواه
         ],
         // 'users' => [
         //     'driver' => 'database',

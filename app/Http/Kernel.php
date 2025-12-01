@@ -55,6 +55,7 @@ class Kernel extends HttpKernel
     protected $middlewareAliases = [
         'auth'              => \App\Http\Middleware\Authenticate::class,
         'admin'             => \App\Http\Middleware\CheckAdminAuthenticated::class,
+        'auth.jwt'          => \Tymon\JWTAuth\Http\Middleware\Authenticate::class,
         'submenu.permission'=> \App\Http\Middleware\CheckSubmenuPermission::class,
         'auth.basic'        => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         'auth.session'      => \Illuminate\Session\Middleware\AuthenticateSession::class,

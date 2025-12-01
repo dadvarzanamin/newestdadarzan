@@ -37,8 +37,6 @@ class FullRegisterController extends Controller
 
         DB::beginTransaction();
 
-
-
             $phone          = $this->convertPersianToEnglishNumbers($request->input('phone'));
             $national_id    = $this->convertPersianToEnglishNumbers($request->input('national_id'));
             $birthday       = $this->convertPersianToEnglishNumbers($request->input('birthday'));

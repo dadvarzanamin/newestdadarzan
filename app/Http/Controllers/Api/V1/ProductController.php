@@ -12,6 +12,7 @@ use App\Models\APP\tokil;
 use App\Models\Contract;
 use App\Models\Dashboard\Estelam;
 use App\Models\Invoice;
+use App\Models\Product;
 use App\Models\Profile\EstelamToken;
 use App\Models\Profile\Workshop;
 use App\Models\Profile\Workshopsign;
@@ -22,6 +23,27 @@ use Illuminate\Support\Facades\Response;
 
 class ProductController extends Controller
 {
+    public function getcontract()
+    {
+        $contracts = Product::whereProduct_type('contract')->whereStatus(4)->get();
+        if ($contracts) {
+            return response()->json(
+                ['isSuccess' => true,
+                    'message' => 'مقادیر رکورد دریافت شد',
+                    'errors' => null,
+                    'status_code' => 200,
+                    'result' => $contracts
+                ], 200);
+        } else {
+            return response()->json(
+                ['isSuccess' => null,
+                    'message' => 'مقداری یافت نشد.',
+                    'errors' => true,
+                    'status_code' => 500,
+                ], 500);
+        }
+    }
+
     public function estelam(Request $request)
     {
         try {
@@ -145,8 +167,8 @@ class ProductController extends Controller
         }
     }
 
-    public function workshops(Request $request){
-        $workshops = Workshop::where('id' , '!=' , 2)->get();
+    public function workshops(){
+        $workshops = Product::whereProduct_type('workshop')->get();
 
         $response = [
             'workshops' => $workshops->map(function ($workshop) {
@@ -319,26 +341,6 @@ class ProductController extends Controller
         }
     }
 
-    public function getcontract(Request $request)
-    {
-        $contracts = Contract::all();
-        if ($contracts) {
-            return response()->json(
-                ['isSuccess' => true,
-                    'message' => 'مقادیر رکورد دریافت شد',
-                    'errors' => null,
-                    'status_code' => 200,
-                    'result' => $contracts
-                ], 200);
-        } else {
-            return response()->json(
-                ['isSuccess' => null,
-                    'message' => 'مقداری یافت نشد.',
-                    'errors' => true,
-                    'status_code' => 500,
-                ], 500);
-        }
-    }
 
     public function form(Request $request){
 

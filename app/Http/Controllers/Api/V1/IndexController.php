@@ -16,8 +16,8 @@ use App\Models\Contract;
 use App\Models\Emploee;
 use App\Models\Invoice;
 use App\Models\Offer;
-use App\Models\Profile\City;
-use App\Models\Profile\State;
+use App\Models\City;
+use App\Models\State;
 use App\Models\Profile\Workshop;
 use App\Models\Profile\Workshopsign;
 use Evryn\LaravelToman\CallbackRequest;
@@ -32,6 +32,48 @@ use Illuminate\Support\Str;
 
 class IndexController extends Controller
 {
+    public function getState()
+    {
+        $states = State::select('id', 'title')->get();
+        if ($states) {
+            return response()->json(
+                ['isSuccess' => true,
+                    'message' => 'مقادیر رکورد دریافت شد',
+                    'errors' => null,
+                    'status_code' => 200,
+                    'result' => $states
+                ], 200);
+        } else {
+            return response()->json(
+                ['isSuccess' => null,
+                    'message' => 'مقداری یافت نشد.',
+                    'errors' => true,
+                    'status_code' => 500,
+                ], 500);
+        }
+    }
+
+    public function getCity(Request $request)
+    {
+        $cities = City::select('id', 'title')->whereState_id($request->input('id'))->get();
+        if ($cities) {
+            return response()->json(
+                ['isSuccess' => true,
+                    'message' => 'مقادیر رکورد دریافت شد',
+                    'errors' => null,
+                    'status_code' => 200,
+                    'result' => $cities
+                ], 200);
+        } else {
+            return response()->json(
+                ['isSuccess' => null,
+                    'message' => 'مقداری یافت نشد.',
+                    'errors' => true,
+                    'status_code' => 500,
+                ], 500);
+        }
+    }
+
     public function version(){
         $version = Version::latest('id')->first();
 
@@ -410,47 +452,7 @@ class IndexController extends Controller
         }
     }
 
-    public function getState(Request $request)
-    {
-        $states = State::select('id', 'title')->get();
-        if ($states) {
-            return response()->json(
-                ['isSuccess' => true,
-                    'message' => 'مقادیر رکورد دریافت شد',
-                    'errors' => null,
-                    'status_code' => 200,
-                    'result' => $states
-                ], 200);
-        } else {
-            return response()->json(
-                ['isSuccess' => null,
-                    'message' => 'مقداری یافت نشد.',
-                    'errors' => true,
-                    'status_code' => 500,
-                ], 500);
-        }
-    }
 
-    public function getCity(Request $request)
-    {
-        $cities = City::select('id', 'title')->whereState_id($request->input('id'))->get();
-        if ($cities) {
-            return response()->json(
-                ['isSuccess' => true,
-                    'message' => 'مقادیر رکورد دریافت شد',
-                    'errors' => null,
-                    'status_code' => 200,
-                    'result' => $cities
-                ], 200);
-        } else {
-            return response()->json(
-                ['isSuccess' => null,
-                    'message' => 'مقداری یافت نشد.',
-                    'errors' => true,
-                    'status_code' => 500,
-                ], 500);
-        }
-    }
 
     public function getarticle(Request $request)
     {

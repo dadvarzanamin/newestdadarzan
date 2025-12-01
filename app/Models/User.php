@@ -2,17 +2,14 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
+use Tymon\JWTAuth\Contracts\JWTSubject;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class User extends Authenticatable
+class User extends Authenticatable implements JWTSubject
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use Notifiable;
 
     protected $guarded = [];
 
@@ -26,6 +23,22 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
+    /**
+     * JWT Identifier
+     */
+    public function getJWTIdentifier()
+    {
+        return $this->getKey();  // معمولاً id کاربر
+    }
+
+    /**
+     * Custom JWT Claims
+     */
+    public function getJWTCustomClaims()
+    {
+        return []; // اگر claim خاصی نمی‌خواهی خالی بگذار
+    }
+
     public function role()
     {
         return $this->belongsToMany(Role::class);
@@ -38,31 +51,31 @@ class User extends Authenticatable
 
     public function permissionsWithActions()
     {
-        $role = $this->role() // رابطه belongsTo
-        ->with(['permissions' => function ($query) {
-            $query->withPivot(['can_view', 'can_insert', 'can_edit', 'can_delete']);
-        }])
+        $role = $this->role()
+            ->with(['permissions' => function ($query) {
+                $query->withPivot(['can_view', 'can_insert', 'can_edit', 'can_delete']);
+            }])
             ->first();
 
         if (!$role) return collect();
 
         return $role->permissions->map(function ($permission) {
             return (object)[
-                'slug'        => $permission->slug,
-                'can_view'    => (bool) $permission->pivot->can_view,
-                'can_insert'  => (bool) $permission->pivot->can_insert,
-                'can_edit'    => (bool) $permission->pivot->can_edit,
-                'can_delete'  => (bool) $permission->pivot->can_delete,
+                'slug'       => $permission->slug,
+                'can_view'   => (bool)$permission->pivot->can_view,
+                'can_insert' => (bool)$permission->pivot->can_insert,
+                'can_edit'   => (bool)$permission->pivot->can_edit,
+                'can_delete' => (bool)$permission->pivot->can_delete,
             ];
         });
     }
 
     public function hasRole($role)
     {
-        if(is_string($role)) {
-            return $this->role->contains('name' , $role);
+        if (is_string($role)) {
+            return $this->role->contains('name', $role);
         }
-        return !! $role->intersect($this->role)->count();
+        return !!$role->intersect($this->role)->count();
     }
 
     public function type(): \Illuminate\Database\Eloquent\Relations\BelongsTo
@@ -91,6 +104,21 @@ class User extends Authenticatable
             ->where('action', 'login')
             ->where('status', true)
             ->latestOfMany();
+    }
+
+    public function state()
+    {
+        return $this->belongsTo(State::class, 'state_id');
+    }
+
+    public function city()
+    {
+        return $this->belongsTo(City::class, 'city_id');
+    }
+
+    public function wallet()
+    {
+        return $this->hasOne(Wallet::class);
     }
 
 }
