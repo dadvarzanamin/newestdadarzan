@@ -210,39 +210,7 @@
 
 <!-- Main JS -->
 <script src="{{ asset('assets/js/main.js') }}"></script>
-{{--<script>--}}
-{{--    (function ($) {--}}
-{{--        function initSelect2(context) {--}}
-{{--            $(context).find('select.select2').each(function () {--}}
-{{--                const $el = $(this);--}}
-{{--                if ($el.data('select2')) return; // جلوگیری از دوباره‌سازی--}}
 
-{{--                $el.select2({--}}
-{{--                    width: '100%',--}}
-{{--                    dir: 'rtl',--}}
-{{--                    placeholder: $el.data('placeholder') || 'انتخاب کنید',--}}
-{{--                    allowClear: $el.data('allow-clear') !== undefined ? !!$el.data('allow-clear') : true,--}}
-{{--                    minimumResultsForSearch: $el.data('min-search') ? parseInt($el.data('min-search'), 10) : 0, // مثلا 10 برای تک‌انتخاب‌های کوتاه--}}
-{{--                    dropdownParent: $el.closest('.modal').length ? $el.closest('.modal') : $(document.body),--}}
-{{--                    // پیام‌های فارسی--}}
-{{--                    language: {--}}
-{{--                        errorLoading: function () { return 'خطا در بارگذاری نتایج'; },--}}
-{{--                        inputTooLong: function (args) { return 'حداکثر ' + (args.maximum) + ' نویسه مجاز است'; },--}}
-{{--                        inputTooShort: function (args) { return 'حداقل ' + (args.minimum - args.input.length) + ' نویسه دیگر وارد کنید'; },--}}
-{{--                        loadingMore: function () { return 'در حال بارگذاری بیشتر…'; },--}}
-{{--                        maximumSelected: function (args) { return 'حداکثر ' + args.maximum + ' مورد قابل انتخاب است'; },--}}
-{{--                        noResults: function () { return 'نتیجه‌ای یافت نشد'; },--}}
-{{--                        searching: function () { return 'در حال جستجو…'; },--}}
-{{--                        removeAllItems: function () { return 'حذف همه موارد'; }--}}
-{{--                    }--}}
-{{--                });--}}
-{{--            });--}}
-{{--        }--}}
-
-{{--        $(document).ready(function () { initSelect2(document); });--}}
-{{--        $(document).on('shown.bs.modal', '.modal', function () { initSelect2(this); });--}}
-{{--    })(jQuery);--}}
-{{--</script>--}}
 
 @yield('script')
 @stack('scripts')

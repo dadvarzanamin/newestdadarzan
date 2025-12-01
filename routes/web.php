@@ -1,5 +1,6 @@
 <?php
-
+use App\Http\Controllers\Panel\CourseSectionController;
+use App\Http\Controllers\Panel\CourseLessonController;
 use App\Models\Menu;
 use App\Models\Submenu;
 use Illuminate\Support\Facades\Auth;
@@ -55,6 +56,15 @@ Route::middleware('admin')->namespace('App\Http\Controllers\Panel')->group(funct
     Route::resource('panel/wallet'       , 'WalletController');
     Route::resource('panel/content'      , 'ContentController');
     Route::resource('panel/emploee'      , 'EmploeeController');
+
+
+    Route::resource('panel/course', 'CourseController');
+    Route::resource('panel/course-section', CourseSectionController::class)->except(['create','show']);
+    Route::resource('panel/course-lesson', CourseLessonController::class)->except(['create','show']);
+
+
+
+
 
 //    Route::resource('panel/leveluser'    , 'LeveluserController');
 
