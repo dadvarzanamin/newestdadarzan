@@ -140,8 +140,7 @@ class UserController extends Controller
 
         // لیست فیلدهای مجاز برای ویرایش
         $updatable = [
-            'type_id',
-            'phone',
+            'role_id',
             'national_id',
             'name',
             'gender',
@@ -172,7 +171,7 @@ class UserController extends Controller
 
         return Response::json(
             ['isSuccess' => true,
-                'message' => 'مقادیر رکورد دریافت شد',
+                'message' => 'مقادیر ارسالی بروز شد',
                 'errors' => null,
                 'status_code' => 200,
                 'result' => $data
