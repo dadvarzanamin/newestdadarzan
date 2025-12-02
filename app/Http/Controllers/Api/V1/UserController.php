@@ -42,6 +42,57 @@ class UserController extends Controller
         return Response::json(['ok' =>true ,'message' => 'success','response'=>$response]);
     }
 
+    public function register(Request $request)
+    {
+        $request->validate([
+            'birthday'          => 'required|string|max:12',
+            'role_id'           => 'required',
+            'national_id'       => 'required|string|max:12',
+            'phone'             => 'required|string|max:20|unique:users,phone',
+        ]);
+
+        DB::beginTransaction();
+
+        $phone       = $this->convertPersianToEnglishNumbers($request->phone);
+        $national_id = $this->convertPersianToEnglishNumbers($request->national_id);
+        $birthday    = $this->convertPersianToEnglishNumbers($request->birthday);
+        $birthday    = str_replace('/', '', $birthday);
+        $birthday    = substr_replace(substr_replace($birthday, '/', 4, 0), '/', 7, 0);
+
+        // ایجاد کاربر
+        $user = User::create([
+            'phone'             => $phone,
+            'national_id'       => $national_id,
+            'birthday'          => $birthday,
+            'level'             => 'site',
+            'status'            => 4,
+            'role_id'           => $request->role_id,
+        ]);
+
+        // تولید توکن JWT
+        $token = auth('api')->login($user);
+
+        // ثبت لاگ
+        User_logs::create([
+            'user_id'    => $user->id,
+            'action'     => 'register',
+            'ip_address' => $request->ip(),
+            'user_agent' => $request->userAgent(),
+            'status'     => true,
+            'description'=> 'ثبت‌نام موفق همراه با ورود',
+        ]);
+
+        DB::commit();
+
+        return response()->json(
+            ['isSuccess' => true,
+                'message' => 'ثبت نام با موفقیت انجام شد',
+                'errors' => null,
+                'status_code' => 200,
+                'result' => $token
+            ], 200);
+    }
+
     public function login(Request $request){
         $phone      = $this->convertPersianToEnglishNumbers($request->input('phone'));
         $password   = $this->convertPersianToEnglishNumbers($request->input('password'));
@@ -249,60 +300,6 @@ class UserController extends Controller
 
     }
 
-    public function register(Request $request)
-    {
-        $request->validate([
-            'birthday'          => 'required|string|max:12',
-            'role_id'           => 'required',
-            'national_id'       => 'required|string|max:12',
-            'phone'             => 'required|string|max:20|unique:users,phone',
-            'password'          => 'required|string|min:8|confirmed',
-            'terms_accepted'    => 'accepted',
-        ]);
-
-        DB::beginTransaction();
-
-        $phone       = $this->convertPersianToEnglishNumbers($request->phone);
-        $national_id = $this->convertPersianToEnglishNumbers($request->national_id);
-        $birthday    = $this->convertPersianToEnglishNumbers($request->birthday);
-        $birthday    = str_replace('/', '', $birthday);
-        $birthday    = substr_replace(substr_replace($birthday, '/', 4, 0), '/', 7, 0);
-
-        // ایجاد کاربر
-        $user = User::create([
-            'phone'             => $phone,
-            'national_id'       => $national_id,
-            'birthday'          => $birthday,
-            'level'             => 'site',
-            'status'            => 4,
-            'role_id'           => $request->role_id,
-            'change_password'   => 1,
-            'password'          => Hash::make($request->password),
-        ]);
-
-        // تولید توکن JWT
-        $token = auth('api')->login($user);
-
-        // ثبت لاگ
-        User_logs::create([
-            'user_id'    => $user->id,
-            'action'     => 'register',
-            'ip_address' => $request->ip(),
-            'user_agent' => $request->userAgent(),
-            'status'     => true,
-            'description'=> 'ثبت‌نام موفق همراه با ورود',
-        ]);
-
-        DB::commit();
-
-        return response()->json(
-            ['isSuccess' => true,
-                'message' => 'ثبت نام با موفقیت انجام شد',
-                'errors' => null,
-                'status_code' => 200,
-                'result' => $token
-            ], 200);
-    }
 
     protected function convertPersianToEnglishNumbers($string) {
         $persianNumbers = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
@@ -310,7 +307,6 @@ class UserController extends Controller
 
         return str_replace($persianNumbers, $englishNumbers, $string);
     }
-
 
     protected function respondWithToken($token)
     {
