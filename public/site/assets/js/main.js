@@ -377,12 +377,11 @@
                 prevEl: '.team-slider .swiper-button-prev',
             },
 
-            slidesPerView: 1,
+            slidesPerView: 2,
             breakpoints: {
-                768:  { slidesPerView: 2 },
-                1024: { slidesPerView: 2 },
-                1200: { slidesPerView: 3 },
-                1400: { slidesPerView: 4 }, // اگر خواستی 4تایی روی خیلی بزرگ
+                1024: { slidesPerView: 3 },
+                1200: { slidesPerView: 4 },
+                1400: { slidesPerView: 5 }, // اگر خواستی 4تایی روی خیلی بزرگ
             },
 
             observer: true,
@@ -424,7 +423,6 @@
   if ($('.company-slide').length > 0) {
     const partnersSwiper = new Swiper('.company-slide', {
       loop: true,
-      slidesPerView: 'auto',
       centeredSlides: false,
       allowTouchMove: false,
       spaceBetween: 24,
@@ -432,6 +430,12 @@
       autoplay: {
         delay: 0,
         disableOnInteraction: false,
+      },
+      slidesPerView: 3,
+      breakpoints: {
+          1024: { slidesPerView: 4 },
+          1200: { slidesPerView: 5 },
+          1400: { slidesPerView: 6 }, // اگر خواستی 4تایی روی خیلی بزرگ
       },
     });
   }

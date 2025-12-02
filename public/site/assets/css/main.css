@@ -3692,15 +3692,31 @@
   color: hsl(var(--body-color));
 }
 
-.company-slide img {
-  -webkit-transition: all 0.3s;
-  -o-transition: all 0.3s;
-  transition: all 0.3s;
+.customer-slide {
+
+    background: linear-gradient(135deg, #f5f7fa, #e4e7eb); /* پس‌زمینه مینیمال روشن */
+    border-radius: 12px;
+    padding: 20px;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+
+    transition: all 0.3s ease;
 }
 
-.company-slide img:hover {
-  filter: grayscale(100%) brightness(70%) sepia(100%) hue-rotate(200deg) saturate(300%);
+.customer-slide:hover {
+    background: linear-gradient(135deg, #e8ecf1, #d8dce0);
+    transform: translateY(-4px);
 }
+
+.customer-slide img {
+    max-height: 120px;
+    max-width: 100%;
+    object-fit: contain;
+
+    transition: all 0.3s;
+}
+
 
 .privacy-policy-content h2,
 .privacy-policy-content h3 {

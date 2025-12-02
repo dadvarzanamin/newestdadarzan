@@ -25,9 +25,9 @@
                 <a href="{{ route('profile') }}" class="btn btn--border">پروفایل</a>
             @endguest
 
-            <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas"
+            <button class="navbar-toggler py-2" type="button" data-bs-toggle="offcanvas"
                     data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" ...> ... </svg>
+                <i class="fa-solid fa-bars" style="color: #ffffff;"></i>
             </button>
         </div>
         <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
@@ -35,7 +35,9 @@
                 <h5 class="offcanvas-title" id="offcanvasNavbarLabel">
                     <img src="{{ asset('site/assets/images/logo/darklogodadvarzan.png') }}" alt="logo" class="logo-img">
                 </h5>
-                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close">
+                    <i class="fa-solid fa-xmark" style="color: aliceblue"></i>
+                </button>
             </div>
             <div class="d-flex d-lg-none gap-4 pt-3 justify-content-center">
                 @guest
