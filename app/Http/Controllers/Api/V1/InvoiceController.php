@@ -114,24 +114,27 @@ class InvoiceController extends Controller
 
     public function invoicedestroy(Request $request)
     {
-        $invoice = Invoice::find($request->id);
+        $invoice = Invoice::where('id', $request->id)
+            ->whereNull('price_status')
+            ->first();
 
-        if ($invoice) {
-            $invoice->delete();
-            return response()->json(
-                ['isSuccess' => true,
-                    'message' => 'مقادیر رکورد با موفقیت پاک شد',
-                    'errors' => null,
-                    'status_code' => 200,
-                ], 200);
-        } else {
-            return response()->json(
-                ['isSuccess' => null,
-                    'message' => 'مقداری یافت نشد.',
-                    'errors' => true,
-                    'status_code' => 500,
-                ], 500);
+        if (!$invoice) {
+            return response()->json([
+                'isSuccess'   => false,
+                'message'     => 'رکوردی یافت نشد یا قابل حذف نیست.',
+                'errors'      => true,
+                'status_code' => 404,
+            ], 404);
         }
+
+        $invoice->delete();
+
+        return response()->json([
+            'isSuccess'   => true,
+            'message'     => 'رکورد با موفقیت حذف شد.',
+            'errors'      => null,
+            'status_code' => 200,
+        ], 200);
     }
 
     public function invoicetotal()

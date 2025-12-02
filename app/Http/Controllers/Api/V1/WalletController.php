@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
 use App\Models\Invoice;
+use App\Models\Wallet;
 use App\Models\WalletTransaction;
 use Evryn\LaravelToman\Facades\Toman;
 use Ghasedak\Exceptions\HttpException;
@@ -213,9 +214,9 @@ class WalletController extends Controller
                 ->where('user_id', auth()->id())
                 ->update(['price_status' => 4]);
 
-            $invoice = Invoice::leftjoin('workshops' ,'workshops.id' , '=' , 'invoices.product_id')
+            $invoice = Invoice::leftjoin('products' ,'products.id' , '=' , 'invoices.product_id')
                 ->leftjoin('users' , 'users.id' , '=' , 'invoices.user_id')
-                ->select('workshops.title' , 'workshops.date' , 'users.phone' , 'users.name' , 'invoices.product_type')
+                ->select('products.title' , 'products.start_date' , 'users.phone' , 'users.name' , 'invoices.product_type')
                 ->where('invoices.id', $invoiceIds)
                 ->where('invoices.user_id', auth()->id())
                 ->first();
@@ -233,7 +234,7 @@ class WalletController extends Controller
                         'type' => 1,
                         'param1' => $invoice->name,
                         'param2' => $invoice->title,
-                        'param3' => $invoice->date,
+                        'param3' => $invoice->start_date,
                         'receptor' => $invoice->phone,
                         'template' => 'workshop',
                     ]);
