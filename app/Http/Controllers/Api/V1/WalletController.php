@@ -4,14 +4,14 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
 use App\Models\Invoice;
-use App\Models\Profile\Wallet;
-use App\Models\Profile\WalletTransaction;
+use App\Models\WalletTransaction;
 use Evryn\LaravelToman\Facades\Toman;
 use Ghasedak\Exceptions\HttpException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Response;
 
 class WalletController extends Controller
 {
@@ -66,12 +66,21 @@ class WalletController extends Controller
         $amount      = $request->amount;
         $description = $request->description ?? 'شارژ کیف پول';
 
-        if (empty(auth()->user()->email)) {
-            return Response::json(['isSuccess' =>null ,'message' => 'ادرس ایمیل خالی می باشد' , 'errors' => true]);
-        }
+        $user = auth()->user();
 
-        if (empty(auth()->user()->phone)) {
-            return Response::json(['isSuccess' =>null ,'message' => 'شماره موبایل خالی می باشد' , 'errors' => true]);
+        $requiredFields = [
+            'email' => 'آدرس ایمیل خالی می‌باشد',
+            'phone' => 'شماره موبایل خالی می‌باشد',
+        ];
+
+        foreach ($requiredFields as $field => $message) {
+            if (empty($user->$field)) {
+                return Response::json([
+                    'isSuccess' => null,
+                    'message'   => $message,
+                    'errors'    => true
+                ]);
+            }
         }
 
         $transaction = auth()->user()->transactions()->create([
@@ -89,7 +98,7 @@ class WalletController extends Controller
             ->request();
 
         if ($paymentRequest->successful()) {
-            WalletTransaction::whereid($transaction->id)->whereUser_id(Auth::user()->id)->whereStatus('pending')->update([
+            WalletTransaction::whereid($transaction->id)->whereUser_id(Auth::id())->whereStatus('pending')->update([
                 'transactionId' => $paymentRequest->transactionId()
             ]);
             return response()->json([

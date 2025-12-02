@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
@@ -78,7 +79,7 @@ class User extends Authenticatable implements JWTSubject
         return !!$role->intersect($this->role)->count();
     }
 
-    public function type(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    public function type(): BelongsTo
     {
         return $this->belongsTo(typeUser::class, 'type_id');
     }
@@ -119,6 +120,11 @@ class User extends Authenticatable implements JWTSubject
     public function wallet()
     {
         return $this->hasOne(Wallet::class);
+    }
+
+    public function transactions()
+    {
+        return $this->hasMany(WalletTransaction::class);
     }
 
 }

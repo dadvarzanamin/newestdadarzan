@@ -318,8 +318,6 @@ class UserController extends Controller
     }
 
 
-
-
     function sendCurlRequest($url, $method, $headers, $data = [])
     {
         try {

@@ -59,34 +59,40 @@ class InvoiceController extends Controller
             ], 200);
     }
 
-    public function showinvoice(Request $request)
+    public function order()
     {
-        $orders = DB::table('invoices')
-            ->leftJoin('workshops', function ($join) {
-                $join->on('invoices.product_id', '=', 'workshops.id')
-                    ->where('invoices.product_type', '=', 'workshop');
-            })
-            ->leftJoin('contracts', function ($join) {
-                $join->on('invoices.product_id', '=', 'contracts.id')
-                    ->where('invoices.product_type', '=', 'contracts');
-            })
-            ->leftJoin('estelams', function ($join) {
-                $join->on('invoices.product_id', '=', 'estelams.id')
-                    ->where('invoices.product_type', '=', 'estelam');
-            })
+        $orders = Invoice::query()
+            ->leftJoin('products', 'products.id', '=', 'invoices.product_id')
+            ->select('invoices.id','invoices.product_type','invoices.product_type', 'products.cover','products.file_path')
+            ->where('invoices.price_status', 4)
             ->where('invoices.user_id', Auth::id())
-            ->whereNull('invoices.price_status')
-            ->select(
-                'invoices.*',
-                DB::raw("CASE
-            WHEN invoices.product_type = 'workshop' THEN workshops.title
-            WHEN invoices.product_type = 'contracts' THEN contracts.title
-            WHEN invoices.product_type = 'estelam' THEN estelams.title_fa
-            ELSE NULL END AS product_name"),
-                DB::raw("CASE
-            WHEN invoices.product_type = 'contracts' THEN contracts.file_path
-            ELSE NULL END AS file_path")
-            )
+            ->get();
+
+        if ($orders) {
+            return response()->json(
+                ['isSuccess' => true,
+                    'message' => 'مقادیر رکورد دریافت شد',
+                    'errors' => null,
+                    'status_code' => 200,
+                    'result' => $orders
+                ], 200);
+        } else {
+            return response()->json(
+                ['isSuccess' => null,
+                    'message' => 'مقداری یافت نشد.',
+                    'errors' => true,
+                    'status_code' => 500,
+                ], 500);
+        }
+    }
+
+    public function showinvoice()
+    {
+        $orders = Invoice::query()
+            ->leftJoin('products', 'products.id', '=', 'invoices.product_id')
+            ->select('invoices.id','invoices.product_type','invoices.product_type', 'products.cover','products.file_path')
+            ->where('invoices.price_status', null)
+            ->where('invoices.user_id', Auth::id())
             ->get();
         if ($orders) {
             return response()->json(
@@ -130,7 +136,7 @@ class InvoiceController extends Controller
 
     public function invoicetotal()
     {
-        $totalFinal = Invoice::whereUser_id(Auth::user()->id)
+        $totalFinal = Invoice::whereUser_id(Auth::id())
             ->wherePrice_status(null)
             ->sum(DB::raw('final_price'));
 
@@ -143,51 +149,4 @@ class InvoiceController extends Controller
             ], 200);
     }
 
-    public function order(Request $request)
-    {
-
-        $orders = DB::table('invoices')
-            ->leftJoin('workshops', function ($join) {
-                $join->on('invoices.product_id', '=', 'workshops.id')
-                    ->where('invoices.product_type', '=', 'workshop');
-            })
-            ->leftJoin('contracts', function ($join) {
-                $join->on('invoices.product_id', '=', 'contracts.id')
-                    ->where('invoices.product_type', '=', 'contract');
-            })
-            ->leftJoin('estelams', function ($join) {
-                $join->on('invoices.product_id', '=', 'estelams.id')
-                    ->where('invoices.product_type', '=', 'estelam');
-            })
-            ->where('invoices.user_id', Auth::id())
-            ->where('invoices.price_status', 4)
-            ->select(
-                'invoices.*',
-                DB::raw("CASE
-            WHEN invoices.product_type = 'workshop' THEN workshops.title
-            WHEN invoices.product_type = 'contract' THEN contracts.title
-            WHEN invoices.product_type = 'estelam' THEN estelams.title_fa
-            ELSE NULL END AS product_name"),
-                DB::raw("CASE
-            WHEN invoices.product_type = 'contract' THEN contracts.file_path
-            ELSE NULL END AS file_path")
-            )
-            ->get();
-        if ($orders) {
-            return response()->json(
-                ['isSuccess' => true,
-                    'message' => 'مقادیر رکورد دریافت شد',
-                    'errors' => null,
-                    'status_code' => 200,
-                    'result' => $orders
-                ], 200);
-        } else {
-            return response()->json(
-                ['isSuccess' => null,
-                    'message' => 'مقداری یافت نشد.',
-                    'errors' => true,
-                    'status_code' => 500,
-                ], 500);
-        }
-    }
 }
