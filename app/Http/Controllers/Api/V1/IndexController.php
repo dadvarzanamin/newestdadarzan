@@ -10,7 +10,6 @@ use App\Models\APP\judgement;
 use App\Models\APP\lawsuit;
 use App\Models\APP\legalAdvice;
 use App\Models\APP\tokil;
-use App\Models\APP\Version;
 use App\Models\Article;
 use App\Models\Contract;
 use App\Models\Emploee;
@@ -20,6 +19,7 @@ use App\Models\City;
 use App\Models\State;
 use App\Models\Profile\Workshop;
 use App\Models\Profile\Workshopsign;
+use App\Models\Version;
 use Evryn\LaravelToman\CallbackRequest;
 use Evryn\LaravelToman\Facades\Toman;
 use Illuminate\Http\Request;
@@ -75,10 +75,8 @@ class IndexController extends Controller
     }
 
     public function version(){
-        $version = Version::latest('id')->first();
-
         $response = [
-            'version'          => $version ,
+            'version'    => Version::latest('id')->first() ,
         ];
         return Response::json(['ok' =>true ,'message' => 'success','response'=>$response]);
     }
@@ -451,8 +449,6 @@ class IndexController extends Controller
             //return redirect("yourapp://payment-failed?message=" . urlencode("پرداخت لغو شد"));
         }
     }
-
-
 
     public function getarticle(Request $request)
     {
