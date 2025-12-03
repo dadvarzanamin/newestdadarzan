@@ -72,6 +72,10 @@ class UserController extends Controller
         // تولید توکن JWT
         $token = auth('api')->login($user);
 
+        $code = ActiveCode::generateCode($user);
+
+        $user->notify(new ActiveCodeNotification($code , $user->phone));
+
         // ثبت لاگ
         User_logs::create([
             'user_id'    => $user->id,
@@ -81,6 +85,7 @@ class UserController extends Controller
             'status'     => true,
             'description'=> 'ثبت‌نام موفق همراه با ورود',
         ]);
+
 
         DB::commit();
 
