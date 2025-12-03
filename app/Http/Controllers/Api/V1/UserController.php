@@ -211,9 +211,13 @@ class UserController extends Controller
             'place_id'
         ];
 
-        // فقط فیلدهایی که ارسال شده و در لیست مجاز هستند گرفته می‌شود
-        $data = $request->only($updatable);
+        $data = [];
 
+        foreach ($updatable as $field) {
+            if ($request->has($field) && $request->$field !== null && $request->$field !== '') {
+                $data[$field] = $request->$field;
+            }
+        }
         // اگر هیچ فیلدی ارسال نشده باشد
         if (empty($data)) {
             return response()->json([
