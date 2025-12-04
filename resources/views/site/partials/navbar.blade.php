@@ -98,15 +98,17 @@
 
                         @if($menu->mega_menu)
                             <li class="nav-item dropdown mega-menu-has">
-                                <a href="#" class="nav-link">
+                                <a href="#"
+                                   class="nav-link dropdown-toggle"
+                                   data-bs-toggle="dropdown"
+                                   role="button"
+                                   aria-expanded="false">
                                     {{ $menu->title }} <i class="la la-angle-down fs-12"></i>
                                 </a>
 
                                 <div class="dropdown-menu mega-menu p-3">
                                     <ul class="row g-3">
-
                                         @php
-                                            // تعداد ستون‌ها
                                             $columns = 1;
                                             foreach ($megacounts as $megacount) {
                                                 if ($megacount->menu_id == $menu->id) {
@@ -115,8 +117,6 @@
                                                 }
                                             }
                                             $colClass = 12 / $columns;
-
-                                            // فقط مگا منوهای مربوط به همین menu
                                             $menuMegaItems = $megamenus->where('menu_id', $menu->id);
                                         @endphp
 
@@ -131,13 +131,13 @@
                                                 @endphp
 
                                                 @foreach($submenuItems as $submenu)
-                                                    <a href="{{ url($menu->slug.'/'.$submenu->slug) }}" class="d-block mb-1">
+                                                    <a href="{{ url($menu->slug.'/'.$submenu->slug) }}"
+                                                       class="d-block mb-1">
                                                         {{ $submenu->title }}
                                                     </a>
                                                 @endforeach
                                             </li>
                                         @endforeach
-
                                     </ul>
                                 </div>
                             </li>
