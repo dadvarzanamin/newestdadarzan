@@ -33,62 +33,27 @@ use Illuminate\Support\Facades\Redirect;
 class IndexController extends Controller
 {
 
-    public function index(Request $request)
+    public function index()
     {
-
-        $url = $request->segments();
-        $menus = Menu::select('id', 'title', 'slug', 'submenu', 'priority', 'mega_menu')->orderBy('priority')->whereStatus(4)->whereType('site')->get();
-        if (count($url) == 1) {
-            $thispage = Menu::select('id', 'title', 'slug')->whereStatus(4)->whereType('site')->whereSlug($url[0])->first();
-        } elseif (count($url) > 1) {
-            $thispage = Submenu::select('id', 'title', 'slug')->whereStatus(4)->whereType('site')->whereSlug($url[1])->first();
-        }elseif (count($url) == 0) {
-            $thispage = Menu::select('id', 'title', 'slug')->whereStatus(4)->whereType('site')->whereSlug('/')->first();
-        }
-        $megacounts = DB::table('mega_menus')->selectRaw('COUNT(*) as count, menu_id')
-            ->groupBy('menu_id')
-            ->get()
-            ->toArray();
-        $megamenus      = DB::table('mega_menus')->get();
-        $submenus       = Submenu::select('id', 'title', 'slug', 'menu_id', 'megamenu_id')->whereStatus(4)->whereType('site')->get();
 
         $products       = Product::orderBy('id' , 'DESC')->get();
         $emploees       = Emploee::whereStatus(4)->orderBy('priority')->get();
         $posts          = Content::whereMenu_id(65)->whereSubmenu_id(74)->whereStatus(4)->orderBy('id' , 'DESC')->limit(6)->get();
         $customers      = Customer::whereStatus(4)->get();
 
-        return view('site.pages.index')->with(compact('menus', 'thispage', 'submenus' , 'products' , 'emploees' , 'megacounts' , 'megamenus' , 'posts' , 'customers'));
+        return view('site.pages.index')->with(compact('products' , 'emploees'  , 'posts' , 'customers'));
     }
 
-    public function contract(Request $request)
+    public function contract()
     {
-
-        $url = $request->segments();
-        $menus = Menu::select('id', 'title', 'slug', 'submenu', 'priority', 'mega_menu')->orderBy('priority')->whereStatus(4)->whereType('site')->get();
-        if (count($url) == 1) {
-            $thispage = Menu::select('id', 'title', 'slug')->whereStatus(4)->whereType('site')->whereSlug($url[0])->first();
-        } elseif (count($url) > 1) {
-            $thispage = Submenu::select('id', 'title', 'slug')->whereStatus(4)->whereType('site')->whereSlug($url[1])->first();
-        }elseif (count($url) == 0) {
-            $thispage = Menu::select('id', 'title', 'slug')->whereStatus(4)->whereType('site')->whereSlug('/')->first();
-        }
-        $megacounts = DB::table('mega_menus')->selectRaw('COUNT(*) as count, menu_id')
-            ->groupBy('menu_id')
-            ->get()
-            ->toArray();
-        $megamenus      = DB::table('mega_menus')->get();
-        $submenus       = Submenu::select('id', 'title', 'slug', 'menu_id', 'megamenu_id')->whereStatus(4)->whereType('site')->get();
-
         $contracts       = Product::where('product_type' , 'contract')->whereStatus(4)->orderBy('id' , 'DESC')->get();
 
-        return view('site.pages.contracts')->with(compact('menus', 'thispage', 'submenus' , 'contracts' , 'megamenus' , 'megacounts'));
+        return view('site.pages.contracts')->with(compact('contracts'));
     }
 
     public function departmandaavi(Request $request)
     {
-
         $url = $request->segments();
-        $menus = Menu::select('id', 'title', 'slug', 'submenu', 'priority', 'mega_menu')->orderBy('priority')->whereStatus(4)->whereType('site')->get();
         if (count($url) == 1) {
             $thispage = Menu::select('id', 'title', 'slug')->whereStatus(4)->whereType('site')->whereSlug($url[0])->first();
         } elseif (count($url) > 1) {
@@ -96,23 +61,15 @@ class IndexController extends Controller
         }elseif (count($url) == 0) {
             $thispage = Menu::select('id', 'title', 'slug')->whereStatus(4)->whereType('site')->whereSlug('/')->first();
         }
-        $megacounts = DB::table('mega_menus')->selectRaw('COUNT(*) as count, menu_id')
-            ->groupBy('menu_id')
-            ->get()
-            ->toArray();
-        $megamenus      = DB::table('mega_menus')->get();
-        $submenus       = Submenu::select('id', 'title', 'slug', 'menu_id', 'megamenu_id')->whereStatus(4)->whereType('site')->get();
 
         $services      = content::where('menu_id' , 61)->where('slug' , $thispage->slug)->first();
 
-        return view('site.pages.single-service')->with(compact('menus', 'thispage', 'submenus' , 'services'));
+        return view('site.pages.single-service')->with(compact( 'services'));
     }
 
     public function departmangharardad(Request $request)
     {
-
         $url = $request->segments();
-        $menus = Menu::select('id', 'title', 'slug', 'submenu', 'priority', 'mega_menu')->orderBy('priority')->whereStatus(4)->whereType('site')->get();
         if (count($url) == 1) {
             $thispage = Menu::select('id', 'title', 'slug')->whereStatus(4)->whereType('site')->whereSlug($url[0])->first();
         } elseif (count($url) > 1) {
@@ -120,47 +77,22 @@ class IndexController extends Controller
         }elseif (count($url) == 0) {
             $thispage = Menu::select('id', 'title', 'slug')->whereStatus(4)->whereType('site')->whereSlug('/')->first();
         }
-        $megacounts = DB::table('mega_menus')->selectRaw('COUNT(*) as count, menu_id')
-            ->groupBy('menu_id')
-            ->get()
-            ->toArray();
-        $megamenus      = DB::table('mega_menus')->get();
-        $submenus       = Submenu::select('id', 'title', 'slug', 'menu_id', 'megamenu_id')->whereStatus(4)->whereType('site')->get();
 
         $services      = content::where('menu_id' , 62)->where('slug' , $thispage->slug)->first();
 
-        return view('site.pages.single-service')->with(compact('menus', 'thispage', 'submenus' , 'services'));
+        return view('site.pages.single-service')->with(compact('services'));
     }
 
-    public function departmanamoozesh(Request $request)
+    public function departmanamoozesh()
     {
-
-        $url = $request->segments();
-        $menus = Menu::select('id', 'title', 'slug', 'submenu', 'priority', 'mega_menu')->orderBy('priority')->whereStatus(4)->whereType('site')->get();
-        if (count($url) == 1) {
-            $thispage = Menu::select('id', 'title', 'slug')->whereStatus(4)->whereType('site')->whereSlug($url[0])->first();
-        } elseif (count($url) > 1) {
-            $thispage = Submenu::select('id', 'title', 'slug')->whereStatus(4)->whereType('site')->whereSlug($url[1])->first();
-        }elseif (count($url) == 0) {
-            $thispage = Menu::select('id', 'title', 'slug')->whereStatus(4)->whereType('site')->whereSlug('/')->first();
-        }
-        $megacounts = DB::table('mega_menus')->selectRaw('COUNT(*) as count, menu_id')
-            ->groupBy('menu_id')
-            ->get()
-            ->toArray();
-        $megamenus      = DB::table('mega_menus')->get();
-        $submenus       = Submenu::select('id', 'title', 'slug', 'menu_id', 'megamenu_id')->whereStatus(4)->whereType('site')->get();
-
         $workshops       = Product::orderBy('id' , 'DESC')->whereProduct_type('workshop')->get();
 
-
-        return view('site.pages.workshops')->with(compact('menus', 'thispage', 'submenus' , 'workshops'));
+        return view('site.pages.workshops')->with(compact('workshops'));
     }
 
     public function service(Request $request)
     {
         $url = $request->segments();
-        $menus = Menu::select('id', 'title', 'slug', 'submenu', 'priority', 'mega_menu')->orderBy('priority')->whereStatus(4)->whereType('site')->get();
         if (count($url) == 1) {
             $thispage = Menu::select('id', 'title', 'slug')->whereStatus(4)->whereType('site')->whereSlug($url[0])->first();
         } elseif (count($url) > 1) {
@@ -168,243 +100,87 @@ class IndexController extends Controller
         }elseif (count($url) == 0) {
             $thispage = Menu::select('id', 'title', 'slug')->whereStatus(4)->whereType('site')->whereSlug('/')->first();
         }
-        $megacounts = DB::table('mega_menus')->selectRaw('COUNT(*) as count, menu_id')
-            ->groupBy('menu_id')
-            ->get()
-            ->toArray();
-        $megamenus      = DB::table('mega_menus')->get();
-        $submenus       = Submenu::select('id', 'title', 'slug', 'menu_id', 'megamenu_id')->whereStatus(4)->whereType('site')->get();
 
         $services      = content::where('menu_id' , 64)->where('slug' , $thispage->slug)->whereStatus(4)->first();
 
-        return view('site.pages.single-service')->with(compact('menus', 'thispage', 'submenus' , 'services'));
+        return view('site.pages.single-service')->with(compact('services'));
     }
 
-    public function akhbar(Request $request)
+    public function akhbar()
     {
-
-        $url = $request->segments();
-        $menus = Menu::select('id', 'title', 'slug', 'submenu', 'priority', 'mega_menu')->orderBy('priority')->whereStatus(4)->whereType('site')->get();
-        if (count($url) == 1) {
-            $thispage = Menu::select('id', 'title', 'slug')->whereStatus(4)->whereType('site')->whereSlug($url[0])->first();
-        } elseif (count($url) > 1) {
-            $thispage = Submenu::select('id', 'title', 'slug')->whereStatus(4)->whereType('site')->whereSlug($url[1])->first();
-        }elseif (count($url) == 0) {
-            $thispage = Menu::select('id', 'title', 'slug')->whereStatus(4)->whereType('site')->whereSlug('/')->first();
-        }
-        $megacounts = DB::table('mega_menus')->selectRaw('COUNT(*) as count, menu_id')
-            ->groupBy('menu_id')
-            ->get()
-            ->toArray();
-        $megamenus      = DB::table('mega_menus')->get();
-        $submenus       = Submenu::select('id', 'title', 'slug', 'menu_id', 'megamenu_id')->whereStatus(4)->whereType('site')->get();
-
         $posts      = content::where('menu_id' , 65)->whereSubmenu_id(48)->whereStatus(4)->orderBy('id' , 'DESC')->paginate(10);
 
-
-        return view('site.pages.posts')->with(compact('menus', 'thispage', 'submenus' , 'posts'));
+        return view('site.pages.posts')->with(compact('posts'));
     }
 
-    public function about(Request $request)
+    public function about()
     {
-
-        $url = $request->segments();
-        $menus = Menu::select('id', 'title', 'slug', 'submenu', 'priority', 'mega_menu')->orderBy('priority')->whereStatus(4)->whereType('site')->get();
-        if (count($url) == 1) {
-            $thispage = Menu::select('id', 'title', 'slug')->whereStatus(4)->whereType('site')->whereSlug($url[0])->first();
-        } elseif (count($url) > 1) {
-            $thispage = Submenu::select('id', 'title', 'slug')->whereStatus(4)->whereType('site')->whereSlug($url[1])->first();
-        }elseif (count($url) == 0) {
-            $thispage = Menu::select('id', 'title', 'slug')->whereStatus(4)->whereType('site')->whereSlug('/')->first();
-        }
-        $megacounts = DB::table('mega_menus')->selectRaw('COUNT(*) as count, menu_id')
-            ->groupBy('menu_id')
-            ->get()
-            ->toArray();
-        $megamenus      = DB::table('mega_menus')->get();
-        $submenus       = Submenu::select('id', 'title', 'slug', 'menu_id', 'megamenu_id')->whereStatus(4)->whereType('site')->get();
-
-        return view('site.pages.about')->with(compact('menus', 'thispage', 'submenus'));
+        return view('site.pages.about');
     }
 
-    public function contact(Request $request)
+    public function contact()
     {
-
-        $url = $request->segments();
-        $menus = Menu::select('id', 'title', 'slug', 'submenu', 'priority')->orderBy('priority')->whereStatus(4)->whereType('site')->get();
-        if (count($url) == 1) {
-            $thispage = Menu::select('id', 'title', 'slug')->whereStatus(4)->whereType('site')->whereSlug($url[0])->first();
-        } elseif (count($url) > 1) {
-            $thispage = Submenu::select('id', 'title', 'slug')->whereStatus(4)->whereType('site')->whereSlug($url[1])->first();
-        }elseif (count($url) == 0) {
-            $thispage = Menu::select('id', 'title', 'slug')->whereStatus(4)->whereType('site')->whereSlug('/')->first();
-        }
-        $submenus       = Submenu::select('id', 'title', 'slug', 'menu_id')->whereStatus(4)->whereType('site')->get();
-
-        return view('site.pages.contact')->with(compact('menus', 'thispage', 'submenus'));
+        return view('site.pages.contact');
     }
 
-    public function privacy(Request $request)
+    public function privacy()
     {
-
-        $url = $request->segments();
-        $menus = Menu::select('id', 'title', 'slug', 'submenu', 'priority')->orderBy('priority')->whereStatus(4)->whereType('site')->get();
-        if (count($url) == 1) {
-            $thispage = Menu::select('id', 'title', 'slug')->whereStatus(4)->whereType('site')->whereSlug($url[0])->first();
-        } elseif (count($url) > 1) {
-            $thispage = Submenu::select('id', 'title', 'slug')->whereStatus(4)->whereType('site')->whereSlug($url[1])->first();
-        }elseif (count($url) == 0) {
-            $thispage = Menu::select('id', 'title', 'slug')->whereStatus(4)->whereType('site')->whereSlug('/')->first();
-        }
-        $submenus       = Submenu::select('id', 'title', 'slug', 'menu_id')->whereStatus(4)->whereType('site')->get();
-
-        return view('site.pages.privacy')->with(compact('menus', 'thispage', 'submenus'));
+        return view('site.pages.privacy');
     }
 
-    public function term(Request $request)
+    public function term()
     {
-
-        $url = $request->segments();
-        $menus = Menu::select('id', 'title', 'slug', 'submenu', 'priority')->orderBy('priority')->whereStatus(4)->whereType('site')->get();
-        if (count($url) == 1) {
-            $thispage = Menu::select('id', 'title', 'slug')->whereStatus(4)->whereType('site')->whereSlug($url[0])->first();
-        } elseif (count($url) > 1) {
-            $thispage = Submenu::select('id', 'title', 'slug')->whereStatus(4)->whereType('site')->whereSlug($url[1])->first();
-        }elseif (count($url) == 0) {
-            $thispage = Menu::select('id', 'title', 'slug')->whereStatus(4)->whereType('site')->whereSlug('/')->first();
-        }
-        $submenus       = Submenu::select('id', 'title', 'slug', 'menu_id')->whereStatus(4)->whereType('site')->get();
-
-        return view('site.pages.term')->with(compact('menus', 'thispage', 'submenus'));
+        return view('site.pages.term');
     }
 
-    public function resume(Request $request)
+    public function resume()
     {
-
-        $url = $request->segments();
-        $menus = Menu::select('id', 'title', 'slug', 'submenu', 'priority')->orderBy('priority')->whereStatus(4)->whereType('site')->get();
-        if (count($url) == 1) {
-            $thispage = Menu::select('id', 'title', 'slug')->whereStatus(4)->whereType('site')->whereSlug($url[0])->first();
-        } elseif (count($url) > 1) {
-            $thispage = Submenu::select('id', 'title', 'slug')->whereStatus(4)->whereType('site')->whereSlug($url[1])->first();
-        }elseif (count($url) == 0) {
-            $thispage = Menu::select('id', 'title', 'slug')->whereStatus(4)->whereType('site')->whereSlug('/')->first();
-        }
-        $submenus       = Submenu::select('id', 'title', 'slug', 'menu_id')->whereStatus(4)->whereType('site')->get();
         $emploees       = Emploee::whereStatus(4)->orderBy('priority')->get();
 
-        return view('site.pages.team')->with(compact('menus', 'thispage', 'submenus' , 'emploees'));
+        return view('site.pages.team')->with(compact('emploees'));
     }
 
-    public function questionlist(Request $request)
+    public function questionlist()
     {
-
-        $url = $request->segments();
-        $menus = Menu::select('id', 'title', 'slug', 'submenu', 'priority')->orderBy('priority')->whereStatus(4)->whereType('site')->get();
-        if (count($url) == 1) {
-            $thispage = Menu::select('id', 'title', 'slug')->whereStatus(4)->whereType('site')->whereSlug($url[0])->first();
-        } elseif (count($url) > 1) {
-            $thispage = Submenu::select('id', 'title', 'slug')->whereStatus(4)->whereType('site')->whereSlug($url[1])->first();
-        }elseif (count($url) == 0) {
-            $thispage = Menu::select('id', 'title', 'slug')->whereStatus(4)->whereType('site')->whereSlug('/')->first();
-        }
-        $submenus       = Submenu::select('id', 'title', 'slug', 'menu_id')->whereStatus(4)->whereType('site')->get();
         $questionlists  = DB::table('questionlists')->whereStatus(4)->orderBy('id')->get();
 
-        return view('site.pages.faq')->with(compact('menus', 'thispage', 'submenus' , 'questionlists'));
+        return view('site.pages.faq')->with(compact('questionlists'));
     }
 
-    public function post(Request $request)
+    public function post()
     {
-
-        $url = $request->segments();
-        $menus = Menu::select('id', 'title', 'slug', 'submenu', 'priority')->orderBy('priority')->whereStatus(4)->whereType('site')->get();
-        if (count($url) == 1) {
-            $thispage = Menu::select('id', 'title', 'slug')->whereStatus(4)->whereType('site')->whereSlug($url[0])->first();
-        } elseif (count($url) > 1) {
-            $thispage = Submenu::select('id', 'title', 'slug')->whereStatus(4)->whereType('site')->whereSlug($url[1])->first();
-        }elseif (count($url) == 0) {
-            $thispage = Menu::select('id', 'title', 'slug')->whereStatus(4)->whereType('site')->whereSlug('/')->first();
-        }
-        $submenus       = Submenu::select('id', 'title', 'slug', 'menu_id')->whereStatus(4)->whereType('site')->get();
-
         $posts      = content::where('menu_id' , 65)->whereSubmenu_id(74)->whereStatus(4)->orderBy('id' , 'DESC')->paginate(10);
 
-
-        return view('site.pages.posts')->with(compact('menus', 'thispage', 'submenus' , 'posts'));
+        return view('site.pages.posts')->with(compact('posts'));
     }
 
-    public function singlepost(Request $request , $slug)
+    public function singlepost($slug)
     {
-        $url = $request->segments();
-        $menus = Menu::select('id', 'title', 'slug', 'submenu', 'priority')->orderBy('priority')->whereStatus(4)->whereType('site')->get();
-        if (count($url) == 1) {
-            $thispage = Menu::select('id', 'title', 'slug')->whereStatus(4)->whereType('site')->whereSlug($url[0])->first();
-        } elseif (count($url) > 1) {
-            $thispage = Submenu::select('id', 'title', 'slug')->whereStatus(4)->whereType('site')->whereSlug($url[1])->first();
-        }elseif (count($url) == 0) {
-            $thispage = Menu::select('id', 'title', 'slug')->whereStatus(4)->whereType('site')->whereSlug('/')->first();
-        }
-        $submenus       = Submenu::select('id', 'title', 'slug', 'menu_id')->whereStatus(4)->whereType('site')->get();
-
         $posts = Content::leftjoin('users', 'contents.user_id', '=', 'users.id')
             ->where('contents.slug', $slug)->first();
 
-        return view('site.pages.single-post')->with(compact('menus', 'thispage', 'submenus', 'posts'));
+        return view('site.pages.single-post')->with(compact( 'posts'));
     }
 
-    public function singleworkshop(Request $request , $slug)
+    public function singleworkshop($slug)
     {
-        $url = $request->segments();
-        $menus = Menu::select('id', 'title', 'slug', 'submenu', 'priority')->orderBy('priority')->whereStatus(4)->whereType('site')->get();
-        if (count($url) == 1) {
-            $thispage = Menu::select('id', 'title', 'slug')->whereStatus(4)->whereType('site')->whereSlug($url[0])->first();
-        } elseif (count($url) > 1) {
-            $thispage = Submenu::select('id', 'title', 'slug')->whereStatus(4)->whereType('site')->whereSlug($url[1])->first();
-        }elseif (count($url) == 0) {
-            $thispage = Menu::select('id', 'title', 'slug')->whereStatus(4)->whereType('site')->whereSlug('/')->first();
-        }
-        $submenus       = Submenu::select('id', 'title', 'slug', 'menu_id')->whereStatus(4)->whereType('site')->get();
-
         $singleworkshops = Product::where('slug', $slug)->first();
 
-        return view('site.pages.single-workshop')->with(compact('menus', 'thispage', 'submenus', 'singleworkshops'));
+        return view('site.pages.single-workshop')->with(compact('singleworkshops'));
     }
 
-    public function emploeeresume(Request $request , $slug)
+    public function emploeeresume($slug)
     {
-        $url = $request->segments();
-        $menus = Menu::select('id', 'title', 'slug', 'submenu', 'priority')->orderBy('priority')->whereStatus(4)->whereType('site')->get();
-        if (count($url) == 1) {
-            $thispage = Menu::select('id', 'title', 'slug')->whereStatus(4)->whereType('site')->whereSlug($url[0])->first();
-        } elseif (count($url) > 1) {
-            $thispage = Submenu::select('id', 'title', 'slug')->whereStatus(4)->whereType('site')->whereSlug($url[1])->first();
-        }elseif (count($url) == 0) {
-            $thispage = Menu::select('id', 'title', 'slug')->whereStatus(4)->whereType('site')->whereSlug('/')->first();
-        }
-        $submenus       = Submenu::select('id', 'title', 'slug', 'menu_id')->whereStatus(4)->whereType('site')->get();
-
         $emploees       = Emploee::whereSlug($slug)->first();
 
-        return view('site.pages.single-team')->with(compact('menus', 'thispage', 'submenus', 'emploees'));
+        return view('site.pages.single-team')->with(compact('emploees'));
     }
 
-    public function singlecontract(Request $request , $slug)
+    public function singlecontract($slug)
     {
-        $url = $request->segments();
-        $menus = Menu::select('id', 'title', 'slug', 'submenu', 'priority')->orderBy('priority')->whereStatus(4)->whereType('site')->get();
-        if (count($url) == 1) {
-            $thispage = Menu::select('id', 'title', 'slug')->whereStatus(4)->whereType('site')->whereSlug($url[0])->first();
-        } elseif (count($url) > 1) {
-            $thispage = Submenu::select('id', 'title', 'slug')->whereStatus(4)->whereType('site')->whereSlug($url[1])->first();
-        }elseif (count($url) == 0) {
-            $thispage = Menu::select('id', 'title', 'slug')->whereStatus(4)->whereType('site')->whereSlug('/')->first();
-        }
-        $submenus       = Submenu::select('id', 'title', 'slug', 'menu_id')->whereStatus(4)->whereType('site')->get();
-
         $contract = Product::where('slug', $slug)->first();
 
-        return view('site.pages.single-contract')->with(compact('menus', 'thispage', 'submenus', 'contract'));
+        return view('site.pages.single-contract')->with(compact('contract'));
     }
 
 

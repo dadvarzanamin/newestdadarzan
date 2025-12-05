@@ -175,21 +175,19 @@ class ProductController extends Controller
                 return [
                     'id'                => $workshop->id,
                     'title'             => $workshop->title,
-                    'teacher'           => $workshop->teacher,
+                    'teacher'           => $workshop->item1,
                     'slug'              => $workshop->slug,
-                    'teacher_image'     => $workshop->teacher_image,
-                    'teacher_resume'    => $workshop->teacher_resume,
+                    'teacher_image'     => $workshop->item2,
+                    'teacher_resume'    => $workshop->item3,
                     'price'             => $workshop->price,
-                    'certificate_price' => $workshop->certificate_price,
-                    'offer'             => $workshop->offer,
-                    'duration'          => $workshop->duration,
-                    'type'              => json_decode($workshop->type),
-                    'image'             => $workshop->image,
-                    'video'             => $workshop->video,
-                    'date'              => $workshop->date,
-                    'description'       => $workshop->description,
-//                    'target'            => strip_tags($workshop->target),
-                    'target'            => $workshop->target,
+                    'certificate_price' => $workshop->price_certificate,
+                    'duration'          => $workshop->product_time,
+                    'type'              => json_decode($workshop->product_use),
+                    'image'             => $workshop->cover,
+                    'video'             => $workshop->file_path,
+                    'date'              => $workshop->start_date,
+                    'description'       => $workshop->full_description,
+                    'target'            => $workshop->description,
                     'status'            => $workshop->status,
                     'level'             => $workshop->level,
                 ];
@@ -340,7 +338,6 @@ class ProductController extends Controller
                 ], 500);
         }
     }
-
 
     public function form(Request $request){
 
