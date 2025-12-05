@@ -40,7 +40,7 @@ class IndexController extends Controller
         ->orderBy('wallets.balance', 'desc')
         ->get();
 
-        return view('dashboard')->with(compact(['thispage' , 'users' , 'wallets']));
+        return view('panel.dashboard')->with(compact(['thispage' , 'users' , 'wallets']));
     }
     public function getcities($stateId)
     {
