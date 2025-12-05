@@ -59,13 +59,25 @@ class EmploeeController extends Controller
                     return '<img src="' . asset('storage/' .$data->image) . '"  width="100" class="img-rounded" align="center" />';
                 })
                 ->editColumn('action', function ($data) {
+                    $base = 'btn btn-sm btn-icon rounded-pill waves-effect mx-1';
 
                     $actionBtn = '';
+
                     if (auth()->user()->can('can-access', ['emploee', 'edit'])) {
-                        $actionBtn .= '<button type="button" class="btn btn-sm btn-outline-primary edit-btn" data-id="'.$data->id.'" data-url="'.route('emploee.edit', $data->id).'"><i class="mdi mdi-pencil-outline"></i></button>';
+                        $actionBtn .= '<button type="button"
+                        class="'.$base.' btn-outline-primary edit-btn"
+                        data-id="'.$data->id.'"
+                        data-url="'.route('emploee.edit', $data->id).'">
+                        <i class="mdi mdi-pencil-outline fs-5"></i>
+                    </button>';
                     }
+
                     if (auth()->user()->can('can-access', ['emploee', 'delete'])) {
-                        $actionBtn .= '<button type="button" class="btn btn-sm btn-icon btn-outline-danger mx-1 delete-btn" data-id="'.$data->id.'"><i class="mdi mdi-delete-outline"></i></button>';
+                        $actionBtn .= '<button type="button"
+                        class="'.$base.' btn-outline-danger delete-btn"
+                        data-id="'.$data->id.'">
+                        <i class="mdi mdi-delete-outline fs-5"></i>
+                    </button>';
                     }
 //                    $actionBtn .= '<button class="btn btn-sm btn-icon btn-image mx-1 upload-btn" data-id="'.$data->id.'" data-subject="1"><i class="mdi mdi-file-document-multiple-outline"></i></button>';
                     $subject_id = 1;

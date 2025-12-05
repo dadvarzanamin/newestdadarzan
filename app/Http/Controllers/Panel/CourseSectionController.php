@@ -49,7 +49,8 @@ class CourseSectionController extends Controller
                         <i class="mdi mdi-playlist-play"></i>
                     </a>';
 
-                    $btn .= '<button type="button"
+                    $btn .=
+                        '<button type="button"
                         class="'.$base.' btn-outline-primary mx-1 edit-btn"
                         data-url="'.url('panel/course-section/'.$row->id.'/edit').'">
                         <i class="mdi mdi-pencil-outline"></i>

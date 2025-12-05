@@ -61,13 +61,14 @@ class MenusiteController extends Controller
                     }
                 })
                 ->editColumn('action', function ($data) {
+                    $base = 'btn btn-sm btn-icon rounded-pill waves-effect mx-1';
 
                     $actionBtn = '';
                     if (auth()->user()->can('can-access', ['menusite', 'edit'])) {
-                        $actionBtn .= '<button type="button" class="btn btn-sm btn-outline-primary edit-btn" data-id="'.$data->id.'" data-url="'.route('menusite.edit', $data->id).'"><i class="mdi mdi-pencil-outline"></i></button>';
+                        $actionBtn .= '<button type="button" class="'.$base.' btn btn-sm btn-outline-primary edit-btn" data-id="'.$data->id.'" data-url="'.route('menusite.edit', $data->id).'"><i class="mdi mdi-pencil-outline"></i></button>';
                     }
                     if (auth()->user()->can('can-access', ['menusite', 'delete'])) {
-                        $actionBtn .= '<button type="button" class="btn btn-sm btn-icon btn-outline-danger mx-1 delete-btn" data-id="'.$data->id.'"><i class="mdi mdi-delete-outline"></i></button>';
+                        $actionBtn .= '<button type="button" class="'.$base.' btn btn-sm btn-icon btn-outline-danger mx-1 delete-btn" data-id="'.$data->id.'"><i class="mdi mdi-delete-outline"></i></button>';
                     }
                     return $actionBtn;
                 })
