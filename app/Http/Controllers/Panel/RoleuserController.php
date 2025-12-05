@@ -65,14 +65,18 @@ class RoleuserController extends Controller
                     }
                 })
                 ->editColumn('action', function ($data) {
+
+                    $base = 'btn btn-sm btn-icon rounded-pill waves-effect mx-1';
+
+
                     $actionBtn = '';
                     if (Gate::allows('can-access', ['roleuser', 'edit'])) {
-                        $actionBtn .= '<button type="button" class="btn btn-sm btn-outline-primary edit-btn" data-id="'.$data->id.'" data-url="'.route('roleuser.edit', $data->id).'"><i class="mdi mdi-pencil-outline"></i></button>';
+                        $actionBtn .= '<button type="button" class="'.$base.' btn btn-sm btn-outline-primary edit-btn" data-id="'.$data->id.'" data-url="'.route('roleuser.edit', $data->id).'"><i class="mdi mdi-pencil-outline"></i></button>';
                     }
                     if (Gate::allows('can-access', ['roleuser', 'delete'])) {
-                        $actionBtn .= '<button type="button" class="btn btn-sm btn-icon btn-outline-danger mx-1 delete-btn" data-id="'.$data->id.'"><i class="mdi mdi-delete-outline"></i></button>';
+                        $actionBtn .= '<button type="button" class="'.$base.' btn btn-sm btn-icon btn-outline-danger mx-1 delete-btn" data-id="'.$data->id.'"><i class="mdi mdi-delete-outline"></i></button>';
                     }
-                        $actionBtn .= '<button type="button" class="btn btn-sm btn-outline-danger edit-btn" data-id="'.$data->id.'" data-url="'.route('roleuser.show', $data->id).'"><i class="mdi mdi-access-point"></i></button>';
+                        $actionBtn .= '<button type="button" class="'.$base.' btn btn-sm btn-outline-danger edit-btn" data-id="'.$data->id.'" data-url="'.route('roleuser.show', $data->id).'"><i class="mdi mdi-access-point"></i></button>';
 
                     return $actionBtn;
                 })
