@@ -63,7 +63,7 @@ class InvoiceController extends Controller
     {
         $orders = Invoice::query()
             ->leftJoin('products', 'products.id', '=', 'invoices.product_id')
-            ->select('invoices.id','invoices.product_type','invoices.product_type', 'products.cover','products.file_path')
+            ->select('invoices.id','invoices.product_type','invoices.final_price as price', 'products.title', 'products.item1', 'products.product_use', 'products.start_date as date', 'products.cover','products.file_path')
             ->where('invoices.price_status', 4)
             ->where('invoices.user_id', Auth::id())
             ->get();
