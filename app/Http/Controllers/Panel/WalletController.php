@@ -51,6 +51,10 @@ class WalletController extends Controller
 
     public function store(Request $request)
     {
+        if ($request->input('amount') <= 1000) {
+            alert()->error('', 'مبلغ را صحیح وارد کنید');
+            return Redirect::back();
+        }
         $amount          = $this->convertPersianToEnglishNumbers($request->input('amount'));
         $amount          = str_replace(',', '', $amount);
         $user           = auth()->user();
