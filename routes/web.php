@@ -90,8 +90,8 @@ Route::post('panel/fullregister'        , [App\Http\Controllers\Auth\FullRegiste
 Route::patch('panel/fullregister/{id}'  , [App\Http\Controllers\Auth\FullRegisterController::class, 'update'])->name('fullregister.update');
 Route::get('logout'                     , [App\Http\Controllers\Auth\FullRegisterController::class, 'logout'])->name('logout');
 Route::post('logout'                    , [App\Http\Controllers\Auth\FullRegisterController::class, 'logout'])->name('logout');
-Route::get('login/{provider}'           , [App\Http\Controllers\Auth\LoginController::class, 'redirectToProvider'])   ->name('redirectToProvider');
-Route::get('login/{provider}/callback'  , [App\Http\Controllers\Auth\LoginController::class, 'handleProviderCallback'])->name('handleProviderCallback');
+Route::get('/login/google'               , [App\Http\Controllers\Auth\LoginController::class, 'redirectToProvider'])   ->name('redirectToProvider');
+Route::get('/login/google/callback'      , [App\Http\Controllers\Auth\LoginController::class, 'handleProviderCallback'])->name('handleProviderCallback');
 Route::get('otplogin'                   , [App\Http\Controllers\Auth\LoginController::class, 'otplogin'])->name('otplogin');
 Route::post('gettoken'                  , [App\Http\Controllers\Auth\LoginController::class, 'gettoken'])->name('gettoken');
 Route::get('sendtoken'                  , [App\Http\Controllers\Auth\LoginController::class, 'sendtoken'])->name('sendtoken');

@@ -36,6 +36,7 @@ class WalletController extends Controller
                 ], 500);
         }
     }
+
     public function transactions(){
 
         $payments       = auth()->user()->wallet->transactions()->latest()->get();
@@ -57,14 +58,21 @@ class WalletController extends Controller
                 ], 500);
         }
     }
+
     public function deposit(Request $request)
     {
-        $request->validate([
-            'amount'      => 'required|numeric|min:1000',
-            'description' => 'nullable|string|max:255',
-        ]);
+        if ($request->input('amount') <= 1000) {
+            return response()->json(
+                ['isSuccess'     => false,
+                    'message'    => 'مبلغ را صحیح وارد کنید',
+                    'errors'     => null,
+                    'status_code'=> 401,
+                    'result'     => '',
+                ], 401);
+        }
+        $amount          = $this->convertPersianToEnglishNumbers($request->input('amount'));
+        $amount          = str_replace(',', '', $amount);
 
-        $amount      = $request->amount;
         $description = $request->description ?? 'شارژ کیف پول';
 
         $user = auth()->user();
@@ -112,6 +120,7 @@ class WalletController extends Controller
             ]);
         }
     }
+
     public function callbackpay(Request $request)
     {
         $authority  = $request->query('Authority');
@@ -164,6 +173,7 @@ class WalletController extends Controller
         }
 
     }
+
     public function withdraw(Request $request)
     {
         $amount         = $request->input('totalFinal');
@@ -276,4 +286,12 @@ class WalletController extends Controller
             }
         }
     }
+
+    protected function convertPersianToEnglishNumbers($string) {
+        $persianNumbers = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
+        $englishNumbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
+
+        return str_replace($persianNumbers, $englishNumbers, $string);
+    }
+
 }

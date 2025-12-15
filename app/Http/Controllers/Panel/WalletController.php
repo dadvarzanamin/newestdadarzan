@@ -58,11 +58,8 @@ class WalletController extends Controller
         $amount          = $this->convertPersianToEnglishNumbers($request->input('amount'));
         $amount          = str_replace(',', '', $amount);
         $user           = auth()->user();
-        if($request->description == null){
-            $description = 'شارژ کیف پول';
-        }else {
-            $description = $request->description;
-        }
+        $description = $request->description ?? 'شارژ کیف پول';
+
         $transaction = $user->transactions()->create([
             'wallet_id'     => $user->wallet->id,
             'type'          => 'deposit',
