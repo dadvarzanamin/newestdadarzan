@@ -3,16 +3,19 @@
 namespace App\Http\Controllers\Panel;
 
 use App\Http\Controllers\Controller;
+use App\Models\Invoice;
+use App\Models\Wallet;
+use App\Models\WalletTransaction;
+use Evryn\LaravelToman\Facades\Toman;
+use Ghasedak\Exceptions\HttpException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Redirect;
 use Yajra\DataTables\Facades\DataTables;
 
 class WalletController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index(Request $request)
     {
         $thispage       = [
@@ -46,9 +49,79 @@ class WalletController extends Controller
         return view('panel.wallet')->with(compact(['thispage']));
     }
 
-    public function edit(string $id)
+    public function store(Request $request)
     {
-        //
+        $amount          = $this->convertPersianToEnglishNumbers($request->input('amount'));
+        $amount          = str_replace(',', '', $amount);
+        $user           = auth()->user();
+        if($request->description == null){
+            $description = 'شارژ کیف پول';
+        }else {
+            $description = $request->description;
+        }
+        $transaction = $user->transactions()->create([
+            'wallet_id'     => $user->wallet->id,
+            'type'          => 'deposit',
+            'amount'        => $amount,
+            'description'   => $description,
+            'status'        => 'pending',
+        ]);
+        if (Auth::user()->email == null)
+        {
+            alert()->error('', 'اطلاعات ادرس ایمیل وارد نشده است، به قسمت تنظیمات حساب مراجعه کنید');
+            return Redirect::back();
+
+        }elseif (Auth::user()->phone == null){
+            alert()->error('', 'اطلاعات شماره همراه وارد نشده است، به قسمت تنظیمات حساب مراجعه کنید');
+            return Redirect::back();
+
+        }
+        $request = Toman::amount($amount)
+            ->description($description)
+            ->callback(route('payment.callback'))
+            ->mobile(Auth::user()->phone)
+            ->email(Auth::user()->email)
+            ->request();
+
+        dd($request);
+        if ($request->successful()) {
+            WalletTransaction::whereId($transaction->id)->whereUser_id(Auth::user()->id)->whereStatus('pending')->update([
+                'transactionId' => $request->transactionId()
+            ]);
+            return $request->pay();
+        }
+    }
+
+    public function callbackpay(Request $request)
+    {
+        $authority  = $request->query('Authority');
+        $status     = $request->query('Status');
+
+        if ($status == "OK") {
+            $wallet_transactions = WalletTransaction::
+            select('id','amount')
+                ->where('transactionId', '=', $authority)
+                ->where('user_id', '=', Auth::user()->id)
+                ->where('status', '=', 'pending')
+                ->first();
+
+            $payment = Toman::amount($wallet_transactions->amount)->transactionId($authority)->verify();
+
+            if ($payment->successful()) {
+                WalletTransaction::whereid($wallet_transactions->id)->whereUser_id(Auth::user()->id)->whereStatus('pending')
+                    ->update(['status' => 'completed' , 'referenceId' => $payment->referenceId()]);
+                $wallet = Wallet::whereUser_id(Auth::user()->id)->first();
+                $amount_total = $wallet->balance + $wallet_transactions->amount;
+                Wallet::whereUser_id(Auth::user()->id)->update(['balance' => $amount_total]);
+                return view('Site.Dashboard.payment-success');
+            } else {
+                WalletTransaction::whereid($wallet_transactions->id)->whereUser_id(Auth::user()->id)->whereStatus('pending')
+                    ->update(['status' => 'failed']);
+                return view('Site.Dashboard.payment-failed');
+            }
+        } else {
+            return view('Site.Dashboard.payment-failed');
+        }
     }
 
     public function show(Request $request)
@@ -92,11 +165,130 @@ class WalletController extends Controller
         }
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+    public function withdraw(Request $request)
     {
-        //
+
+        $amount     = $request->input('totalFinal');
+        $invoiceIds = $request->input('invoice_ids', []);
+
+        if (!is_array($invoiceIds)) {
+            $invoiceIds = explode(',', $invoiceIds);
+        }
+
+        $user = auth()->user();
+        $wallet = $user->wallet;
+
+        if ($wallet->balance < $amount) {
+            return response()->json([
+                'isSuccess'    => false,
+                'message'      => 'موجودی کافی نیست. در حال انتقال به صفحه پرداخت...',
+                'redirect_url' => route('pay', ['user' => $user->id, 'amount' => $amount]),
+            ]);
+
+        }
+
+        $transaction = $user->transactions()->create([
+            'wallet_id'     => $wallet->id,
+            'type'          => 'withdraw',
+            'amount'        => $amount,
+            'description'   => $request->description,
+            'status'        => 'completed',
+        ]);
+
+        $wallet->decrement('balance', $amount);
+
+        Invoice::whereIn('id', $invoiceIds)
+            ->where('user_id', auth()->id())
+            ->update(['price_status' => 4]);
+
+        $invoice = Invoice::leftjoin('workshops' ,'workshops.id' , '=' , 'invoices.product_id')
+            ->leftjoin('users' , 'users.id' , '=' , 'invoices.user_id')
+            ->select('workshops.title' , 'workshops.date' , 'users.phone' , 'users.name' , 'invoices.product_type', 'invoices.type_use')
+            ->where('invoices.id', $invoiceIds)
+            ->where('invoices.user_id', auth()->id())
+            ->first();
+
+        if ($invoice->product_type == 'workshop') {
+            if ($invoice->type_use == 1) {
+                $type = 'حضوری';
+            }elseif ($invoice->type_use == 2) {
+                $type = 'آنلاین';
+            }
+
+            try {
+                $headers = array(
+                    'apikey: ilvYYKKVEXlM+BAmel+hepqt8fliIow1g0Br06rP4ko',
+                    'Accept: application/json',
+                    'Content-Type: application/x-www-form-urlencoded',
+                    'charset: utf-8'
+                );
+
+                $params = http_build_query([
+                    'type' => 1,
+                    'param1'    => $invoice->name,
+                    'param2'    => $invoice->title,
+                    'param3'    => $type.' در تاریخ '.$invoice->date,
+                    'receptor'  => $invoice->phone,
+                    'template'  => 'workshop',
+                ]);
+
+                $url = 'http://api.ghasedaksms.com/v2/send/verify';
+
+                $method = 'POST';
+
+                $init = curl_init();
+                curl_setopt($init, CURLOPT_URL, $url);
+                curl_setopt($init, CURLOPT_HTTPHEADER, $headers);
+                curl_setopt($init, CURLOPT_RETURNTRANSFER, true);
+                curl_setopt($init, CURLOPT_SSL_VERIFYHOST, false);
+                curl_setopt($init, CURLOPT_SSL_VERIFYPEER, false);
+                curl_setopt($init, CURLOPT_CUSTOMREQUEST, $method);
+                curl_setopt($init, CURLOPT_POSTFIELDS, $params);
+
+                $result = curl_exec($init);
+                $code = curl_getinfo($init, CURLINFO_HTTP_CODE);
+                $curl_errno = curl_errno($init);
+                $curl_error = curl_error($init);
+                if ($curl_errno) {
+                    throw new HttpException($curl_error, $curl_errno);
+                }
+
+                $json_result = json_decode($result);
+
+                return response()->json(
+                    ['isSuccess' => true,
+                        'message' => 'مبلغ با موفقیت از کیف پول برداشت شد.',
+                        'errors' => null,
+                        'status_code' => 200,
+                        'result' => $wallet->balance,
+                        'redirect_url' => route('order'),
+                    ], 200);
+
+            } catch (\Throwable $e) {
+                Log::error('Exception: ' . $e->getMessage());
+                return response()->json(['error' => $e->getMessage()], 500);
+            }
+        }
+
+        return response()->json(
+            ['isSuccess'        => true,
+                'message'       => 'مبلغ با موفقیت از کیف پول برداشت شد.',
+                'errors'        => null,
+                'status_code'   => 200,
+                'result'        => $wallet->balance,
+                'redirect_url' => route('order'),
+            ], 200);
+    }
+
+    public function transactions()
+    {
+        return auth()->user()->wallet->transactions()->latest()->get();
+    }
+
+    protected function convertPersianToEnglishNumbers($string) {
+        $persianNumbers = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
+        $englishNumbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
+
+        return str_replace($persianNumbers, $englishNumbers, $string);
     }
 }

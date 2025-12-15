@@ -53,10 +53,13 @@ Route::middleware('admin')->namespace('App\Http\Controllers\Panel')->group(funct
     Route::resource('panel/menusite'     , 'MenusiteController');
     Route::resource('panel/submenusite'  , 'SubmenusiteController');
     Route::resource('panel/transaction'  , 'TransactionController');
-    Route::resource('panel/wallet'       , 'WalletController');
     Route::resource('panel/content'      , 'ContentController');
     Route::resource('panel/emploee'      , 'EmploeeController');
 
+    Route::get('payment.callback'   , 'WalletController@callbackpay')           ->name('payment.callback');
+    Route::post('discountcheck'     , 'ProfileController@discountcheck')        ->name('discountcheck');
+    Route::get('payment-success'    , 'ProfileController@pay')                  ->name('payment-success');
+    Route::get('payment-failed'     , 'ProfileController@pay')                  ->name('payment-failed');
 
     Route::resource('panel/course', 'CourseController');
     Route::resource('panel/course-section', CourseSectionController::class)->except(['create','show']);
