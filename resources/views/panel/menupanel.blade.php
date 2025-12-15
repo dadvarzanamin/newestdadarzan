@@ -82,8 +82,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="بستن"></button>
                 </div>
                 <div class="modal-body">
-                    <form id="addform" data-type="create" method="POST" class="row g-4 mb-4"
-                          action="{{ route('menupanel.store') }}">
+                    <form id="addform" data-type="create" method="POST" class="row g-4 mb-4" action="{{ route('menupanel.store') }}">
                         {{csrf_field()}}
                         <div class="col-12 col-md-4">
                             <div class="form-floating form-floating-outline">
@@ -172,14 +171,14 @@
                 serverSide: true,
                 ajax: "{{route(request()->segment(2).'.index')}}",
                 columns: [
-                    {data: 'id', name: 'id', className: 'text-center'},
-                    {data: 'title', name: 'title'},
-                    {data: 'label', name: 'label'},
-                    {data: 'slug', name: 'slug'},
-                    {data: 'class', name: 'class'},
-                    {data: 'controller', name: 'controller'},
-                    {data: 'status', name: 'status', className: 'text-center'},
-                    {data: 'action', name: 'action', orderable: true, searchable: true, className: 'text-center'},
+                    {data: 'id'         , name: 'id'        , className: 'text-center'},
+                    {data: 'title'      , name: 'title'     , className: 'text-center'},
+                    {data: 'label'      , name: 'label'     , className: 'text-center'},
+                    {data: 'slug'       , name: 'slug'      , className: 'text-center'},
+                    {data: 'class'      , name: 'class'     , className: 'text-center'},
+                    {data: 'controller' , name: 'controller', className: 'text-center'},
+                    {data: 'status'     , name: 'status'    , className: 'text-center'},
+                    {data: 'action'     , name: 'action'    , orderable: true, searchable: true, className: 'text-center'},
                 ],
                 language: {
                     url: "{{asset('assets/vendor/js/fa.json')}}"
