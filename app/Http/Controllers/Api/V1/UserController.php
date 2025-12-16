@@ -309,7 +309,6 @@ class UserController extends Controller
 
     }
 
-
     protected function convertPersianToEnglishNumbers($string) {
         $persianNumbers = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
         $englishNumbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
@@ -325,7 +324,6 @@ class UserController extends Controller
             'expires_in'   => auth('api')->factory()->getTTL()
         ]);
     }
-
 
     function sendCurlRequest($url, $method, $headers, $data = [])
     {
@@ -354,7 +352,6 @@ class UserController extends Controller
             return null;
         }
     }
-
 
     public function recoverpass(Request $request)
     {
@@ -408,27 +405,5 @@ class UserController extends Controller
         }
 
     }
-
-    public function laws(){
-
-        if (Auth::check()) {
-
-            $laws          = Law::all();
-
-
-            $response = [
-                'laws'         => $laws,
-
-            ];
-            return Response::json(['ok' => true , 'message' => 'success' , 'response' => $response]);
-        }else{
-            $response = [
-                'user' => 'شما هنوز به حساب خود وارد نشده اید'
-            ];
-            return Response::json(['ok' => false , 'message' => 'faild' , 'response' => $response]);
-        }
-
-    }
-
 
 }

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Court;
 use App\Models\Emploee;
 use App\Models\Invoice;
+use App\Models\Law;
 use App\Models\Offer;
 use App\Models\City;
 use App\Models\State;
@@ -461,6 +462,20 @@ class IndexController extends Controller
                 ], 500);
         }
     }
+
+    public function laws(){
+
+        $laws          = Law::all();
+
+        return response()->json(
+            ['isSuccess' => true,
+                'message' => 'مقادیر رکورد دریافت شد',
+                'errors' => null,
+                'status_code' => 200,
+                'result' => $laws
+            ], 200);
+    }
+
 
 }
 
