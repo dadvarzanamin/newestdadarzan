@@ -9,6 +9,7 @@ use App\Models\Invoice;
 use App\Models\Law;
 use App\Models\Offer;
 use App\Models\City;
+use App\Models\Product;
 use App\Models\State;
 use App\Models\Version;
 use Evryn\LaravelToman\Facades\Toman;
@@ -476,6 +477,20 @@ class IndexController extends Controller
             ], 200);
     }
 
+    public function demands(){
+
+        $types = ['contractDrafting','documentDrafting','judgement','lawsuit','legalAdvice' , 'tokil'];
+
+        $result          = Invoice::whereIn('Product_type' , $types)->get();
+
+        return response()->json(
+            ['isSuccess' => true,
+                'message' => 'مقادیر رکورد دریافت شد',
+                'errors' => null,
+                'status_code' => 200,
+                'result' => $result
+            ], 200);
+    }
 
 }
 
