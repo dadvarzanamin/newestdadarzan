@@ -24,10 +24,10 @@ Route::middleware('auth.jwt')->group(function () {
     Route::post('v1/discountcheck'      , [App\Http\Controllers\Api\V1\IndexController::class        , 'discountcheck']);
     Route::GET('v1/courts'              , [App\Http\Controllers\Api\V1\IndexController::class        , 'court']);
     Route::get('v1/getform'             , [App\Http\Controllers\Api\V1\IndexController::class        , 'getform'])              ->name('getform');
+    Route::get('v1/laws'                , [App\Http\Controllers\Api\V1\IndexController::class         , 'laws']);
 
     Route::get('v1/profile'             , [App\Http\Controllers\Api\V1\UserController::class         , 'profile']);
     Route::get('v1/demands'             , [App\Http\Controllers\Api\V1\UserController::class         , 'demands']);
-    Route::get('v1/laws'                , [App\Http\Controllers\Api\V1\UserController::class         , 'laws']);
     Route::post('v1/addpass'            , [App\Http\Controllers\Api\V1\UserController::class         , 'addpass']);
     Route::post('v1/addmail'            , [App\Http\Controllers\Api\V1\UserController::class         , 'addmail']);
     Route::post('v1/editprofile'        , [App\Http\Controllers\Api\V1\UserController::class         , 'editprofile']);
