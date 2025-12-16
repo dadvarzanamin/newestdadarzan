@@ -67,7 +67,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="بستن"></button>
                 </div>
                 <div class="modal-body">
-                    <form id="addform" data-type="create" method="POST" class="row g-4 mb-4" action="{{ route('menupanel.store') }}">
+                    <form id="addform" data-type="create" method="POST" class="row g-4 mb-4" action="{{ route('content.store') }}">
                         {{csrf_field()}}
                         <div class="col-12 col-md-4">
                             <div class="form-floating form-floating-outline">
@@ -78,18 +78,22 @@
                         </div>
                         <div class="col-12 col-md-4">
                             <div class="form-floating form-floating-outline">
-                                <input required type="text" class="form-control" id="meta_title" name="meta_title" placeholder="عنوان صفحه" >
-                                <label for="title">عنوان صفحه داشبورد</label>
-                                <div class="invalid-feedback" id="meta_titleFeedback">عنوان صفحه اجباری می باشد.</div>
+                                <select name="menupanel_id" id="menupanel_id" class="form-control select-lg select2">
+                                    @foreach(DB::table('menus')->whereType('site')->whereStatus(4)->get() as $submenusite)
+                                        <option value="{{$submenusite->id}}" >{{$submenusite->label}}</option>
+                                    @endforeach
+                                </select>
+                                <label for="submenu">انتخاب زیر منو</label>
                             </div>
                         </div>
                         <div class="col-12 col-md-4">
                             <div class="form-floating form-floating-outline">
-                                <select name="submenu" id="submenu" class="form-control">
-                                    <option value="1" >دارد</option>
-                                    <option value="0" >ندارد</option>
+                                <select name="menupanel_id" id="menupanel_id" class="form-control select-lg select2">
+                                    @foreach(DB::table('submenus')->whereType('site')->whereStatus(4)->get() as $submenusite)
+                                        <option value="{{$submenusite->id}}" >{{$submenusite->label}}</option>
+                                    @endforeach
                                 </select>
-                                <label for="submenu">زیر  منو داشبورد</label>
+                                <label for="submenu">انتخاب زیر منو</label>
                             </div>
                         </div>
                         <div class="col-12 col-md-4">
@@ -150,16 +154,16 @@
                 serverSide: true,
                 ajax: "{{route(request()->segment(2).'.index')}}",
                 columns: [
-                    {data: 'id'             , name: 'id',className: 'text-center'            },
-                    {data: 'title'          , name: 'title'         },
-                    {data: 'menu_title'     , name: 'menu_title'    },
-                    {data: 'submenu_title'  , name: 'submenu_title' },
-                    {data: 'slide'          , name: 'slide'         },
-                    {data: 'cover'          , name: 'cover'         },
-                    {data: 'image'          , name: 'image'         },
-                    {data: 'video'          , name: 'video'         },
-                    {data: 'aparat'         , name: 'aparat'        },
-                    {data: 'status'         , name: 'status',className: 'text-center'        },
+                    {data: 'id'             , name: 'id'            ,className: 'text-center'},
+                    {data: 'title'          , name: 'title'         ,className: 'text-center'},
+                    {data: 'menu_title'     , name: 'menu_title'    ,className: 'text-center'},
+                    {data: 'submenu_title'  , name: 'submenu_title' ,className: 'text-center'},
+                    {data: 'slide'          , name: 'slide'         ,className: 'text-center'},
+                    {data: 'cover'          , name: 'cover'         ,className: 'text-center'},
+                    {data: 'image'          , name: 'image'         ,className: 'text-center'},
+                    {data: 'video'          , name: 'video'         ,className: 'text-center'},
+                    {data: 'aparat'         , name: 'aparat'        ,className: 'text-center'},
+                    {data: 'status'         , name: 'status'        ,className: 'text-center'},
                     {data: 'action'         , name: 'action', orderable: true, searchable: true,className: 'text-center'},
                 ],
                 language: {

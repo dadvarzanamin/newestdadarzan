@@ -68,7 +68,7 @@ class ContentController extends Controller
                 })
                 ->addColumn('aparat', function ($data) {
                     $fileUrl = asset('storage/' . $data->aparat);
-                    return '<a href="' . $fileUrl . '">' . $data->original_name . '</a>';
+                    return '<video width="160" height="90" controls><source src="' . $fileUrl . '" type="video/mp4">مرورگر شما از پخش ویدیو پشتیبانی نمی‌کند.</video>';
                 })
                 ->addColumn('status', function ($data) {
                     if ($data->status == "0") {
@@ -95,7 +95,7 @@ class ContentController extends Controller
                     }
                     return $actionBtn;
                 })
-                ->rawColumns(['action'])
+                ->rawColumns(['action' , 'video' , 'aparat'])
                 ->make(true);
         }
         return view('panel.content')->with(compact(['thispage']));

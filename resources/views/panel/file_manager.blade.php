@@ -10,6 +10,7 @@
             <div class="d-flex justify-content-between align-items-center mb-4">
                 <h5 class="card-title mb-0">{{$thispage['list']}}</h5>
                 <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#uploadModal">{{$thispage['add']}}</a>
+                <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addModal">تخصیص فایل</a>
             </div>
 
             <div class="table-responsive">
@@ -46,6 +47,45 @@
                 <div class="modal-footer justify-content-center">
                     <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">انصراف</button>
                     <button type="button" class="btn btn-danger" id="confirmDelete">حذف</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Add Modal -->
+    <div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addModalLabel">{{$thispage['add']}}</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="بستن"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="addform" data-type="create" method="POST" class="row g-4 mb-4" action="{{ route('filemanager.store') }}">
+                        {{csrf_field()}}
+{{--                        <div class="col-12 col-md-4">--}}
+{{--                            <div class="form-floating form-floating-outline">--}}
+{{--                                <select name="company_id" id="company_id_{{$mediafile->id}}" class="form-control">--}}
+{{--                                    @foreach($companies as $company)--}}
+{{--                                        <option value="{{$company->id}}" {{$company->id == $mediafile->project_id ? 'selected' : '' }}>{{$company->title}}</option>--}}
+{{--                                    @endforeach--}}
+{{--                                </select>--}}
+{{--                                <label for="company_id">انتخاب شرکت</label>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+{{--                        <div class="col-12 col-md-4">--}}
+{{--                            <div class="form-floating form-floating-outline">--}}
+{{--                                <select name="subject_id" id="subject_id_{{$mediafile->id}}" class="form-control">--}}
+{{--                                    @foreach($subject_files as $subject_file)--}}
+{{--                                        <option value="{{$subject_file->id}}" {{$mediafile->subject_id == $subject_file->id ? 'selected' : '' }}>{{$subject_file->title}}</option>--}}
+{{--                                    @endforeach--}}
+{{--                                </select>--}}
+{{--                                <label for="subject_id">انتخاب نوع فایل</label>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+                        <div class="text-end">
+                            <button type="submit" class="btn btn-primary">ذخیره اطلاعات</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
