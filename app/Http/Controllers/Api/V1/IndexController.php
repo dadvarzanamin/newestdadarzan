@@ -481,7 +481,7 @@ class IndexController extends Controller
 
         $types = ['contractDrafting','documentDrafting','judgement','lawsuit','legalAdvice' , 'tokil'];
 
-        $result          = Invoice::whereIn('Product_type' , $types)->get();
+        $result          = Invoice::whereIn('Product_type' , $types)->whereUser_id(Auth::id())->get();
 
         return response()->json(
             ['isSuccess' => true,
