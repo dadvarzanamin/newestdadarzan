@@ -3,32 +3,18 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
-use App\Models\APP\contractDrafting;
-use App\Models\APP\Courts;
-use App\Models\APP\documentDrafting;
-use App\Models\APP\judgement;
-use App\Models\APP\lawsuit;
-use App\Models\APP\legalAdvice;
-use App\Models\APP\tokil;
-use App\Models\Article;
-use App\Models\Contract;
+use App\Models\Court;
 use App\Models\Emploee;
 use App\Models\Invoice;
 use App\Models\Offer;
 use App\Models\City;
 use App\Models\State;
-use App\Models\Profile\Workshop;
-use App\Models\Profile\Workshopsign;
 use App\Models\Version;
-use Evryn\LaravelToman\CallbackRequest;
 use Evryn\LaravelToman\Facades\Toman;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Response;
-use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Str;
 
 class IndexController extends Controller
 {
@@ -83,11 +69,13 @@ class IndexController extends Controller
 
     public function index(){
         $emploees       = Emploee::select('id' , 'priority' , 'fullname' , 'image' , 'side' , 'status')->whereStatus(4)->orderBy('priority')->get();
-        $response = [
-            'emploees'          => $emploees ,
-        ];
-        return Response::json(['ok' =>true ,'message' => 'success','response'=>$response]);
-
+        return response()->json(
+            ['isSuccess' => true,
+                'message' => 'مقادیر رکورد دریافت شد',
+                'errors' => null,
+                'status_code' => 200,
+                'result' => $emploees
+            ], 200);
     }
 
     public function getform(Request $request)
@@ -216,11 +204,14 @@ class IndexController extends Controller
     }
 
     public function court(){
-        $courts       = Courts::whereStatus(4)->get();
-        $response = [
-            'courts'          => $courts ,
-        ];
-        return Response::json(['ok' =>true ,'message' => 'success','response'=>$response]);
+        $courts       = Court::whereStatus(4)->get();
+        return response()->json(
+            ['isSuccess' => true,
+                'message' => 'مقادیر رکورد دریافت شد',
+                'errors' => null,
+                'status_code' => 200,
+                'result' => $courts
+            ], 200);
     }
 
     public function discountcheck(Request $request){
