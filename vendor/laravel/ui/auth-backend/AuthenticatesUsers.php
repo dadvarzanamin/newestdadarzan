@@ -161,45 +161,41 @@ trait AuthenticatesUsers
     {
         return Auth::guard();
     }
+
     public function redirectToProvider($provider)
     {
-//        return Socialite::driver($provider)->redirect();
-        return Socialite::driver($provider)
-            ->scopes(['https://www.googleapis.com/auth/calendar'])
-            ->with([
-                'access_type' => 'offline',
-                'prompt'      => 'consent',
-            ])
-            ->redirect();
+        return Socialite::driver($provider)->redirect();
     }
+
 
     public function handleProviderCallback($provider)
     {
-        $user = Socialite::driver($provider)->user();
-        $authUser = $this->findOrCreateUser($user, $provider);
+        $userSocial = Socialite::driver($provider)->stateless()->user();
+
+        $authUser = $this->findOrCreateUser($userSocial, $provider);
         Auth::login($authUser, true);
-        $google_id            = $user->getId();
-        $google_token         = $user->token;
-        $google_refresh_token = $user->refreshToken;
-        $google_expires_in    = $user->expiresIn;
+
         try {
             $user = User::find(Auth::id());
-            $user->email_verify     = 1;
-            $user->google_id        = $google_id;
-            $user->google_token     = $google_token;
-            $user->google_expires_in= $google_expires_in;
-            if ($google_refresh_token) {
-                $user->google_refresh_token = $google_refresh_token;
+            $user->email_verify        = 1;
+            $user->google_id           = $userSocial->getId();
+            $user->google_token        = $userSocial->token;
+            $user->google_expires_in   = $userSocial->expiresIn;
+
+            if ($userSocial->refreshToken) {
+                $user->google_refresh_token = $userSocial->refreshToken;
             }
 
             $user->save();
 
-        }catch (Exception){
-
+        } catch (\Exception $e) {
+            // لاگ خطا در صورت نیاز
         }
-        alert()->success($user->name.' به داشبورد مدیریتی ' , 'خوش آمدید' );
+
+        alert()->success($user->name.' به داشبورد مدیریتی ', 'خوش آمدید');
         return redirect()->intended('/');
     }
+
 
     public function findOrCreateUser($user, $provider)
     {
