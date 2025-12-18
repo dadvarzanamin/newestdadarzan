@@ -164,6 +164,8 @@ trait AuthenticatesUsers
 
     public function redirectToProvider($provider)
     {
+        dd(config('services.google.redirect'));
+
         return Socialite::driver($provider)->redirect();
     }
 
