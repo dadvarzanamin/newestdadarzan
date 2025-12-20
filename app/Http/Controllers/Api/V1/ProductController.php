@@ -341,91 +341,86 @@ class ProductController extends Controller
 
     public function form(Request $request){
 
-        $type       = $request->input('type');
-        $arrayData  = $request->input('fields', []);
-        $userId     = Auth::id();
-        $filePaths  = [];
+        $type      = $request->input('type');
+        $arrayData = $request->input('fields', []);
+        $userId    = Auth::id();
 
-        if ($request->hasFile('files')) {
-            foreach ($request->file('files') as $file) {
-                $path = $file->store("upload/{$type}/files", 'public');
-                $filePaths[] = $path;
-            }
-        }
+        $model = new Invoice();
 
-        $models = [
-            'tokil'            => Tokil::class,
-            'lawsuit'          => Lawsuit::class,
-            'legalAdvice'      => LegalAdvice::class,
-            'contractDrafting' => ContractDrafting::class,
-            'documentDrafting' => DocumentDrafting::class,
-            'judgement'        => Judgement::class,
+        $fieldsMap = [
+            'legalAdvice' => [
+                'request_type',
+                'topic',
+                'subtopic',
+                'contract_type',
+                'additional_info',
+            ],
+            'tokil' => [
+                'request_type',
+                'contract_type',
+                'hearing_date',
+                'hearing_time',
+                'province',
+                'city',
+                'court_complex',
+                'court_branch',
+                'additional_info',
+            ],
+            'contractDrafting' => [
+                'request_type',
+                'contract_type',
+                'party_one_name',
+                'party_two_name',
+                'party_one_national_id',
+                'party_two_national_id',
+            ],
+            'judgement' => [
+                'request_type',
+                'contract_type',
+                'party_one_name',
+                'party_two_name',
+                'party_one_national_id',
+                'party_two_national_id',
+            ],
+            'documentDrafting' => [
+                'request_type',
+                'topic',
+                'subtopic',
+                'contract_type',
+                'additional_info',
+            ],
+
+            'lawsuit' => [
+                'request_type',
+                'contract_type',
+                'case_subject',
+                'stage',
+                'party_one_name',
+                'party_one_national_id',
+                'additional_info',
+            ],
+
+
         ];
 
-        if (isset($models[$type])) {
-            $modelClass = $models[$type];
-            $model = new $modelClass();
-
-            switch ($type) {
-                case 'tokil':
-                    $model->case_type       = $arrayData['case_type'] ?? null;
-                    $model->hearing_date    = $arrayData['hearing_date'] ?? null;
-                    $model->hearing_time    = $arrayData['hearing_time'] ?? null;
-                    $model->province        = $arrayData['province'] ?? null;
-                    $model->city            = $arrayData['city'] ?? null;
-                    $model->court_complex   = $arrayData['court_complex'] ?? null;
-                    $model->court_branch    = $arrayData['court_branch'] ?? null;
-                    $model->additional_info = $arrayData['additional_info'] ?? null;
-                    break;
-
-                case 'lawsuit':
-                    $model->case_type             = $arrayData['case_type'] ?? null;
-                    $model->case_subject          = $arrayData['case_subject'] ?? null;
-                    $model->stage                 = $arrayData['stage'] ?? null;
-                    $model->opponent_name         = $arrayData['opponent_name'] ?? null;
-                    $model->opponent_national_id  = $arrayData['opponent_national_id'] ?? null;
-                    $model->additional_info       = $arrayData['additional_info'] ?? null;
-                    break;
-
-                case 'legalAdvice':
-                    $model->topic          = $arrayData['topic'] ?? null;
-                    $model->sub_topic      = $arrayData['sub_topic'] ?? null;
-                    $model->type           = $arrayData['type'] ?? null;
-                    $model->additional_info = $arrayData['additional_info'] ?? null;
-                    break;
-
-                case 'contractDrafting':
-                    $model->contract_type          = $arrayData['contract_type'] ?? null;
-                    $model->party_one_name         = $arrayData['party_one_name'] ?? null;
-                    $model->party_two_name         = $arrayData['party_two_name'] ?? null;
-                    $model->party_one_national_id  = $arrayData['party_one_national_id'] ?? null;
-                    $model->party_two_national_id  = $arrayData['party_two_national_id'] ?? null;
-                    break;
-
-                case 'documentDrafting':
-                    $model->topic           = $arrayData['topic'] ?? null;
-                    $model->sub_topic       = $arrayData['sub_topic'] ?? null;
-                    $model->document_type   = $arrayData['document_type'] ?? null;
-                    $model->additional_info = $arrayData['additional_info'] ?? null;
-                    break;
-
-                case 'judgement':
-                    $model->judgement_type        = $arrayData['judgementType'] ?? null;
-                    $model->contract_type         = $arrayData['contractType'] ?? null;
-                    $model->party_one_name        = $arrayData['partyOneName'] ?? null;
-                    $model->party_two_name        = $arrayData['partyTwoName'] ?? null;
-                    $model->party_one_national_id = $arrayData['partyOneNationalId'] ?? null;
-                    $model->party_two_national_id = $arrayData['partyTwoNationalId'] ?? null;
-                    break;
-            }
-
-            $model->status        = 2;
-            $model->user_id       = $userId;
-            if (!empty($filePaths)) {
-                $model->uploaded_file = json_encode($filePaths);
-            }
-            $model->save();
+        if (!isset($fieldsMap[$type])) {
+            abort(400, 'Invalid type');
         }
+
+        foreach ($fieldsMap[$type] as $key => $value) {
+            if (is_int($key)) {
+                $model->{$value} = $arrayData[$value] ?? null;
+            } else {
+                $model->{$value} = $arrayData[$key] ?? null;
+            }
+        }
+
+        $model->type    = $type;
+        $model->status  = 2;
+        $model->user_id = $userId;
+
+        $model->save();
+
 
         return response()->json([
             'isSuccess'   => true,
