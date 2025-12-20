@@ -2,6 +2,40 @@
 
 @section('style')
 <link rel="stylesheet" href="{{ asset('assets/vendor/css/rtl/dataTables.dataTables.min.css') }}"/>
+
+{{-- Quill (Snow theme) --}}
+<link href="https://cdn.jsdelivr.net/npm/quill@1.3.7/dist/quill.snow.css" rel="stylesheet">
+
+{{-- KaTeX (required for formula module) --}}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+
+<style>
+    /* Toolbar should stay LTR (icons/controls are designed LTR) */
+    .ql-toolbar,
+    .ql-toolbar * {
+        /*direction: ltr;*/
+    }
+
+    /* Editor content should be RTL for Persian */
+    .ql-editor {
+        direction: rtl;
+        text-align: right;
+        line-height: 1.9;
+        min-height: 180px;
+    }
+
+    /* Optional: make the editor fit Bootstrap card nicely */
+    .ql-toolbar.ql-snow {
+        border-top-left-radius: .5rem;
+        border-top-right-radius: .5rem;
+    }
+    .ql-container.ql-snow {
+        border-bottom-left-radius: .5rem;
+        border-bottom-right-radius: .5rem;
+    }
+</style>
+
+
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.3/dropzone.min.css"/>
 @endsection
 
@@ -13,6 +47,75 @@
     </div>
 
     <div class="row gy-4 mb-4">
+
+
+        <div class="card mb-4">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h5 class="card-title mb-0">ویرایشگر متن</h5>
+                </div>
+
+                <div class="quill-wrapper">
+                    {{-- Quill Toolbar --}}
+                    <div id="snow-toolbar">
+                <span class="ql-formats">
+                    <select class="ql-font"></select>
+                    <select class="ql-size"></select>
+                </span>
+                        <span class="ql-formats">
+                    <button class="ql-bold" type="button"></button>
+                    <button class="ql-italic" type="button"></button>
+                    <button class="ql-underline" type="button"></button>
+                    <button class="ql-strike" type="button"></button>
+                </span>
+                        <span class="ql-formats">
+                    <select class="ql-color"></select>
+                    <select class="ql-background"></select>
+                </span>
+                        <span class="ql-formats">
+                    <button class="ql-script" value="sub" type="button"></button>
+                    <button class="ql-script" value="super" type="button"></button>
+                </span>
+                        <span class="ql-formats">
+                    <button class="ql-header" value="1" type="button"></button>
+                    <button class="ql-header" value="2" type="button"></button>
+                    <button class="ql-blockquote" type="button"></button>
+                    <button class="ql-code-block" type="button"></button>
+                </span>
+                        <span class="ql-formats">
+                    <button class="ql-list" value="ordered" type="button"></button>
+                    <button class="ql-list" value="bullet" type="button"></button>
+                    <button class="ql-indent" value="-1" type="button"></button>
+                    <button class="ql-indent" value="+1" type="button"></button>
+                </span>
+                        <span class="ql-formats">
+                    <button class="ql-direction" value="rtl" type="button"></button>
+                    <select class="ql-align"></select>
+                </span>
+                        <span class="ql-formats">
+                    <button class="ql-link" type="button"></button>
+                    <button class="ql-image" type="button"></button>
+                    <button class="ql-video" type="button"></button>
+                    <button class="ql-formula" type="button"></button>
+                </span>
+                        <span class="ql-formats">
+                    <button class="ql-clean" type="button"></button>
+                </span>
+                    </div>
+
+                    {{-- Quill Editor --}}
+                    <div id="snow-editor">
+                        <p>متن نمونه…</p>
+                    </div>
+
+                    {{-- Hidden input for submitting HTML (optional) --}}
+                    <input type="hidden" name="content_html" id="content_html" value="">
+                </div>
+
+            </div>
+        </div>
+
+
 
         <div class="row gy-4 mb-4">
             <div class="col-xl-2 col-lg-2 col-md-3 col-sm-4 col-6">
@@ -817,6 +920,48 @@
 @push('scripts')
     <script src="{{ asset('assets/js/timeline-chart.js') }}"></script>
     <script src="{{ asset('assets/js/charts-apex.js') }}"></script>
+
+    {{-- KaTeX must be loaded BEFORE initializing Quill formula module --}}
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+
+    {{-- Quill --}}
+    <script src="https://cdn.jsdelivr.net/npm/quill@1.3.7/dist/quill.min.js"></script>
+
+    <script>
+        "use strict";
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const editorEl = document.querySelector("#snow-editor");
+            const toolbarEl = document.querySelector("#snow-toolbar");
+            if (!editorEl || !toolbarEl) return;
+
+            // If formula module is enabled, KaTeX must exist on window
+            if (!window.katex) {
+                console.error("KaTeX is not loaded. Formula module requires KaTeX.");
+                // You can return here if you want to prevent Quill from initializing:
+                // return;
+            }
+
+            const quill = new Quill(editorEl, {
+                theme: "snow",
+                bounds: editorEl,
+                modules: {
+                    toolbar: toolbarEl,
+                    formula: true
+                }
+            });
+
+            // Keep hidden input synced (optional, useful for form submit)
+            const hidden = document.querySelector("#content_html");
+            if (hidden) {
+                const sync = () => { hidden.value = quill.root.innerHTML; };
+                sync();
+                quill.on("text-change", sync);
+            }
+        });
+    </script>
+
+
     <script>
         // جستجوی سبک در کلاینت بر اساس نام/ایمیل
         document.addEventListener('DOMContentLoaded', () => {
@@ -834,5 +979,6 @@
             });
         });
     </script>
+
 @endpush
 
