@@ -110,8 +110,7 @@ class WalletController extends Controller
             WalletTransaction::whereid($transaction->id)->whereUser_id(Auth::id())->whereStatus('pending')->update([
                 'transactionId' => $paymentRequest->transactionId()
             ]);
-            dd(get_class($paymentRequest));
-
+            dd($paymentRequest->store());
             return $paymentRequest->store();
 //            return response()->json([
 //                "ok" => true,
