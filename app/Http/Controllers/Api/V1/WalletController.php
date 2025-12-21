@@ -61,7 +61,7 @@ class WalletController extends Controller
 
     public function deposit(Request $request)
     {
-        if ($request->input('amount') <= 1000) {
+        if ($request->input('amount') <= 1000 || $request->input('amount') >= 1000000000) {
             return response()->json(
                 ['isSuccess'     => false,
                     'message'    => 'مبلغ را صحیح وارد کنید',
