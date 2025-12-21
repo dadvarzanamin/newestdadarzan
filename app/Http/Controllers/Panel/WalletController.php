@@ -108,14 +108,15 @@ class WalletController extends Controller
             WalletTransaction::whereid($transaction->id)->whereUser_id(Auth::id())->whereStatus('pending')->update([
                 'transactionId' => $paymentRequest->transactionId()
             ]);
-            return response()->json([
-                "ok" => true,
-                "message" => "لینک پرداخت ایجاد شد.",
-                "response" => [
-                    "url" => "https://www.zarinpal.com/pg/StartPay/" . $paymentRequest->transactionId(),
-                    "authority" => $paymentRequest->transactionId(),
-                ],
-            ]);
+            return $request->pay();
+//            return response()->json([
+//                "ok" => true,
+//                "message" => "لینک پرداخت ایجاد شد.",
+//                "response" => [
+//                    "url" => "https://www.zarinpal.com/pg/StartPay/" . $paymentRequest->transactionId(),
+//                    "authority" => $paymentRequest->transactionId(),
+//                ],
+//            ]);
         }
     }
 
