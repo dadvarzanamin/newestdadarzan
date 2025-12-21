@@ -52,7 +52,13 @@ class WalletController extends Controller
 
     public function store(Request $request)
     {
-        if ($request->input('amount') <= 1000 || $request->input('amount') >= 1000000000) {
+
+        $amount          = $this->convertPersianToEnglishNumbers($request->input('amount'));
+        $amount          = str_replace(',', '', $amount);
+        $user           = auth()->user();
+        $description = $request->description ?? 'شارژ کیف پول';
+
+        if ((int)$amount <= 1000 || (int)$amount >= 1000000000) {
             return response()->json(
                 ['isSuccess'     => false,
                     'message'    => 'مبلغ را صحیح وارد کنید',
@@ -61,10 +67,6 @@ class WalletController extends Controller
                     'result'     => '',
                 ], 401);
         }
-        $amount          = $this->convertPersianToEnglishNumbers($request->input('amount'));
-        $amount          = str_replace(',', '', $amount);
-        $user           = auth()->user();
-        $description = $request->description ?? 'شارژ کیف پول';
 
         $transaction = $user->transactions()->create([
             'wallet_id'     => $user->wallet->id,
@@ -103,7 +105,7 @@ class WalletController extends Controller
             ->mobile(Auth::user()->phone)
             ->email(Auth::user()->email)
             ->request();
-
+dd($paymentRequest);
         if ($paymentRequest->successful()) {
             WalletTransaction::whereid($transaction->id)->whereUser_id(Auth::id())->whereStatus('pending')->update([
                 'transactionId' => $paymentRequest->transactionId()
