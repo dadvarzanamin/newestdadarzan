@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Response;
 use Yajra\DataTables\Facades\DataTables;
 
 class WalletController extends Controller
@@ -51,9 +52,14 @@ class WalletController extends Controller
 
     public function store(Request $request)
     {
-        if ($request->input('amount') <= 1000) {
-            alert()->error('', 'مبلغ را صحیح وارد کنید');
-            return Redirect::back();
+        if ($request->input('amount') <= 1000 || $request->input('amount') >= 1000000000) {
+            return response()->json(
+                ['isSuccess'     => false,
+                    'message'    => 'مبلغ را صحیح وارد کنید',
+                    'errors'     => null,
+                    'status_code'=> 401,
+                    'result'     => '',
+                ], 401);
         }
         $amount          = $this->convertPersianToEnglishNumbers($request->input('amount'));
         $amount          = str_replace(',', '', $amount);
@@ -67,29 +73,49 @@ class WalletController extends Controller
             'description'   => $description,
             'status'        => 'pending',
         ]);
-        if (Auth::user()->email == null)
-        {
-            alert()->error('', 'اطلاعات ادرس ایمیل وارد نشده است، به قسمت تنظیمات حساب مراجعه کنید');
-            return Redirect::back();
 
-        }elseif (Auth::user()->phone == null){
-            alert()->error('', 'اطلاعات شماره همراه وارد نشده است، به قسمت تنظیمات حساب مراجعه کنید');
-            return Redirect::back();
+        $requiredFields = [
+            'email' => 'آدرس ایمیل خالی می‌باشد',
+            'phone' => 'شماره موبایل خالی می‌باشد',
+        ];
 
+        foreach ($requiredFields as $field => $message) {
+            if (empty($user->$field)) {
+                return Response::json([
+                    'isSuccess' => null,
+                    'message'   => $message,
+                    'errors'    => true
+                ]);
+            }
         }
-        $request = Toman::amount($amount)
+
+        $transaction = auth()->user()->transactions()->create([
+            'wallet_id'   => auth()->user()->wallet->id,
+            'type'        => 'deposit',
+            'amount'      => $amount,
+            'description' => $description,
+            'status'      => 'pending',
+        ]);
+
+        $paymentRequest = Toman::amount($amount)
             ->description($description)
             ->callback(route('payment.callback'))
             ->mobile(Auth::user()->phone)
             ->email(Auth::user()->email)
             ->request();
 
-        dd($request);
-        if ($request->successful()) {
-            WalletTransaction::whereId($transaction->id)->whereUser_id(Auth::user()->id)->whereStatus('pending')->update([
-                'transactionId' => $request->transactionId()
+        if ($paymentRequest->successful()) {
+            WalletTransaction::whereid($transaction->id)->whereUser_id(Auth::id())->whereStatus('pending')->update([
+                'transactionId' => $paymentRequest->transactionId()
             ]);
-            return $request->pay();
+            return response()->json([
+                "ok" => true,
+                "message" => "لینک پرداخت ایجاد شد.",
+                "response" => [
+                    "url" => "https://www.zarinpal.com/pg/StartPay/" . $paymentRequest->transactionId(),
+                    "authority" => $paymentRequest->transactionId(),
+                ],
+            ]);
         }
     }
 
