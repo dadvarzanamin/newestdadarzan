@@ -22,8 +22,8 @@ Route::middleware('auth.jwt')->group(function () {
 
     Route::get('v1/index'               , [App\Http\Controllers\Api\V1\IndexController::class        , 'index']);
     Route::post('v1/discountcheck'      , [App\Http\Controllers\Api\V1\IndexController::class        , 'discountcheck']);
+    Route::post('v1/upload_files'       , [App\Http\Controllers\Api\V1\IndexController::class        , 'upload_file']);
     Route::GET('v1/courts'              , [App\Http\Controllers\Api\V1\IndexController::class        , 'court']);
-    Route::get('v1/getform'             , [App\Http\Controllers\Api\V1\IndexController::class        , 'getform'])              ->name('getform');
     Route::get('v1/laws'                , [App\Http\Controllers\Api\V1\IndexController::class         , 'laws']);
     Route::get('v1/demands'             , [App\Http\Controllers\Api\V1\IndexController::class         , 'demands']);
 
@@ -41,10 +41,11 @@ Route::middleware('auth.jwt')->group(function () {
     Route::post('v1/workshopinvoice'    , [App\Http\Controllers\Api\V1\ProductController::class      , 'workshopinvoice']);
     Route::post('v1/purchase_contract'  , [App\Http\Controllers\Api\V1\ProductController::class      , 'purchase_contract']);
     Route::post('v1/purchase_workshop'  , [App\Http\Controllers\Api\V1\ProductController::class      , 'purchase_workshop']);
-    Route::post('v1/purchase_request'  , [App\Http\Controllers\Api\V1\ProductController::class      , 'purchase_request']);
+    Route::post('v1/purchase_request'  , [App\Http\Controllers\Api\V1\ProductController::class       , 'purchase_request']);
     Route::post('v1/estelam'            , [App\Http\Controllers\Api\V1\ProductController::class      , 'estelam']);
     Route::post('v1/form'               , [App\Http\Controllers\Api\V1\ProductController::class      , 'form']);
     Route::post('v1/stepform'           , [App\Http\Controllers\Api\V1\ProductController::class      , 'stepform']);
+    Route::get('v1/getform'             , [App\Http\Controllers\Api\V1\ProductController::class      , 'getform'])              ->name('getform');
 
     Route::post('v1/invoice'            , [App\Http\Controllers\Api\V1\InvoiceController::class        , 'invoice'])            ->name('invoice');
     Route::delete('v1/invoicedestroy/{id}' , [App\Http\Controllers\Api\V1\InvoiceController::class     , 'invoicedestroy'])     ->name('invoicedestroy');

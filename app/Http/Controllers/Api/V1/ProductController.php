@@ -340,10 +340,10 @@ class ProductController extends Controller
     }
 
     public function form(Request $request){
-
-        $type      = $request->input('type');
-        $arrayData = $request->input('fields', []);
-        $userId    = Auth::id();
+        $type       = $request->input('type');
+        $product_id = $request->input('product_id');
+        $arrayData  = $request->input('fields', []);
+        $userId     = Auth::id();
 
         $model = new Invoice();
 
@@ -415,9 +415,10 @@ class ProductController extends Controller
             }
         }
 
-        $model->type    = $type;
-        $model->status  = 2;
-        $model->user_id = $userId;
+        $model->product_type  = $type;
+        $model->product_id    = $product_id;
+        $model->price_status  = 2;
+        $model->user_id       = $userId;
 
         $model->save();
 
@@ -431,58 +432,91 @@ class ProductController extends Controller
         ], 200);
     }
 
-    public function stepform(Request $request)
+    public function getform(Request $request)
     {
-        $formType   = $request->input('form_type');
-        $formId     = $request->input('form_id');
-        $price      = $request->input('price');
+        $type = $request->input('type');
 
-        $models = [
-            'documentDrafting' => documentDrafting::class,
-            'contractDrafting' => contractDrafting::class,
-            'legalAdvice'      => legalAdvice::class,
-            'judgement'        => judgement::class,
-            'lawsuit'          => lawsuit::class,
-            'tokil'            => tokil::class,
-        ];
-
-
-        if (isset($models[$formType])) {
-            $model = $models[$formType]::findOrFail($formId);
-            $model->status = 3;
-            $model->price  = $price;
-            $model->save();
-
-            $exists = Invoice::where('user_id', $model->user_id)
-                ->where('product_id', $model->id)
-                ->where('product_type', $formType)
-                ->exists();
-            if (! $exists) {
-                $invoice = new Invoice();
-                $invoice->user_id           = $model->user_id;
-                $invoice->product_id        = $formId;
-                $invoice->product_type      = $formType;
-                $invoice->product_price     = $price;
-                $invoice->price             = $price;
-                $invoice->final_price       = $price;
-                $invoice->save();
-            }
+        if (!$type) {
             return response()->json([
-                'isSuccess'   => true,
-                'message'     => 'اطلاعات با موفقیت ثبت شد',
-                'errors'      => null,
-                'status_code' => 200,
-                'result'      => ''
-            ], 200);
-        }else{
-            return response()->json([
-                'isSuccess'   => true,
-                'message'     => 'اطلاعات ثبت نشد',
-                'errors'      => null,
-                'status_code' => 500,
-                'result'      => ''
+                'isSuccess'   => null,
+                'message'     => 'نوع درخواست مشخص نشده است.',
+                'errors'      => true,
+                'status_code' => 422,
             ], 200);
         }
+
+        $result = Invoice::where('user_id', Auth::id())
+            ->where('product_type', $type)
+            ->get();
+
+        if ($result->isEmpty()) {
+            return response()->json([
+                'isSuccess'   => null,
+                'message'     => 'مقداری یافت نشد.',
+                'errors'      => true,
+                'status_code' => 404,
+            ], 200);
+        }
+
+        $result->transform(function ($item) {
+            $item->uploaded_file = json_decode($item->uploaded_file, true);
+            return $item;
+        });
+
+        return response()->json([
+            'isSuccess'   => true,
+            'message'     => 'اطلاعات با موفقیت دریافت شد',
+            'errors'      => null,
+            'status_code' => 200,
+            'result'      => $result
+        ], 200);
+    }
+
+    public function stepform(Request $request)
+    {
+        $product_type = $request->input('product_type');
+        $invoice_id   = $request->input('invoice_id');
+        $price        = $request->input('price');
+        $price_status = $request->input('price_status');
+
+        if (!$product_type || !$invoice_id || !$price) {
+            return response()->json([
+                'isSuccess'   => null,
+                'message'     => 'اطلاعات ورودی ناقص است.',
+                'errors'      => true,
+                'status_code' => 422,
+                'result'      => null
+            ], 200);
+        }
+
+        $invoice = Invoice::where('user_id', Auth::id())
+            ->where('id', $invoice_id)
+            ->where('product_type', $product_type)
+            ->first();
+
+        if (!$invoice) {
+            return response()->json([
+                'isSuccess' => null,
+                'message' => 'اطلاعات یافت نشد.',
+                'errors' => true,
+                'status_code' => 404,
+                'result' => null
+            ], 200);
+        }else{
+            $invoice->price_status  = $price_status;
+            $invoice->product_price = $price;
+            $invoice->price         = $price;
+            $invoice->final_price   = $price;
+            $invoice->save();
+        }
+
+        return response()->json([
+            'isSuccess'   => true,
+            'message'     => 'اطلاعات با موفقیت ثبت شد',
+            'errors'      => null,
+            'status_code' => 200,
+            'result'      => $invoice
+        ], 200);
     }
 
     public function purchase_contract(Request $request){

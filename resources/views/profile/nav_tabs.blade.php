@@ -10,6 +10,14 @@
     @if(Auth::user()->level == 'site')
         <li class="nav-item">
             <button type="button" class="nav-link d-flex flex-column gap-1" role="tab"
+                    data-bs-toggle="tab" data-bs-target="#navs-workshops-card"
+                    aria-controls="navs-workshop-card" aria-selected="false">
+                <i class="tf-icons mdi mdi-domain mdi-20px me-1"></i>
+                اطلاعات کارگاه ها
+            </button>
+        </li>
+        <li class="nav-item">
+            <button type="button" class="nav-link d-flex flex-column gap-1" role="tab"
                     data-bs-toggle="tab" data-bs-target="#navs-orders-card"
                     aria-controls="navs-order-card" aria-selected="false">
                 <i class="tf-icons mdi mdi-domain mdi-20px me-1"></i>

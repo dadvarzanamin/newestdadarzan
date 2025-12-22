@@ -167,7 +167,6 @@ trait AuthenticatesUsers
         return Socialite::driver($provider)->redirect();
     }
 
-
     public function handleProviderCallback($provider)
     {
         $userSocial = Socialite::driver($provider)->stateless()->user();
@@ -195,7 +194,6 @@ trait AuthenticatesUsers
         alert()->success($user->name.' به داشبورد مدیریتی ', 'خوش آمدید');
         return redirect()->intended('/');
     }
-
 
     public function findOrCreateUser($user, $provider)
     {

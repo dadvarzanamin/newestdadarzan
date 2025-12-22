@@ -7,6 +7,7 @@ use App\Models\Court;
 use App\Models\Emploee;
 use App\Models\Invoice;
 use App\Models\Law;
+use App\Models\MediaFile;
 use App\Models\Offer;
 use App\Models\City;
 use App\Models\Product;
@@ -17,6 +18,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Str;
 
 class IndexController extends Controller
 {
@@ -78,131 +80,6 @@ class IndexController extends Controller
                 'status_code' => 200,
                 'result' => $emploees
             ], 200);
-    }
-
-    public function getform(Request $request)
-    {
-        if($request->input('type') == 'tokil') {
-            $result = tokil::whereUser_id(Auth::user()->id)->get();
-
-            if ($result->isEmpty()) {
-                return response()->json(
-                    ['isSuccess' => null,
-                        'message' => 'مقداری یافت نشد.',
-                        'errors' => true,
-                        'status_code' => 500,
-                    ], 200);
-            }else {
-                $result->transform(function ($item) {
-                    $item->uploaded_file = json_decode($item->uploaded_file, true);
-                    return $item;
-                });
-                return response()->json(
-                    ['isSuccess' => true,
-                        'message' => 'اطلاعات با موفقیت دریافت شد',
-                        'errors' => null,
-                        'status_code' => 200,
-                        'result' => $result
-                    ], 200);
-            }
-        }
-        elseif($request->input('type') == 'lawsuit'){
-
-            $result = lawsuit::whereUser_id(Auth::user()->id)->get();
-
-            if ($result->isEmpty()) {
-                return response()->json(
-                    ['isSuccess' => null,
-                        'message' => 'مقداری یافت نشد.',
-                        'errors' => true,
-                        'status_code' => 500,
-                    ], 200);
-            }else {
-                $result->transform(function ($item) {
-                    $item->uploaded_file = json_decode($item->uploaded_file, true);
-                    return $item;
-                });
-                return response()->json(
-                    ['isSuccess' => true,
-                        'message' => 'اطلاعات با موفقیت دریافت شد',
-                        'errors' => null,
-                        'status_code' => 200,
-                        'result' => $result
-                    ], 200);
-            }
-        }
-        elseif($request->input('type') == 'legalAdvice'){
-            $result = legalAdvice::whereUser_id(Auth::user()->id)->get();
-
-            if ($result->isEmpty()) {
-                return response()->json(
-                    ['isSuccess' => null,
-                        'message' => 'مقداری یافت نشد.',
-                        'errors' => true,
-                        'status_code' => 500,
-                    ], 200);
-            }else {
-                $result->transform(function ($item) {
-                    $item->uploaded_file = json_decode($item->uploaded_file, true);
-                    return $item;
-                });
-                return response()->json(
-                    ['isSuccess' => true,
-                        'message' => 'اطلاعات با موفقیت دریافت شد',
-                        'errors' => null,
-                        'status_code' => 200,
-                        'result' => $result
-                    ], 200);
-            }
-        }
-        elseif($request->input('type') == 'contractDrafting'){
-            $result = contractDrafting::whereUser_id(Auth::user()->id)->get();
-
-            if ($result->isEmpty()) {
-                return response()->json(
-                    ['isSuccess' => null,
-                        'message' => 'مقداری یافت نشد.',
-                        'errors' => true,
-                        'status_code' => 500,
-                    ], 200);
-            }else {
-                $result->transform(function ($item) {
-                    $item->uploaded_file = json_decode($item->uploaded_file, true);
-                    return $item;
-                });
-                return response()->json(
-                    ['isSuccess' => true,
-                        'message' => 'اطلاعات با موفقیت دریافت شد',
-                        'errors' => null,
-                        'status_code' => 200,
-                        'result' => $result
-                    ], 200);
-            }
-        }
-        elseif($request->input('type') == 'documentDrafting'){
-            $result = documentDrafting::whereUser_id(Auth::user()->id)->get();
-
-            if ($result->isEmpty()) {
-                return response()->json(
-                    ['isSuccess' => null,
-                        'message' => 'مقداری یافت نشد.',
-                        'errors' => true,
-                        'status_code' => 500,
-                    ], 200);
-            }else {
-                $result->transform(function ($item) {
-                    $item->uploaded_file = json_decode($item->uploaded_file, true);
-                    return $item;
-                });
-                return response()->json(
-                    ['isSuccess' => true,
-                        'message' => 'اطلاعات با موفقیت دریافت شد',
-                        'errors' => null,
-                        'status_code' => 200,
-                        'result' => $result
-                    ], 200);
-            }
-        }
     }
 
     public function court(){
@@ -490,6 +367,65 @@ class IndexController extends Controller
                 'status_code' => 200,
                 'result' => $result
             ], 200);
+    }
+
+    public function upload_file(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|file|max:102400|mimes:jpg,jpeg,png,pdf,doc,docx,xls,xlsx,ppt,pptx,zip,rar,mp4,mp3',
+        ]);
+
+        $file           = $request->file('file');
+        $subject_id     = $request->input('subject_id');
+        $originalName   = $file->getClientOriginalName();
+        $extension      = $file->getClientOriginalExtension();
+        $size           = $file->getSize();
+        $project_id     = $request->input('record_id');
+        $mime           = $file->getMimeType();
+
+        $type = match (true) {
+            Str::contains($mime, 'image')                            => 'images',
+            Str::contains($mime, 'video')                            => 'videos',
+            Str::contains($mime, 'audio')                            => 'audios',
+            $mime === 'application/pdf'                                     => 'documents',
+            Str::contains($mime, 'msword')                           => 'documents', // doc
+            Str::contains($mime, 'officedocument.wordprocessingml')  => 'documents', // docx
+            Str::contains($mime, 'ms-excel')                         => 'spreadsheets', // xls
+            Str::contains($mime, 'officedocument.spreadsheetml')     => 'spreadsheets', // xlsx
+            Str::contains($mime, 'ms-powerpoint')                    => 'presentations', // ppt
+            Str::contains($mime, 'officedocument.presentationml')    => 'presentations', // pptx
+            Str::contains($mime, 'zip') || $mime === 'application/zip'              => 'archives', // zip
+            Str::contains($mime, 'rar') || $mime === 'application/x-rar-compressed' => 'archives', // rar
+            default                                                  => 'others',
+        };
+        $fileName = (string) Str::uuid() . '.' . $extension;
+        try {
+        if ($request->input('record_id')){
+            $path = $file->storeAs("uploads/".$request->input('record_id').'/'.$type, $fileName, 'public');
+
+        }else {
+            $path = $file->storeAs("uploads/" . $type, $fileName, 'public');
+        }
+
+        MediaFile::create([
+            'subject_id'    => $subject_id,
+            'name'          => $fileName,
+            'original_name' => $originalName,
+            'type'          => rtrim($type, 's'),
+            'file_path'     => $path,
+            'size'          => $size,
+            'project_id'    => $project_id,
+            'mime'          => $mime,
+            'user_id'       => Auth::user()->id,
+        ]);
+        } catch (\Throwable $e) {
+            return response()->json([
+                'isSuccess'   => false,
+                'message'     => 'خطا در آپلود فایل',
+                'errors'      => null,
+                'status_code' => 500,
+            ], 200);
+        }
     }
 
 }

@@ -122,9 +122,44 @@ class InvoiceController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Request $request)
     {
-        //
+        if ($request->ajax()) {
+            $data = Invoice::
+            leftJoin('products', function ($join) {
+                $join->on('products.product_id', '=', 'invoices.product_id')
+                    ->on('products.product_type', '=', 'invoices.product_type');
+            })
+                ->select('invoices.id','invoices.product_type','invoices.product_price','invoices.final_price','invoices.price_status as status', 'products.title as product_name')
+                ->where('invoices.user_id' , Auth::user()->id)
+                ->where('invoices.price_status' , 4)
+                ->where('invoices.product_type' , 'workshop')
+                ->get();
+            return Datatables::of($data)
+                ->addColumn('id', function ($data) {
+                    return ($data->id);
+                })
+                ->addColumn('product_name', function ($data) {
+                    return ($data->product_name);
+                })
+                ->addColumn('product_type', function ($data) {
+                    return ($data->product_type);
+                })
+                ->addColumn('product_price', function ($data) {
+                    return (number_format((int)$data->product_price));
+                })
+                ->addColumn('final_price', function ($data) {
+                    return (number_format((int)$data->final_price));
+                })
+                ->addColumn('status', function ($data) {
+                    if ($data->status == null) {
+                        return "تسویه نشده";
+                    } elseif ($data->status == "4") {
+                        return "تسویه شده";
+                    }
+                })
+                ->make(true);
+        }
     }
 
     /**

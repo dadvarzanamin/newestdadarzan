@@ -48,12 +48,14 @@
 
                     @if(Auth::user()->level == 'site')
 
+                        @include('profile.tab_workshops')
+
                         @include('profile.tab_orders')
 
                         @include('profile.tab_wallets')
 
-                    @elseif(Auth::user()->level == 'investor')
-                        @include('profile.tab_investor_projects')
+                    @elseif(Auth::user()->level == 'admin')
+{{--                        @include('profile.tab_investor_projects')--}}
                     @endif
                 </div>
             </div>
