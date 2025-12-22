@@ -163,7 +163,7 @@ class WalletController extends Controller
 //                    ], 500);
             }
         } else {
-            return view('Api.payment-failed');
+            return view('api.payment-failed');
 //            return response()->json(
 //                ['isSuccess' => null,
 //                    'message' => 'متاسفانه تراکنش موفقیت آمیز نبود.',
