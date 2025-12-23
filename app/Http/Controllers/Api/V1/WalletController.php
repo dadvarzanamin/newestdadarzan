@@ -72,9 +72,7 @@ class WalletController extends Controller
         }
         $amount          = $this->convertPersianToEnglishNumbers($request->input('amount'));
         $amount          = str_replace(',', '', $amount);
-
         $description = $request->description ?? 'شارژ کیف پول';
-
         $user = auth()->user();
 
         $requiredFields = [
@@ -99,6 +97,7 @@ class WalletController extends Controller
             'description' => $description,
             'status'      => 'pending',
         ]);
+
         $paymentRequest = Toman::amount($amount)
             ->description($description)
             ->callback(url('https://dadvarzanamin.ir/api/v1/wallet/backtoapp'))
