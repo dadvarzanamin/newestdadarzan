@@ -428,7 +428,7 @@ class ProductController extends Controller
             'message'     => 'اطلاعات با موفقیت ثبت شد',
             'errors'      => null,
             'status_code' => 200,
-            'result'      => ''
+            'result'      => $model
         ], 200);
     }
 
