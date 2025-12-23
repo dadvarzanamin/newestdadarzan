@@ -418,6 +418,14 @@ class IndexController extends Controller
             'mime'          => $mime,
             'user_id'       => Auth::user()->id,
         ]);
+            return response()->json([
+                'isSuccess'   => true,
+                'message'     => 'اطلاعات با موفقیت ثبت شد',
+                'errors'      => null,
+                'status_code' => 200,
+                'result'      => ''
+            ], 200);
+
         } catch (\Throwable $e) {
             return response()->json([
                 'isSuccess'   => false,
