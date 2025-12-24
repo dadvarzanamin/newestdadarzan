@@ -175,17 +175,15 @@ class WalletController extends Controller
 
     public function withdraw(Request $request)
     {
-        $amount         = $request->input('totalFinal');
-        $invoiceIds     = $request->input('invoice_ids', []);
-
-        $invoiceIds = (array)$request->input('invoice_ids');
+        $amount     = (int) $request->input('totalFinal');
+        $invoiceIds = (array) $request->input('invoice_ids');
 
         $paidInvoices = Invoice::whereIn('id', $invoiceIds)
             ->where('user_id', auth()->id())
             ->where('price_status', 4)
-            ->get();
+            ->exists();
 
-        if ($paidInvoices->isNotEmpty()) {
+        if ($paidInvoices) {
             return response()->json(
                 ['isSuccess' => null,
                     'message' => 'شما قبلا فاکتور(ها) رو پرداخت کرده اید',
@@ -193,10 +191,10 @@ class WalletController extends Controller
                     'status_code' => 500,
                     'result' => $paidInvoices
                 ], 500);
-        } else {
+        }
 
-            $user = auth()->user();
-            $wallet = $user->wallet;
+        $user   = auth()->user();
+        $wallet = $user->wallet;
 
             if ($wallet->balance < $amount) {
                 return response()->json(
@@ -208,20 +206,19 @@ class WalletController extends Controller
                     ], 500);
             }
 
-            $transaction = $user->transactions()->create([
-                'wallet_id'     => $wallet->id,
-                'type'          => 'withdraw',
-                'amount'        => $amount,
-                'description'   => $request->description,
-                'status'        => 'completed',
-            ]);
+        $user->transactions()->create([
+            'wallet_id'   => $wallet->id,
+            'type'        => 'withdraw',
+            'amount'      => $amount,
+            'description' => $request->input('description'),
+            'status'      => 'completed',
+        ]);
 
-            $wallet->decrement('balance', $amount);
+        $wallet->decrement('balance', $amount);
 
-            $invoiceIds = (array)$request->input('invoice_ids');
-            Invoice::whereIn('id', $invoiceIds)
-                ->where('user_id', auth()->id())
-                ->update(['price_status' => 4]);
+        Invoice::whereIn('id', $invoiceIds)
+            ->where('user_id', auth()->id())
+            ->update(['price_status' => 4]);
 
             $invoice = Invoice::leftjoin('products' ,'products.id' , '=' , 'invoices.product_id')
                 ->leftjoin('users' , 'users.id' , '=' , 'invoices.user_id')
@@ -282,8 +279,59 @@ class WalletController extends Controller
                     Log::error('Exception: ' . $e->getMessage());
                     return response()->json(['error' => $e->getMessage()], 500);
                 }
+            }else{
+                return response()->json(
+                    ['isSuccess' => true,
+                        'message' => 'مبلغ با موفقیت از کیف پول برداشت شد.',
+                        'errors' => null,
+                        'status_code' => 200,
+                        'result' => $wallet->balance,
+                        'redirect_url' => route('order'),
+                    ], 200);
             }
         }
+
+    public function purchase_product(Request $request)
+    {
+        $invoice = Invoice::findOrFail($request->input('invoice_id'));
+        $product = $invoice->product;
+        $user    = auth()->user();
+        $wallet  = $user->wallet;
+
+        if ($wallet->balance < $invoice->final_price) {
+            return response()->json([
+                'isSuccess'   => false,
+                'message'     => 'موجودی کافی نیست.',
+                'errors'      => true,
+                'status_code' => 500,
+                'result'      => $wallet->balance
+            ], 500);
+        }
+
+        $response = $this->withdraw(new Request([
+            'totalFinal'  => $invoice->final_price,
+            'invoice_ids' => [$invoice->id],
+            'description' => $product->title,
+        ]));
+
+        $data = $response->getData(true);
+
+        if ($data['isSuccess'] === true) {
+            return response()->json([
+                'isSuccess'   => true,
+                'message'     => 'ثبت نام و پرداخت با موفقیت انجام شد',
+                'errors'      => null,
+                'status_code' => 200,
+                'result'      => ''
+            ], 200);
+        }
+
+        return response()->json([
+            'isSuccess'   => false,
+            'message'     => $withdrawResult['message'] ?? 'خطا در عملیات',
+            'errors'      => true,
+            'status_code' => 500,
+        ], 500);
     }
 
     protected function convertPersianToEnglishNumbers($string) {
