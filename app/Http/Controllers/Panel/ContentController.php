@@ -114,7 +114,10 @@ class ContentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $content = new Content();
+        $content->title         = $request->input('title');
+        $content->menu_id       = $request->input('menu_id');
+        $content->submenu_id    = $request->input('submenu_id');
     }
 
     /**

@@ -73,6 +73,7 @@ Route::middleware('admin')->namespace('App\Http\Controllers\Panel')->group(funct
 
     Route::get('panel/profile'            , 'ProfileController@index')->name('profile');
     Route::get('panel/userdata'           , 'ProfileController@userdata')->name('userdata');
+    Route::post('panel/getsubmenu'        , 'IndexController@getsubmenu')->name('getsubmenu');
 
     Route::get('panel/changepassword'      , 'ChangePasswordController@index')->name('password.change.form');
     Route::post('panel/changepassword'     , 'ChangePasswordController@change')->name('password.change.submit');

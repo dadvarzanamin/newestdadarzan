@@ -50,4 +50,12 @@ class IndexController extends Controller
 
     }
 
+    public function getmenu($stateId)
+    {
+        $cities = City::where('state_id', $stateId)->select('id', 'title')->orderBy('title')->get();
+
+        return response()->json($cities);
+
+    }
+
 }

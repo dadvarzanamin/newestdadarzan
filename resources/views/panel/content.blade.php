@@ -79,36 +79,20 @@
                         <div class="col-12 col-md-4">
                             <div class="form-floating form-floating-outline">
                                 <select name="menupanel_id" id="menupanel_id" class="form-control select-lg select2">
-                                    @foreach(DB::table('menus')->whereType('site')->whereStatus(4)->get() as $submenusite)
+                                    <option value="" >انتخاب منو</option>
+                                @foreach(DB::table('menus')->whereType('site')->whereStatus(4)->whereNot('id' , 11)->get() as $submenusite)
                                         <option value="{{$submenusite->id}}" >{{$submenusite->label}}</option>
                                     @endforeach
                                 </select>
-                                <label for="submenu">انتخاب زیر منو</label>
+                                <label for="submenu">انتخاب منو</label>
                             </div>
                         </div>
                         <div class="col-12 col-md-4">
                             <div class="form-floating form-floating-outline">
-                                <select name="menupanel_id" id="menupanel_id" class="form-control select-lg select2">
-                                    @foreach(DB::table('submenus')->whereType('site')->whereStatus(4)->get() as $submenusite)
-                                        <option value="{{$submenusite->id}}" >{{$submenusite->label}}</option>
-                                    @endforeach
+                                <select name="submenupanel_id" id="submenupanel_id" class="form-control select-lg select2">
+                                    <option value="" >انتخاب زیر منو</option>
                                 </select>
                                 <label for="submenu">انتخاب زیر منو</label>
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-4">
-                            <div class="form-floating form-floating-outline">
-                                <input required type="text" class="form-control" id="class" name="class" placeholder="کلاس داشبورد">
-                                <label for="class">کلاس داشبورد</label>
-                                <div class="invalid-feedback" id="classFeedback">کلاس داشبورد اجباری می باشد.</div>
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-4">
-                            <div class="form-floating form-floating-outline">
-                                <input required type="text" class="form-control" id="controller" name="controller"
-                                       placeholder="کنترلر داشبورد" >
-                                <label for="controller">کنترلر داشبورد</label>
-                                <div class="invalid-feedback" id="controllerFeedback">کنترلر داشبورد اجباری می باشد.</div>
                             </div>
                         </div>
                         <div class="col-12 col-md-4">
