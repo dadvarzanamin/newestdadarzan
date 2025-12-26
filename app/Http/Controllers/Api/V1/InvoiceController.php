@@ -63,7 +63,7 @@ class InvoiceController extends Controller
     {
         $invoice = new Invoice();
         $invoice->user_id           = Auth::user()->id;
-        $invoice->product_id        = $request->input('id');
+        $invoice->product_id        = $request->input('product_id');
         $invoice->product_type      = $request->input('product_type');
         $invoice->product_price     = $request->input('product_price');
         $invoice->save();
