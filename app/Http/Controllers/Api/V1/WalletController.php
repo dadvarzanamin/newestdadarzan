@@ -316,13 +316,15 @@ class WalletController extends Controller
 
         $data = $response->getData(true);
 
+        $finalinvoice = Invoice::findOrFail($request->input('invoice_id'));
+
         if ($data['isSuccess'] === true) {
             return response()->json([
                 'isSuccess'   => true,
                 'message'     => 'ثبت نام و پرداخت با موفقیت انجام شد',
                 'errors'      => null,
                 'status_code' => 200,
-                'result'      => ''
+                'result'      => $finalinvoice
             ], 200);
         }
 
