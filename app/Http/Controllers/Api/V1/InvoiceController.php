@@ -66,6 +66,8 @@ class InvoiceController extends Controller
         $invoice->product_id        = $request->input('product_id');
         $invoice->product_type      = $request->input('product_type');
         $invoice->product_price     = $request->input('product_price');
+        $invoice->price             = $request->input('product_price');
+        $invoice->final_price       = $request->input('product_price');
         $invoice->save();
 
         return response()->json(
