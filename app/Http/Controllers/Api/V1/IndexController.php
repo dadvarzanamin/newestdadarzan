@@ -95,13 +95,13 @@ class IndexController extends Controller
 
     public function discountcheck(Request $request){
 
-        $offer = Invoice::leftJoin('offers', 'offers.workshop_id', '=', 'invoices.product_id')
+        $offer = Invoice::leftJoin('offers', 'offers.product_id', '=', 'invoices.product_id')
             ->select('invoices.id', 'invoices.price', 'offers.discount', 'offers.percentage')
             ->where([
-                ['offers.status', '=', 4],
-                ['invoices.user_id', '=', Auth::id()],
-                ['invoices.product_type', '=', 'workshop'],
-                ['offers.offercode', '=', $request->input('discountcode')],
+                ['offers.status'         , '=', 4],
+                ['invoices.user_id'      , '=', Auth::id()],
+                ['invoices.product_type' , '=', $request->input('product_type')],
+                ['offers.offercode'      , '=', $request->input('discountcode')],
             ])
             ->where(function ($q) {
                 $q->whereNull('offers.user_offer')
@@ -119,13 +119,11 @@ class IndexController extends Controller
                 ], 500);
         }
 
-        if ($request->input('product_type') == 'workshop') {
             $invoice = Invoice::where('user_id', Auth::id())
                 ->where('product_id', $request->input('product_id'))
-                ->where('product_type', 'workshop')
+                ->where('product_type', $request->input('product_type'))
                 ->whereNull('price_status')
                 ->first();
-        }
 
         if ($offer->percentage <> null){
             $invoice->offer_percentage  = $offer->percentage;
