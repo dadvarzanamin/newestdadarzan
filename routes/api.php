@@ -46,6 +46,7 @@ Route::middleware('auth.jwt')->group(function () {
     Route::get('v1/getform'             , [App\Http\Controllers\Api\V1\ProductController::class      , 'getform'])              ->name('getform');
 
     Route::post('v1/invoice'            , [App\Http\Controllers\Api\V1\InvoiceController::class        , 'invoice'])            ->name('invoice');
+    Route::post('v1/setinvoice'         , [App\Http\Controllers\Api\V1\InvoiceController::class      , 'setinvoice'])           ->name('setinvoice');
     Route::delete('v1/invoicedestroy/{id}' , [App\Http\Controllers\Api\V1\InvoiceController::class     , 'invoicedestroy'])     ->name('invoicedestroy');
     Route::get('v1/invoicetotal'        , [App\Http\Controllers\Api\V1\InvoiceController::class        , 'invoicetotal'])       ->name('invoicetotal');
     Route::get('v1/order'               , [App\Http\Controllers\Api\V1\InvoiceController::class        , 'order'])              ->name('order');
