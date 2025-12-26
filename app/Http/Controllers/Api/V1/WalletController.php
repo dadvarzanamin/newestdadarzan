@@ -206,11 +206,19 @@ class WalletController extends Controller
                     ], 500);
             }
 
+        $invoice = Invoice::leftjoin('products' ,'products.id' , '=' , 'invoices.product_id')
+            ->leftjoin('users' , 'users.id' , '=' , 'invoices.user_id')
+            ->select('products.title' , 'products.start_date' , 'users.phone' , 'users.name' , 'invoices.product_type', 'invoices.id')
+            ->where('invoices.id', $invoiceIds)
+            ->where('invoices.user_id', auth()->id())
+            ->first();
+
         $user->transactions()->create([
             'wallet_id'   => $wallet->id,
             'type'        => 'withdraw',
+            'invoice_id'  => $invoice->id,
             'amount'      => $amount,
-            'description' => $request->input('description'),
+            'description' => $invoice->title,
             'status'      => 'completed',
         ]);
 
@@ -220,12 +228,6 @@ class WalletController extends Controller
             ->where('user_id', auth()->id())
             ->update(['price_status' => 4]);
 
-            $invoice = Invoice::leftjoin('products' ,'products.id' , '=' , 'invoices.product_id')
-                ->leftjoin('users' , 'users.id' , '=' , 'invoices.user_id')
-                ->select('products.title' , 'products.start_date' , 'users.phone' , 'users.name' , 'invoices.product_type')
-                ->where('invoices.id', $invoiceIds)
-                ->where('invoices.user_id', auth()->id())
-                ->first();
 
             if ($invoice->product_type == 'workshop') {
                 try {
