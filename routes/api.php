@@ -39,18 +39,18 @@ Route::middleware('auth.jwt')->group(function () {
     Route::post('v1/purchase_product'   , [App\Http\Controllers\Api\V1\WalletController::class       , 'purchase_product']);
 
     Route::post('v1/workshopsign'       , [App\Http\Controllers\Api\V1\ProductController::class      , 'workshopsign']);
-    Route::post('v1/workshopinvoice'    , [App\Http\Controllers\Api\V1\ProductController::class      , 'workshopinvoice']);
     Route::post('v1/estelam'            , [App\Http\Controllers\Api\V1\ProductController::class      , 'estelam']);
     Route::post('v1/form'               , [App\Http\Controllers\Api\V1\ProductController::class      , 'form']);
     Route::post('v1/stepform'           , [App\Http\Controllers\Api\V1\ProductController::class      , 'stepform']);
     Route::get('v1/getform'             , [App\Http\Controllers\Api\V1\ProductController::class      , 'getform'])              ->name('getform');
 
     Route::post('v1/invoice'            , [App\Http\Controllers\Api\V1\InvoiceController::class        , 'invoice'])            ->name('invoice');
-    Route::post('v1/setinvoice'         , [App\Http\Controllers\Api\V1\InvoiceController::class      , 'setinvoice'])           ->name('setinvoice');
+    Route::post('v1/setinvoice'         , [App\Http\Controllers\Api\V1\InvoiceController::class        , 'setinvoice'])           ->name('setinvoice');
     Route::delete('v1/invoicedestroy/{id}' , [App\Http\Controllers\Api\V1\InvoiceController::class     , 'invoicedestroy'])     ->name('invoicedestroy');
     Route::get('v1/invoicetotal'        , [App\Http\Controllers\Api\V1\InvoiceController::class        , 'invoicetotal'])       ->name('invoicetotal');
     Route::get('v1/order'               , [App\Http\Controllers\Api\V1\InvoiceController::class        , 'order'])              ->name('order');
     Route::get('v1/showinvoice'         , [App\Http\Controllers\Api\V1\InvoiceController::class        , 'showinvoice'])        ->name('showinvoice');
+    Route::post('v1/productuse'         , [App\Http\Controllers\Api\V1\InvoiceController::class        , 'productuse']);
 
 
 });

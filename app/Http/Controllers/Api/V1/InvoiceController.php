@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
 use App\Models\Invoice;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -61,22 +62,34 @@ class InvoiceController extends Controller
 
     public function setinvoice(Request $request)
     {
-        $invoice = new Invoice();
-        $invoice->user_id           = Auth::user()->id;
-        $invoice->product_id        = $request->input('product_id');
-        $invoice->product_type      = $request->input('product_type');
-        $invoice->product_price     = $request->input('product_price');
-        $invoice->price             = $request->input('product_price');
-        $invoice->final_price       = $request->input('product_price');
-        $invoice->save();
+        $product = Product::whereId($request->input('product_id'))->whereStatus(4)->exists();
 
-        return response()->json(
-            ['isSuccess' => true,
-                'message' => 'مقادیر رکورد دریافت شد',
-                'errors' => null,
-                'status_code' => 200,
-                'result' => $invoice
-            ], 200);
+        if ($product) {
+
+            $invoice = new Invoice();
+            $invoice->user_id = Auth::user()->id;
+            $invoice->product_id = $request->input('product_id');
+            $invoice->product_type = $request->input('product_type');
+            $invoice->product_price = $request->input('product_price');
+            $invoice->price = $request->input('product_price');
+            $invoice->final_price = $request->input('product_price');
+            $invoice->save();
+
+            return response()->json(
+                ['isSuccess' => true,
+                    'message' => 'مقادیر رکورد دریافت شد',
+                    'errors' => null,
+                    'status_code' => 200,
+                    'result' => $invoice
+                ], 200);
+        }else{
+            return response()->json(
+                ['isSuccess' => null,
+                    'message' => 'درخواست ناموفق خدمات غیر فعال شده است',
+                    'errors' => true,
+                    'status_code' => 500,
+                ], 500);
+        }
     }
 
     public function order()
@@ -171,5 +184,62 @@ class InvoiceController extends Controller
                 'result' => $totalFinal
             ], 200);
     }
+
+    public function productuse(Request $request){
+
+        $invoice = Invoice::where('user_id' , Auth::user()->id)
+            ->whereId($request->input('invoice_id'))
+            ->whereNull('price_status')
+            ->first();
+
+        if (!$invoice){
+            return response()->json(
+                ['isSuccess' => null,
+                    'message' => 'عملیات با خطا مواجه شد.',
+                    'errors' => true,
+                    'status_code' => 500,
+                ], 500);
+        }
+
+        $product = $invoice->product;
+
+        $totalPrice = $invoice->price;
+        $price_certificate = 0 ;
+        if ($request->input('certificate') == 1) {
+            $totalPrice += $product->price_certificate;
+            $price_certificate = $product->price_certificate;
+        }
+
+        $result = $invoice->update([
+            'certificate'       => $request->input('certificate'),
+            'certificate_price' => $price_certificate,
+            'type_use'          => $request->input('type_use'),
+            'price'             => $totalPrice,
+            'final_price'       => $totalPrice,
+        ]);
+
+        $result = Invoice::where('user_id' , Auth::user()->id)
+            ->whereId($request->input('invoice_id'))
+            ->whereNull('price_status')
+            ->first();
+
+        if ($result) {
+            return response()->json(
+                ['isSuccess' => true,
+                    'message' => 'عملیات با موفقیت انجام شد.',
+                    'errors' => null,
+                    'status_code' => 200,
+                    'result' => $result
+                ], 200);
+        }else{
+            return response()->json(
+                ['isSuccess' => null,
+                    'message' => 'عملیات با خطا مواجه شد.',
+                    'errors' => true,
+                    'status_code' => 500,
+                ], 500);
+        }
+    }
+
 
 }

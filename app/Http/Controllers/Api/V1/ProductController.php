@@ -283,62 +283,6 @@ class ProductController extends Controller
 
     }
 
-    public function workshopinvoice(Request $request){
-
-        $invoice = Invoice::where('user_id' , Auth::user()->id)
-            ->where('product_id' , $request->input('workshop_id'))
-            ->where('product_type' , 'workshop')
-            ->whereNull('price_status')
-            ->first();
-
-        $workshop = $invoice->workshop;
-
-        $totalPrice = $workshop->price;
-        $certificate_price = 0 ;
-        $type_price        = 0 ;
-        if ($request->input('certificate') == 1) {
-            $totalPrice += $workshop->certificate_price;
-            $certificate_price = $workshop->certificate_price;
-        }
-
-        if ($request->input('type_use') == 1) {
-            $totalPrice += $workshop->type_price;
-            $type_price = $workshop->type_price;
-        }
-
-        $result = $invoice->update([
-            'certificate'       => $request->input('certificate'),
-            'certificate_price' => $certificate_price,
-            'type_use'          => $request->input('type_use'),
-            'type_price'        => $type_price,
-            'price'             => $totalPrice,
-            'final_price'       => $totalPrice,
-        ]);
-
-        $result = Invoice::where('user_id' , Auth::user()->id)
-            ->where('product_id' , $request->input('workshop_id'))
-            ->where('product_type' , 'workshop')
-            ->whereNull('price_status')
-            ->first();
-
-        if ($result) {
-            return response()->json(
-                ['isSuccess' => true,
-                    'message' => 'عملیات با موفقیت انجام شد.',
-                    'errors' => null,
-                    'status_code' => 200,
-                    'result' => $result
-                ], 200);
-        }else{
-            return response()->json(
-                ['isSuccess' => null,
-                    'message' => 'عملیات با خطا مواجه شد.',
-                    'errors' => true,
-                    'status_code' => 500,
-                ], 500);
-        }
-    }
-
     public function form(Request $request){
         $type       = $request->input('type');
         $product_id = $request->input('product_id');
