@@ -263,32 +263,38 @@ class UserController extends Controller
 
     public function token(Request $request){
 
-        $token= (int)$request->input('token');
+        $token = (int) $request->input('token');
 
-        $status = activeCode::whereCode($token)->where('expired_at' , '>' , now())->first();
+        $status = ActiveCode::where('code', $token)
+            ->where('expired_at', '>', now())
+            ->first();
 
-        if(! $status) {
-            return response()->json(
-                ['isSuccess'       => false,
-                    'message'      => 'کد فعال سازی نادرست',
-                    'errors'       => true,
-                    'status_code'  => 500,
-                ], 500);
-
-        }else{
-            $user = User::whereId($status->user_id)->first();
-            $user->activeCode()->delete();
-            $user->phone_verify = 1;
-            $user->update();
-            return response()->json(
-                ['isSuccess'       => true,
-                    'token'        => $user->api_token,
-                    'message'      => 'کاربر با موفقیت ایجاد شد. اطلاعات تکمیلی در حال دریافت می‌باشد.',
-                    'errors'       => null,
-                    'status_code'  => 200,
-                ], 200);
-
+        if (! $status) {
+            return response()->json([
+                'isSuccess'    => false,
+                'message'      => 'کد فعال سازی نادرست',
+                'errors'       => true,
+                'status_code'  => 422,
+            ], 422);
         }
+
+        $user = User::find($status->user_id);
+
+        $user->activeCode()->delete();
+        $user->phone_verify = 1;
+        $user->save();
+
+
+        $Token = auth('api')->login($user);
+
+        return response()->json([
+            'isSuccess'    => true,
+            'access_token'=> $Token,
+            'token_type'  => 'Bearer',
+            'message'     => 'احراز هویت با موفقیت انجام شد',
+            'errors'      => null,
+            'status_code' => 200,
+        ], 200);
     }
 
     public function remember(Request $request){
