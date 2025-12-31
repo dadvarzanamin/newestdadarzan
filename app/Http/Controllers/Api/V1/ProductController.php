@@ -47,15 +47,22 @@ class ProductController extends Controller
     public function estelam(Request $request)
     {
         try {
-            $token = EstelamToken::select('token', 'appname')->first();
             $headers = [
-                'token:' . $token->token,
-                'appname:' . $token->appname,
+                'token:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2Njc3ZWZiYjk0Y2Y1YjIwOTFkOTIxOTQiLCJ1dWlkIjoiNGFiMWFlZDUtYjkzMi00MThjLWE1MzgtYTQ2MDViYzllMjI1IiwiaWF0IjoxNzU3OTYyNTQ5fQ.ZwQkIapimf9N4T7vAC6WspNwC1VlMe2QHLORV6SWiUI',
+                'appname:hosseindbk',
                 'Content-Type: application/json',
             ];
 
-            $estelams = Estelam::whereId($request->input('formId'))->get();
-
+            $estelam = Product::whereId($request->input('product_id'))->first();
+            if ($estelam->status != 4) {
+                return response()->json(
+                    ['isSuccess' => null,
+                        'message' => 'استعلام مورد نظر در حال حاضر غیر فعال می باشد.',
+                        'errors' => true,
+                        'status_code' => 500,
+                        'result' => ''
+                    ], 500);
+            }
             $user = auth()->user();
             $wallet = $user->wallet;
             if ($wallet->balance < '300000') {
@@ -67,17 +74,13 @@ class ProductController extends Controller
                         'result' => $wallet->balance
                     ], 500);
             }else{
-                foreach ($estelams as $estelam) {
 
-                    $requiredFields = explode(',', $estelam->required_fields);
+                    $requiredFields = explode(',', $estelam->item4);
                     $data = [];
-
                     foreach ($requiredFields as $field) {
                         $field = trim($field);
-
                         if ($field <> null) {
                             $data[$field] = $request->input($field);
-
                         } else {
                             return response()->json(
                                 ['isSuccess' => false,
@@ -87,32 +90,32 @@ class ProductController extends Controller
                                 ], 500);
                         }
                     }
-                    $response = $this->sendCurlRequest($estelam->action_route, $estelam->method, $headers, $data);
-
+                    $response = $this->sendCurlRequest($estelam->item1, $estelam->item2, $headers, $data);
                     $result = $response['data']['result'] ?? [];
-                    $resultFields = explode(',', $estelam->result_field);
-
+                    //dd($result);
+                    $resultFields = explode(',', $estelam->item5);
                     foreach ($resultFields as $resultfield) {
                         $dataParts[$resultfield] = $result[$resultfield] ?? '';
                     }
                     if ($response['isSuccess'] === true) {
 
                         $invoice = new Invoice();
-                        $invoice->user_id = Auth::user()->id;
-                        $invoice->product_id = $request->input('formId');
-                        $invoice->product_type = 'estelam';
-                        $invoice->product_price = '300000';
-                        $invoice->product_price = '300000';
+                        $invoice->user_id           = Auth::user()->id;
+                        $invoice->product_id        = $request->input('product_id');
+                        $invoice->product_type      = 'estelam';
+                        $invoice->product_price     = '300000';
+                        $invoice->price             = '300000';
+                        $invoice->final_price       = '300000';
                         $invoice->save();
 
                         $data = [
-                            'totalFinal' => $invoice->product_price,
+                            'totalFinal' => $invoice->final_price,
                             'invoice_ids' => $invoice->id,
                             'description' => 'دریافت موفق استعلام',
                         ];
-                        $withdrawRequest = new Request($data);
-                        $walletController = new WalletController();
-                        $withdrawResult = $walletController->withdraw($withdrawRequest);
+                        $withdrawRequest    = new Request($data);
+                        $walletController   = new WalletController();
+                        $withdrawResult     = $walletController->withdraw($withdrawRequest);
 
                         if ($withdrawResult->getData()->isSuccess === true) {
                             return response()->json(
@@ -132,7 +135,6 @@ class ProductController extends Controller
                             ], 500);
                     }
                 }
-            }
         } catch (\Exception $e) {
             \Log::error('Exception: ' . $e->getMessage());
             return response()->json(['status' => 'error', 'message' => $e->getMessage()], 500);
