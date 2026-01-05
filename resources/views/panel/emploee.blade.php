@@ -1,10 +1,36 @@
 @extends('layouts.base')
-@section('title', 'مدیریت اعضا شرکت')
 @section('style')
     <link rel="stylesheet" href="{{ asset('assets/vendor/css/rtl/dataTables.dataTables.min.css') }}"/>
     <link rel="stylesheet" href="{{ asset('assets/vendor/css/rtl/select2.min.css')}}" />
     <link rel="stylesheet" href="{{ asset('assets/vendor/css/rtl/dropzone.min.css') }}"/>
 
+    <link rel="stylesheet" href="{{asset('assets/vendor/css/rtl/quill.snow.css')}}" >
+    <link rel="stylesheet" href="{{asset('assets/vendor/css/rtl/katex.min.css')}}">
+    <style>
+        /* Toolbar should stay LTR (icons/controls are designed LTR) */
+        .ql-toolbar,
+        .ql-toolbar * {
+            /*direction: ltr;*/
+        }
+
+        /* Editor content should be RTL for Persian */
+        .ql-editor {
+            direction: rtl;
+            text-align: right;
+            line-height: 1.9;
+            min-height: 180px;
+        }
+
+        /* Optional: make the editor fit Bootstrap card nicely */
+        .ql-toolbar.ql-snow {
+            border-top-left-radius: .5rem;
+            border-top-right-radius: .5rem;
+        }
+        .ql-container.ql-snow {
+            border-bottom-left-radius: .5rem;
+            border-bottom-right-radius: .5rem;
+        }
+    </style>
     <style>
         .avatar-column img {
             border-radius: 24px;
@@ -190,6 +216,12 @@
 @endsection
 @section('script')
     <script src="{{asset('assets/vendor/js/dataTables.min.js')}}"></script>
+    <script src="{{ asset('assets/js/timeline-chart.js') }}"></script>
+    <script src="{{ asset('assets/js/charts-apex.js') }}"></script>
+{{--    <script src="{{asset('assets/vendor/js/katex.min.js')}}"></script>--}}
+{{--    <script src="{{asset('assets/vendor/js/quill.min.js')}}"></script>--}}
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/quill@1.3.7/dist/quill.min.js"></script>
     <script src="{{asset('assets/vendor/js/formhandler.js')}}"></script>
     <script type="text/javascript">
         $(function () {
@@ -212,6 +244,39 @@
                 }
             });
 
+        });
+    </script>
+    <script>
+        "use strict";
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const editorEl = document.querySelector("#snow-editor");
+            const toolbarEl = document.querySelector("#snow-toolbar");
+            if (!editorEl || !toolbarEl) return;
+
+            // If formula module is enabled, KaTeX must exist on window
+            if (!window.katex) {
+                console.error("KaTeX is not loaded. Formula module requires KaTeX.");
+                // You can return here if you want to prevent Quill from initializing:
+                // return;
+            }
+
+            const quill = new Quill(editorEl, {
+                theme: "snow",
+                bounds: editorEl,
+                modules: {
+                    toolbar: toolbarEl,
+                    formula: true
+                }
+            });
+
+            // Keep hidden input synced (optional, useful for form submit)
+            const hidden = document.querySelector("#content_html");
+            if (hidden) {
+                const sync = () => { hidden.value = quill.root.innerHTML; };
+                sync();
+                quill.on("text-change", sync);
+            }
         });
     </script>
     <script>

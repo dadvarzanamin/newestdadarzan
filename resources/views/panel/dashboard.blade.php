@@ -2,12 +2,9 @@
 
 @section('style')
 <link rel="stylesheet" href="{{ asset('assets/vendor/css/rtl/dataTables.dataTables.min.css') }}"/>
-
-{{-- Quill (Snow theme) --}}
-<link href="https://cdn.jsdelivr.net/npm/quill@1.3.7/dist/quill.snow.css" rel="stylesheet">
-
-{{-- KaTeX (required for formula module) --}}
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<link rel="stylesheet" href="{{asset('assets/vendor/css/rtl/quill.snow.css')}}" >
+<link rel="stylesheet" href="{{asset('assets/vendor/css/rtl/katex.min.css')}}">
+<link rel="stylesheet" href="{{asset('assets/vendor/css/rtl/dropzone.min.css')}}"/>
 
 <style>
     /* Toolbar should stay LTR (icons/controls are designed LTR) */
@@ -36,7 +33,6 @@
 </style>
 
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.3/dropzone.min.css"/>
 @endsection
 
 @section('content')
@@ -920,11 +916,10 @@
 @push('scripts')
     <script src="{{ asset('assets/js/timeline-chart.js') }}"></script>
     <script src="{{ asset('assets/js/charts-apex.js') }}"></script>
-
+{{--    <script src="{{asset('assets/vendor/js/katex.min.js')}}"></script>--}}
+{{--    <script src="{{asset('assets/vendor/js/quill.min.js')}}"></script>--}}
     {{-- KaTeX must be loaded BEFORE initializing Quill formula module --}}
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
-
-    {{-- Quill --}}
     <script src="https://cdn.jsdelivr.net/npm/quill@1.3.7/dist/quill.min.js"></script>
 
     <script>
