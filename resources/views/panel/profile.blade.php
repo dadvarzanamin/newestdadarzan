@@ -3,7 +3,7 @@
 @section('style')
     <link rel="stylesheet" href="{{ asset('assets/vendor/css/rtl/dropzone.min.css') }}"/>
     <link rel="stylesheet" href="{{ asset('assets/vendor/css/rtl/dataTables.dataTables.min.css') }}"/>
-    <link rel="stylesheet" href="{{'https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css'}}"/>
+    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/select2/select2.css') }}"/>
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <style> table {
             margin: 0 auto;

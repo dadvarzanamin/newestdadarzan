@@ -58,6 +58,71 @@
                 <label for="class">معرفی</label>
             </div>
         </div>
+        <div class="card mb-12">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h5 class="card-title mb-0">ویرایشگر متن</h5>
+                </div>
+
+                <div class="quill-wrapper">
+                    {{-- Quill Toolbar --}}
+                    <div id="snow-toolbar">
+                <span class="ql-formats">
+                    <select class="ql-font"></select>
+                    <select class="ql-size"></select>
+                </span>
+                        <span class="ql-formats">
+                    <button class="ql-bold" type="button"></button>
+                    <button class="ql-italic" type="button"></button>
+                    <button class="ql-underline" type="button"></button>
+                    <button class="ql-strike" type="button"></button>
+                </span>
+                        <span class="ql-formats">
+                    <select class="ql-color"></select>
+                    <select class="ql-background"></select>
+                </span>
+                        <span class="ql-formats">
+                    <button class="ql-script" value="sub" type="button"></button>
+                    <button class="ql-script" value="super" type="button"></button>
+                </span>
+                        <span class="ql-formats">
+                    <button class="ql-header" value="1" type="button"></button>
+                    <button class="ql-header" value="2" type="button"></button>
+                    <button class="ql-blockquote" type="button"></button>
+                    <button class="ql-code-block" type="button"></button>
+                </span>
+                        <span class="ql-formats">
+                    <button class="ql-list" value="ordered" type="button"></button>
+                    <button class="ql-list" value="bullet" type="button"></button>
+                    <button class="ql-indent" value="-1" type="button"></button>
+                    <button class="ql-indent" value="+1" type="button"></button>
+                </span>
+                        <span class="ql-formats">
+                    <button class="ql-direction" value="rtl" type="button"></button>
+                    <select class="ql-align"></select>
+                </span>
+                        <span class="ql-formats">
+                    <button class="ql-link" type="button"></button>
+                    <button class="ql-image" type="button"></button>
+                    <button class="ql-video" type="button"></button>
+                    <button class="ql-formula" type="button"></button>
+                </span>
+                        <span class="ql-formats">
+                    <button class="ql-clean" type="button"></button>
+                </span>
+                    </div>
+
+                    {{-- Quill Editor --}}
+                    <div id="snow-editor">
+                        <p>متن نمونه…</p>
+                    </div>
+
+                    {{-- Hidden input for submitting HTML (optional) --}}
+                    <input type="hidden" name="content_html" id="content_html" value="">
+                </div>
+
+            </div>
+        </div>
         <div class="text-center">
             <button type="submit" id="editsubmit_{{$emploee->id}}" class="btn btn-primary" >ذخیره اطلاعات</button>
         </div>

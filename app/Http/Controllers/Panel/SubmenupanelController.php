@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Panel;
 use App\Http\Controllers\Controller;
 use App\Models\Menu;
 use App\Models\Permission;
+use App\Models\Role;
 use App\Models\Submenu;
 use Exception;
 use Illuminate\Http\Request;
@@ -153,8 +154,8 @@ class SubmenupanelController extends Controller
 
     public function update(Request $request , $id)
     {
-
         $submenu_panel = Submenu::findOrfail($id);
+        $permission_slug = $submenu_panel->slug;
         $submenu_panel->title        = $request->input('title');
         $submenu_panel->label        = $request->input('label');
         $submenu_panel->menu_id      = $request->input('menupanel_id');
@@ -164,6 +165,12 @@ class SubmenupanelController extends Controller
         $submenu_panel->status       = $request->input('status');
 
         $result = $submenu_panel->update();
+        $newsubmenu_panel = Submenu::findOrfail($id);
+        $permision = Permission::whereSlug($permission_slug)->first();
+        $permision->title        =  $newsubmenu_panel->title;
+        $permision->slug         =  $newsubmenu_panel->slug;
+        $permision->update();
+
         try{
             if ($result == true) {
                 $success = true;

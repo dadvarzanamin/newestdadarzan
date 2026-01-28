@@ -143,14 +143,14 @@ class WalletController extends Controller
                 $wallet = Wallet::whereUser_id(Auth::user()->id)->first();
                 $amount_total = $wallet->balance + $wallet_transactions->amount;
                 Wallet::whereUser_id(Auth::user()->id)->update(['balance' => $amount_total]);
-                return view('Site.Dashboard.payment-success');
+                return view('partials.payment-success');
             } else {
                 WalletTransaction::whereid($wallet_transactions->id)->whereUser_id(Auth::user()->id)->whereStatus('pending')
                     ->update(['status' => 'failed']);
-                return view('Site.Dashboard.payment-failed');
+                return view('partials.payment-failed');
             }
         } else {
-            return view('Site.Dashboard.payment-failed');
+            return view('partials.payment-failed');
         }
     }
 

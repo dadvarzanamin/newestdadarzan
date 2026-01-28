@@ -45,6 +45,7 @@ Route::middleware('admin')->namespace('App\Http\Controllers\Panel')->group(funct
     Route::resource('panel/roleuser'     , 'RoleuserController');
     Route::resource('panel/filemanager'  , 'FilemanagerController');
     Route::resource('panel/offer'        , 'OfferController');
+    Route::resource('panel/requestuser'  , 'RequestuserController');
     Route::resource('panel/content'      , 'ContentController');
     Route::resource('panel/product'      , 'ProductController');
     Route::resource('panel/siteuser'     , 'SiteuserController');
