@@ -126,28 +126,76 @@
             </div>
         </div>
     </section>
+    <div class="toast-container position-fixed top-0 start-50 translate-middle-x p-3 mt-3" id="toastContainer" style="z-index: 1080;"></div>
     <script>
-        document.querySelector('.add-to-cart').addEventListener('click', function () {
-            fetch("{{ route('setinvoice') }}", {
-                method: 'POST',
-                headers: {
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    product_id: this.dataset.productId,
-                    product_type: this.dataset.productType,
-                    product_price: this.dataset.productPrice
+        const toastContainer = document.getElementById('toastContainer');
+
+        function showToast(message, type = 'success') {
+            if (!toastContainer) {
+                alert(message);
+                return;
+            }
+
+            const tone = {
+                success: 'text-bg-success',
+                error: 'text-bg-danger',
+                warning: 'text-bg-warning',
+            }[type] || 'text-bg-success';
+
+            const toastEl = document.createElement('div');
+            toastEl.className = `toast align-items-center ${tone} border-0 shadow`;
+            toastEl.setAttribute('role', 'alert');
+            toastEl.setAttribute('aria-live', 'assertive');
+            toastEl.setAttribute('aria-atomic', 'true');
+            toastEl.setAttribute('data-bs-delay', '3000');
+
+            toastEl.innerHTML = `
+                <div class="d-flex">
+                    <div class="toast-body">
+                        ${message}
+                    </div>
+                    <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+            `;
+
+            toastContainer.appendChild(toastEl);
+            const toast = new bootstrap.Toast(toastEl);
+            toast.show();
+            toastEl.addEventListener('hidden.bs.toast', () => toastEl.remove());
+        }
+
+        document.querySelectorAll('.add-to-cart').forEach(button => {
+            button.addEventListener('click', function () {
+                button.disabled = true;
+
+                fetch("{{ route('setinvoice') }}", {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        product_id: this.dataset.productId,
+                        product_type: this.dataset.productType,
+                        product_price: this.dataset.productPrice
+                    })
                 })
-            })
-                .then(res => res.json())
-                .then(data => {
-                    if (data.isSuccess) {
-                        alert('به سبد خرید اضافه شد');
-                    } else {
-                        alert(data.message);
-                    }
-                });
+                    .then(res => {
+                        if (!res.ok) throw new Error('خطا در ارتباط با سرور');
+                        return res.json();
+                    })
+                    .then(data => {
+                        if (data.isSuccess) {
+                            showToast('به سبد خرید اضافه شد');
+                        } else {
+                            showToast(data.message || 'خطایی رخ داد', 'error');
+                        }
+                    })
+                    .catch(() => showToast('خطا در ارتباط با سرور', 'error'))
+                    .finally(() => {
+                        button.disabled = false;
+                    });
+            });
         });
     </script>
 

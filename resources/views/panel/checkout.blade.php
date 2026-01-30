@@ -23,37 +23,55 @@
 
         .dt-layout-end {
             margin-left: 0 !important;
-        }</style>
+        }
+
+        .checkout-card {
+            max-width: 960px;
+        }
+
+        @media (min-width: 992px) {
+            .checkout-card {
+                width: 50%;
+            }
+        }
+
+        .checkout-summary {
+            position: sticky;
+            top: 90px;
+        }
+
+    </style>
 @endsection
 @section('content')
-    <div class="card">
-        <div class="card-body">
-            <h4 class="fw-bold py-3 mb-4">
-                <span class="text-muted fw-light">سبد خرید/</span> پرداخت
-            </h4>
-            <!-- Checkout Wizard -->
-            <div id="wizard-checkout" class="bs-stepper wizard-icons wizard-icons-example mt-2">
-                <div class="bs-stepper-header m-lg-auto mx-2 border-0">
-                    <div class="step" data-target="#checkout-cart">
-                        <button type="button" class="step-trigger">
-                            <span class="bs-stepper-icon">
-                              <svg viewBox="0 0 58 54">
-                                <use xlink:href='../../assets/svg/icons/wizard-checkout-cart.svg#wizardCart'></use>
-                              </svg>
-                            </span>
-                            <span class="bs-stepper-label">سبد خرید</span>
-                        </button>
+    <div class="d-flex justify-content-center">
+        <div class="card checkout-card w-100">
+            <div class="card-body">
+                <h4 class="fw-bold py-3 mb-4">
+                    <span class="text-muted fw-light">سبد خرید/</span> پرداخت
+                </h4>
+                <!-- Checkout Wizard -->
+                <div id="wizard-checkout" class="bs-stepper wizard-icons wizard-icons-example mt-2">
+                    <div class="bs-stepper-header m-lg-auto mx-2 border-0">
+                        <div class="step" data-target="#checkout-cart">
+                            <button type="button" class="step-trigger">
+                                <span class="bs-stepper-icon">
+                                  <svg viewBox="0 0 58 54">
+                                    <use xlink:href='../../assets/svg/icons/wizard-checkout-cart.svg#wizardCart'></use>
+                                  </svg>
+                                </span>
+                                <span class="bs-stepper-label">سبد خرید</span>
+                            </button>
+                        </div>
                     </div>
-                </div>
-                <div class="bs-stepper-content border-top">
-                    <form id="wizard-checkout-form" onSubmit="return false">
-                        <!-- Cart -->
-                        <div id="checkout-cart" class="content">
-                            <div class="row">
-                                <!-- Cart left -->
-                                <div class="col-xl-8 mb-3 mb-xl-0">
+                    <div class="bs-stepper-content border-top">
+                        <form id="wizard-checkout-form" onSubmit="return false">
+                            <!-- Cart -->
+                            <div id="checkout-cart" class="content">
+                                <div class="row">
+                                    <!-- Cart left -->
+                                    <div class="col-xl-8 mb-3 mb-xl-0">
 
-                                    <!-- Offer alert -->
+                                        <!-- Offer alert -->
 {{--                                    <div class="alert alert-success mb-4" role="alert">--}}
 {{--                                        <div class="d-flex gap-3">--}}
 {{--                                            <div class="flex-shrink-0">--}}
@@ -84,7 +102,7 @@
                                                 <div class="d-flex gap-3">
                                                     <div class="flex-shrink-0">
                                                         <img src="{{ $invoice->product_image ?? asset('assets/img/products/1.png') }}"
-                                                             class="w-px-100">
+                                                             class="w-px-100" alt="">
                                                     </div>
 
                                                     <div class="flex-grow-1">
@@ -118,54 +136,56 @@
                                 </div>
 
                                 <div class="col-xl-4">
-                                    <div class="border rounded p-3 mb-3">
-                                        <h6>پیشنهاد</h6>
-                                        <div class="row g-3 mb-3">
-                                            <div class="col-8 col-xxl-8 col-xl-12">
-                                                <input type="text" class="form-control" id="wizard-promo-code" placeholder="کد تخفیف را وارد کنید" aria-label="Enter Promo Code">
-                                            </div>
-                                            <div class="col-4 col-xxl-4 col-xl-12">
-                                                <div class="d-grid">
-                                                    <button type="button" class="btn btn-outline-primary">اعمال</button>
+                                    <div class="checkout-summary">
+                                        <div class="border rounded p-3 mb-3">
+                                            <h6>صورتحساب</h6>
+                                            <div class="row g-3 mb-3">
+                                                <div class="col-8 col-xxl-8 col-xl-12">
+                                                    <input type="text" class="form-control" id="wizard-promo-code" placeholder="کد تخفیف را وارد کنید" aria-label="Enter Promo Code">
+                                                </div>
+                                                <div class="col-4 col-xxl-4 col-xl-12">
+                                                    <div class="d-grid">
+                                                        <button type="button" class="btn btn-outline-primary">اعمال</button>
+                                                    </div>
                                                 </div>
                                             </div>
+                                            <hr class="mx-n3">
+                                            <h6>جزئیات قیمت</h6>
+                                            <dl class="row mb-0">
+
+                                                <dt class="col-6 fw-normal">جمع سبد</dt>
+                                                <dd class="col-6 text-end" id="cart-subtotal">0 تومان</dd>
+
+                                                <dt class="col-6 fw-normal"> تخفیف</dt>
+                                                <dd class="col-6 text-success text-end" id="discount-price"
+                                                    data-applied="false"
+                                                    data-value="0">0 تومان</dd>
+
+                                                <dt class="col-6 fw-normal">مجموع سفارش</dt>
+                                                <dd class="col-6 text-end" id="cart-total">0 تومان</dd>
+
+                                                <hr>
+
+                                                <dt class="col-6">جمع</dt>
+                                                <dd class="col-6 fw-semibold text-end mb-0" id="cart-final-sum">0 تومان</dd>
+
+                                            </dl>
+
                                         </div>
-                                        <hr class="mx-n3">
-                                        <h6>جزئیات قیمت</h6>
-                                        <dl class="row mb-0">
-
-                                            <dt class="col-6 fw-normal">جمع سبد</dt>
-                                            <dd class="col-6 text-end" id="cart-subtotal">0 تومان</dd>
-
-                                            <dt class="col-6 fw-normal"> تخفیف</dt>
-                                            <dd class="col-6 text-success text-end" id="discount-price"
-                                                data-applied="false"
-                                                data-value="0">0 تومان</dd>
-
-                                            <dt class="col-6 fw-normal">مجموع سفارش</dt>
-                                            <dd class="col-6 text-end" id="cart-total">0 تومان</dd>
-
-                                            <hr>
-
-                                            <dt class="col-6">جمع</dt>
-                                            <dd class="col-6 fw-semibold text-end mb-0" id="cart-final-sum">0 تومان</dd>
-
-                                        </dl>
-
-                                    </div>
-                                    <div class="d-grid">
-                                        <button type="button" class="btn btn-primary" id="pay-btn">
-                                            پرداخت آنلاین
-                                        </button>
+                                        <div class="d-grid">
+                                            <button type="button" class="btn btn-primary" id="pay-btn">
+                                                پرداخت آنلاین
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </form>
+                        </form>
+                    </div>
                 </div>
-            </div>
-            <!--/ Checkout Wizard -->
+                <!--/ Checkout Wizard -->
 
+            </div>
         </div>
     </div>
 @endsection
