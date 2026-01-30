@@ -4,13 +4,13 @@ namespace App\Http\Controllers\Panel;
 
 use App\Http\Controllers\Controller;
 use App\Models\Invoice;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\Facades\DataTables;
 
 class InvoiceController extends Controller
 {
-
     public function index(Request $request)
     {
         $thispage       = [
@@ -61,25 +61,38 @@ class InvoiceController extends Controller
         return view('panel.invoice')->with(compact(['thispage']));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function setinvoice(Request $request)
     {
-        //
+        $product = Product::whereId($request->input('product_id'))->whereStatus(4)->exists();
+
+        if ($product) {
+
+            $invoice = new Invoice();
+            $invoice->user_id = Auth::user()->id;
+            $invoice->product_id = $request->input('product_id');
+            $invoice->product_type = $request->input('product_type');
+            $invoice->product_price = $request->input('product_price');
+            $invoice->price = $request->input('product_price');
+            $invoice->final_price = $request->input('product_price');
+            $invoice->save();
+
+            return response()->json(
+                ['isSuccess' => true,
+                    'message' => 'مقادیر رکورد دریافت شد',
+                    'errors' => null,
+                    'status_code' => 200,
+                    'result' => $invoice
+                ], 200);
+        }else{
+            return response()->json(
+                ['isSuccess' => null,
+                    'message' => 'درخواست ناموفق خدمات غیر فعال شده است',
+                    'errors' => true,
+                    'status_code' => 500,
+                ], 500);
+        }
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
     public function show(Request $request)
     {
         if ($request->ajax()) {
@@ -119,9 +132,6 @@ class InvoiceController extends Controller
         }
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(Request $request)
     {
         if ($request->ajax()) {
@@ -162,19 +172,29 @@ class InvoiceController extends Controller
         }
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+    public function invoicedestroy(Request $request)
     {
-        //
+        $invoice = Invoice::where('id', $request->id)
+            ->whereNull('price_status')
+            ->first();
+
+        if (!$invoice) {
+            return response()->json([
+                'isSuccess'   => false,
+                'message'     => 'رکوردی یافت نشد یا قابل حذف نیست.',
+                'errors'      => true,
+                'status_code' => 404,
+            ], 404);
+        }
+
+        $invoice->delete();
+
+        return response()->json([
+            'isSuccess'   => true,
+            'message'     => 'رکورد با موفقیت حذف شد.',
+            'errors'      => null,
+            'status_code' => 200,
+        ], 200);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
-    }
 }
