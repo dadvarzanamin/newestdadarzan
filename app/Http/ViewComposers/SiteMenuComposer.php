@@ -2,7 +2,9 @@
 
 namespace App\Http\ViewComposers;
 
+use App\Models\Invoice;
 use App\Models\Submenu;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 use App\Models\Menu;
@@ -28,6 +30,24 @@ class SiteMenuComposer
             $thispage = Menu::whereSlug('/')->first();
         }
 
-        $view->with(['url' => $url, 'menus' => $menus, 'submenus' => $submenus, 'megamenus'  => $megamenus, 'megacounts' => $megacounts, 'thispage' => $thispage,]);
+        $cartCount = 0;
+        if (Auth::check()) {
+            $cartCount = Invoice::where('user_id', Auth::id())
+                ->where(function ($q) {
+                    $q->whereNull('price_status')
+                      ->orWhere('price_status', '!=', 4);
+                })
+                ->count();
+        }
+
+        $view->with([
+            'url'        => $url,
+            'menus'      => $menus,
+            'submenus'   => $submenus,
+            'megamenus'  => $megamenus,
+            'megacounts' => $megacounts,
+            'thispage'   => $thispage,
+            'cartCount'  => $cartCount,
+        ]);
     }
 }
