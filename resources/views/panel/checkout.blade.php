@@ -3,7 +3,9 @@
 @section('style')
     <link rel="stylesheet" href="{{ asset('assets/vendor/css/rtl/dataTables.dataTables.min.css') }}"/>
     <link rel="stylesheet" href="{{asset('assets/vendor/css/rtl/select2.min.css')}}" />
-    <link rel="stylesheet" href="../../assets/vendor/css/pages/wizard-ex-checkout.css" />
+    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/bs-stepper/bs-stepper.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/rateyo/rateyo.css') }}"/>
+    <link rel="stylesheet" href="{{asset("assets/vendor/css/pages/wizard-ex-checkout.css")}}" />
 
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <style> table {
@@ -785,7 +787,11 @@
     </div>
 @endsection
 @section('script')
-    <script src="{{asset('assets/vendor/js/dataTables.min.js')}}"></script>
+    <script src="{{ asset('assets/vendor/libs/bs-stepper/bs-stepper.js') }}"></script>
+    <script src="{{ asset('assets/vendor/libs/rateyo/rateyo.js') }}"></script>
+    <script src="{{ asset('assets/vendor/libs/cleavejs/cleave.js') }}"></script>
+    <script src="{{ asset('assets/vendor/libs/cleavejs/cleave-phone.js') }}"></script>
+    <script src="{{ asset('assets/js/wizard-ex-checkout.js') }}"></script>
 {{--    <script type="text/javascript">--}}
 {{--        $(function () {--}}
 
