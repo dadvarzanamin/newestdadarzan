@@ -113,7 +113,11 @@
                                         {{$contract->price}}
                                     @endif
                                 </span>
-                                <a href="#" class="btn btn--base">خرید</a>
+                                <div class="product-details-footer d-flex flex-wrap gap-4 mt-4">
+                                    <button class="btn btn--border add-to-cart" data-product-id="{{ $contract->id }}" data-product-type="{{ $contract->product_type }}" data-product-price="{{ $contract->price }}">
+                                        اضافه کردن به سبد خرید
+                                    </button>
+                                </div>
                             </div>
                         </div>
 
@@ -122,7 +126,29 @@
             </div>
         </div>
     </section>
-    <!-- =====>> End Product Details <<=====
-    =========================== -->
+    <script>
+        document.querySelector('.add-to-cart').addEventListener('click', function () {
+            fetch("{{ route('setinvoice') }}", {
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    product_id: this.dataset.productId,
+                    product_type: this.dataset.productType,
+                    product_price: this.dataset.productPrice
+                })
+            })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.isSuccess) {
+                        alert('به سبد خرید اضافه شد');
+                    } else {
+                        alert(data.message);
+                    }
+                });
+        });
+    </script>
 
 @endsection

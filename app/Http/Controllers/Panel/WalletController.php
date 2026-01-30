@@ -121,6 +121,102 @@ class WalletController extends Controller
 //            ]);
         }
     }
+    public function payment()
+    {
+
+        $user = Auth::user();
+
+        // دریافت فاکتورهای پرداخت‌نشده
+        $invoices = Invoice::where('user_id', $user->id)
+            ->whereNull('price_status')
+            ->lockForUpdate()
+            ->get();
+
+        if ($invoices->isEmpty()) {
+            return back()->withErrors('سبد خرید خالی است');
+        }
+
+        // اعتبارسنجی اطلاعات کاربر
+        if (empty($user->email) || empty($user->phone)) {
+            return back()->withErrors('اطلاعات کاربر (ایمیل یا موبایل) ناقص است');
+        }
+
+        $redirectResponse = null;
+
+        DB::transaction(function () use ($user, $invoices, &$redirectResponse) {
+
+            $totalAmount   = $invoices->sum(fn ($i) => $i->final_price ?? $i->price);
+            $walletBalance = $user->wallet->balance;
+
+            $walletPay  = min($walletBalance, $totalAmount);
+            $gatewayPay = $totalAmount - $walletPay;
+
+            // تراکنش اصلی سفارش
+            $transaction = $user->transactions()->create([
+                'wallet_id' => $user->wallet->id,
+                'type'      => 'order_payment',
+                'amount'    => $totalAmount,
+                'status'    => 'pending',
+                'meta'      => [
+                    'wallet_pay'  => $walletPay,
+                    'gateway_pay' => $gatewayPay,
+                ],
+            ]);
+
+            // اتصال فاکتورها به تراکنش
+            Invoice::whereIn('id', $invoices->pluck('id'))
+                ->update(['transactionId' => $transaction->id]);
+
+            // پرداخت از کیف پول
+            if ($walletPay > 0) {
+                $user->wallet->decrement('balance', $walletPay);
+
+                $user->transactions()->create([
+                    'wallet_id' => $user->wallet->id,
+                    'type'      => 'wallet_usage',
+                    'amount'    => $walletPay,
+                    'status'    => 'completed',
+                    'parent_id' => $transaction->id,
+                ]);
+            }
+
+            // نیاز به پرداخت درگاه
+            if ($gatewayPay > 0) {
+
+                $paymentRequest = Toman::amount($gatewayPay)
+                    ->description('پرداخت مابقی سفارش')
+                    ->callback(route('payment.callback'))
+                    ->mobile($user->phone)
+                    ->email($user->email)
+                    ->request();
+
+                if (!$paymentRequest->successful()) {
+                    throw new \Exception('خطا در اتصال به درگاه');
+                }
+
+                // ذخیره شناسه درگاه
+                $transaction->update([
+                    'transactionId' => $paymentRequest->transactionId()
+                ]);
+
+                // ریدایرکت به درگاه (بعد از commit)
+                $redirectResponse = $paymentRequest->pay();
+                return;
+            }
+
+            // فقط پرداخت کیف پول
+            $transaction->update(['status' => 'completed']);
+
+            Invoice::where('transactionId', $transaction->id)
+                ->update(['price_status' => 'paid']);
+
+            $redirectResponse = view('partials.payment-success')
+                ->with('success', 'پرداخت با موفقیت از کیف پول انجام شد');
+
+        });
+
+        return $redirectResponse;
+    }
 
     public function callbackpay(Request $request)
     {

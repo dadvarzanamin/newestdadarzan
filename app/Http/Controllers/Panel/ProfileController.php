@@ -9,6 +9,7 @@ use App\Models\Company;
 use App\Models\Invoice;
 use App\Models\MediaFile;
 use App\Models\Minute;
+use App\Models\Offer;
 use App\Models\Project;
 use App\Models\Project_step;
 use App\Models\State;
@@ -112,56 +113,53 @@ class ProfileController extends Controller
 
     public function discountcheck(Request $request){
 
-        $offer = Invoice::leftJoin('offers', 'offers.product_id', '=', 'invoices.product_id')
-            ->select('invoices.id', 'invoices.price', 'offers.discount', 'offers.percentage')
-            ->where([
-                ['offers.status'         , '=', 4],
-                ['invoices.user_id'      , '=', Auth::id()],
-                ['invoices.product_type' , '=', $request->input('product_type')],
-                ['offers.offercode'      , '=', $request->input('discountcode')],
-            ])
-            ->where(function ($q) {
-                $q->whereNull('offers.user_offer')
-                    ->orWhere('offers.user_offer', Auth::id());
-            })
-            ->first();
-
-        if (!$offer) {
-            return response()->json(
-                ['isSuccess' => null,
-                    'message' => 'کد وارد شده معتبر نمی باشد',
-                    'errors' => true,
-                    'status_code' => 500,
-                    'result' => ''
-                ], 500);
-        }
-
-        $invoice = Invoice::where('user_id', Auth::id())
-            ->where('product_id', $request->input('product_id'))
-            ->where('product_type', $request->input('product_type'))
+        $invoices = Invoice::where('user_id', Auth::id())
             ->whereNull('price_status')
-            ->first();
+            ->get();
 
-        if ($offer->percentage <> null){
-            $invoice->offer_percentage  = $offer->percentage;
-            $invoice->final_price       = $invoice->price - ($invoice->price * (intval(str_replace('%', '', $offer->percentage)))/100);
-        }elseif ($offer->discount <> null) {
-            $invoice->offer_discount    = $offer->discount;
-            $invoice->final_price       = $invoice->price - (int)$offer->discount;
-        }else {
-            $invoice->final_price       = $invoice->price;
-            $invoice->offer_percentage  = 0;
-            $invoice->final_price       = 0;
+        $result = [];
+
+        foreach ($invoices as $invoice) {
+
+            $offer = Offer::where('product_id', $invoice->product_id)
+                ->where('status', 4)
+                ->where('offercode', $request->discountcode)
+                ->where(function ($q) {
+                    $q->whereNull('user_offer')
+                        ->orWhere('user_offer', Auth::id());
+                })
+                ->first();
+
+            $final = $invoice->price;
+
+            if ($offer) {
+                if ($offer->percentage) {
+                    $final -= ($invoice->price * $offer->percentage) / 100;
+                } elseif ($offer->discount) {
+                    $final -= $offer->discount;
+                }
+            }
+
+            $invoice->update([
+                'final_price' => max($final, 0)
+            ]);
+
+            $result[] = [
+                'invoice_id' => $invoice->id,
+                'final_price' => (int)$invoice->final_price
+            ];
         }
-        $invoice->update();
 
-        return response()->json(
-            ['isSuccess' => true,
-                'message' => 'عملیات با موفقیت انجام شد.',
-                'errors' => false,
-                'status_code' => 200,
-                'result' => $invoice->final_price,
-            ], 200);
+        return response()->json([
+            'isSuccess' => true,
+            'items' => $result
+        ]);
+
+    }
+
+    public function pay()
+    {
+        return view('partials.payment-success');
     }
 
 }

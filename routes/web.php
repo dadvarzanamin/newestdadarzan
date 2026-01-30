@@ -64,7 +64,8 @@ Route::middleware('admin')->namespace('App\Http\Controllers\Panel')->group(funct
     Route::get('payment-success'    , 'ProfileController@pay')                  ->name('payment-success');
     Route::get('payment-failed'     , 'ProfileController@pay')                  ->name('payment-failed');
     Route::post('setinvoice'        , 'InvoiceController@setinvoice')           ->name('setinvoice');
-    Route::delete('invoicedestroy' , 'InvoiceController@invoicedestroy')   ->name('invoicedestroy');
+    Route::post('payment'           , 'WalletController@payment')               ->name('payment');
+    Route::delete('invoicedestroy'  , 'InvoiceController@invoicedestroy')       ->name('invoicedestroy');
 
     Route::resource('panel/course', 'CourseController');
     Route::resource('panel/course-section', CourseSectionController::class)->except(['create','show']);

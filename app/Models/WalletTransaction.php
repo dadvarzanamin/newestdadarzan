@@ -10,7 +10,9 @@ class WalletTransaction extends Model
     use HasFactory;
 
     protected $guarded = [];
-
+    protected $casts = [
+        'meta' => 'array',
+    ];
     public function wallet() {
         return $this->belongsTo(Wallet::class);
     }
