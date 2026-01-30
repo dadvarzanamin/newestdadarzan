@@ -56,6 +56,7 @@ Route::middleware('admin')->namespace('App\Http\Controllers\Panel')->group(funct
     Route::resource('panel/transaction'  , 'TransactionController');
     Route::resource('panel/content'      , 'ContentController');
     Route::resource('panel/emploee'      , 'EmploeeController');
+    Route::resource('panel/report'      , 'ReportController');
     Route::resource('panel/checkout'      , 'CheckoutController');
 
     Route::get('payment.callback'   , 'WalletController@callbackpay')           ->name('payment.callback');

@@ -3,6 +3,7 @@
 @section('style')
     <link rel="stylesheet" href="{{ asset('assets/vendor/css/rtl/dataTables.dataTables.min.css') }}"/>
     <link rel="stylesheet" href="{{asset('assets/vendor/css/rtl/select2.min.css')}}" />
+    <link rel="stylesheet" href="{{ asset('assets/vendor/css/rtl/quill.snow.css') }}"/>
     <meta name="csrf-token" content="{{ csrf_token() }}">
 @endsection
 @section('content')
@@ -104,6 +105,53 @@
                                 <label for="status">نمایش/عدم نمایش</label>
                             </div>
                         </div>
+                        <div class="col-12">
+                            <label class="form-label mb-2">محتوا</label>
+                            <div class="quill-wrapper border rounded p-2">
+                                <div id="contentToolbar" class="ql-toolbar ql-snow rounded mb-2">
+                                    <span class="ql-formats">
+                                        <select class="ql-header">
+                                            <option selected></option>
+                                            <option value="1"></option>
+                                            <option value="2"></option>
+                                            <option value="3"></option>
+                                        </select>
+                                        <select class="ql-font"></select>
+                                        <select class="ql-size"></select>
+                                    </span>
+                                    <span class="ql-formats">
+                                        <button class="ql-bold"></button>
+                                        <button class="ql-italic"></button>
+                                        <button class="ql-underline"></button>
+                                        <button class="ql-strike"></button>
+                                    </span>
+                                    <span class="ql-formats">
+                                        <select class="ql-color"></select>
+                                        <select class="ql-background"></select>
+                                    </span>
+                                    <span class="ql-formats">
+                                        <button class="ql-list" value="ordered"></button>
+                                        <button class="ql-list" value="bullet"></button>
+                                        <button class="ql-indent" value="-1"></button>
+                                        <button class="ql-indent" value="+1"></button>
+                                    </span>
+                                    <span class="ql-formats">
+                                        <select class="ql-align"></select>
+                                        <button class="ql-direction" value="rtl"></button>
+                                    </span>
+                                    <span class="ql-formats">
+                                        <button class="ql-link"></button>
+                                        <button class="ql-image"></button>
+                                        <button class="ql-video"></button>
+                                    </span>
+                                    <span class="ql-formats">
+                                        <button class="ql-clean"></button>
+                                    </span>
+                                </div>
+                                <div id="contentEditor" style="height: 260px"></div>
+                            </div>
+                            <input type="hidden" name="content_html" id="content_html">
+                        </div>
                         <div class="text-end">
                             <button type="submit" class="btn btn-primary">ذخیره اطلاعات</button>
                         </div>
@@ -130,6 +178,7 @@
 @section('script')
     <script src="{{asset('assets/vendor/js/dataTables.min.js')}}"></script>
     <script src="{{asset('assets/vendor/js/formhandler.js')}}"></script>
+    <script src="{{ asset('assets/vendor/libs/quill/quill.js') }}"></script>
     <script type="text/javascript">
         $(function () {
 
@@ -155,6 +204,49 @@
                 }
             });
 
+
+            let quill;
+            const hidden = document.getElementById('content_html');
+            const initQuill = () => {
+                if (quill) return;
+                const editorEl = document.getElementById('contentEditor');
+                quill = new Quill(editorEl, {
+                    theme: 'snow',
+                    placeholder: 'متن محتوا را اینجا بنویسید...',
+                    modules: {
+                        toolbar: '#contentToolbar'
+                    }
+                });
+                // راست‌چین کردن محتوای داخل ادیتور
+                quill.format('direction', 'rtl');
+                quill.format('align', 'right');
+                const sync = () => hidden.value = quill.root.innerHTML.trim();
+                quill.on('text-change', sync);
+                sync();
+            };
+
+            const addModal = document.getElementById('addModal');
+            addModal?.addEventListener('shown.bs.modal', () => {
+                initQuill();
+                setTimeout(() => quill && quill.focus(), 120);
+            });
+
         });
     </script>
+    <style>
+        .quill-wrapper .ql-toolbar {
+            direction: ltr;
+        }
+
+        .quill-wrapper .ql-editor {
+            direction: rtl;
+            text-align: right;
+            min-height: 180px;
+            font-family: IRANSans, sans-serif;
+        }
+
+        .quill-wrapper .ql-toolbar button {
+            padding-inline: 6px;
+        }
+    </style>
 @endsection
