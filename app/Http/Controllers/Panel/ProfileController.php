@@ -157,9 +157,4 @@ class ProfileController extends Controller
 
     }
 
-    public function pay()
-    {
-        return view('partials.payment-success');
-    }
-
 }
