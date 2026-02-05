@@ -39,7 +39,7 @@ class WalletController extends Controller
 
     public function transactions(){
 
-        $payments       = auth()->user()->wallet->transactions()->latest()->get();
+        $payments       = auth()->user()->wallet->transactions()->latest()->paginate(12);
 
         if ($payments) {
             return response()->json(
