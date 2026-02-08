@@ -39,7 +39,7 @@ class WalletController extends Controller
 
     public function transactions(){
 
-        $payments       = auth()->user()->wallet->transactions()->latest()->get();
+        $payments       = auth()->user()->wallet->transactions()->latest()->paginate(12);
 
         if ($payments) {
             return response()->json(
@@ -59,7 +59,30 @@ class WalletController extends Controller
         }
     }
 
-    public function deposit(Request $request)
+    public function bazarpay(Request $request)
+    {
+        $amount = $this->convertPersianToEnglishNumbers($request->input('amount'));
+        $amount = str_replace(',', '', $amount);
+        $description = $request->description ?? 'شارژ کیف پول از کافه بازار';
+
+        $transaction = auth()->user()->transactions()->create([
+            'wallet_id'   => auth()->user()->wallet->id,
+            'type'        => 'deposit',
+            'amount'      => $amount,
+            'referenceId' => $request->input('referenceId'),
+            'description' => $description,
+            'status'      => 'completed',
+        ]);
+        Wallet::whereUser_id(Auth::user()->id)->update(['balance' => auth()->user()->wallet->balance + $transaction->amount]);
+        return response()->json(
+            ['isSuccess'     => true,
+                'message'    => 'کیف پول شارژ شد',
+                'errors'     => null,
+                'status_code'=> 200,
+                'result'     => '',
+            ], 200);
+    }
+        public function deposit(Request $request)
     {
         if ($request->input('amount') <= 1000 || $request->input('amount') >= 1000000000) {
             return response()->json(

@@ -36,6 +36,7 @@ Route::middleware('auth.jwt')->group(function () {
     Route::GET('v1/wallet/transactions' , [App\Http\Controllers\Api\V1\WalletController::class       , 'transactions']);
     Route::post('v1/wallet/deposit'     , [App\Http\Controllers\Api\V1\WalletController::class       , 'deposit']);
     Route::post('v1/wallet/withdraw'    , [App\Http\Controllers\Api\V1\WalletController::class       , 'withdraw']);
+    Route::post('v1/wallet/bazarpay'    , [App\Http\Controllers\Api\V1\WalletController::class       , 'bazarpay']);
     Route::post('v1/purchase_product'   , [App\Http\Controllers\Api\V1\WalletController::class       , 'purchase_product']);
 
     Route::post('v1/workshopsign'       , [App\Http\Controllers\Api\V1\ProductController::class      , 'workshopsign']);

@@ -178,8 +178,6 @@ class UserController extends Controller
 
             'wallet_balance' => number_format(optional($userData->wallet)->balance ?? 0),
 
-            'state' => State::select('id', 'title')->get(),
-            'city'  => City::select('id', 'title')->get(),
         ];
 
         return response()->json(['isSuccess' => true,
