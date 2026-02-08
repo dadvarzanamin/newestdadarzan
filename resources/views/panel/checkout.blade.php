@@ -2,10 +2,10 @@
 @section('title', 'مدیریت منوی داشبورد')
 @section('style')
     <link rel="stylesheet" href="{{ asset('assets/vendor/css/rtl/dataTables.dataTables.min.css') }}"/>
-    <link rel="stylesheet" href="{{asset('assets/vendor/css/rtl/select2.min.css')}}" />
+    <link rel="stylesheet" href="{{asset('assets/vendor/css/rtl/select2.min.css')}}"/>
     <link rel="stylesheet" href="{{ asset('assets/vendor/libs/bs-stepper/bs-stepper.css') }}"/>
     <link rel="stylesheet" href="{{ asset('assets/vendor/libs/rateyo/rateyo.css') }}"/>
-    <link rel="stylesheet" href="{{asset("assets/vendor/css/pages/wizard-ex-checkout.css")}}" />
+    <link rel="stylesheet" href="{{asset("assets/vendor/css/pages/wizard-ex-checkout.css")}}"/>
 
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <style> table {
@@ -40,6 +40,80 @@
             top: 90px;
         }
 
+        .checkout-card h6 {
+            line-height: 1.6;
+        }
+
+        .cart-item {
+            border: 1px solid #eef0f3;
+            box-shadow: 0 4px 14px rgba(21, 36, 50, 0.06);
+            transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+        }
+
+        .cart-item:first-child {
+            border-top-left-radius: 14px;
+            border-top-right-radius: 14px;
+        }
+
+        .cart-item:last-child {
+            border-bottom-left-radius: 14px;
+            border-bottom-right-radius: 14px;
+        }
+
+        .cart-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 22px rgba(21, 36, 50, 0.12);
+            border-color: #e2e7ec;
+        }
+
+        .cart-item:hover .remove-from-cart {
+            filter: invert(24%) sepia(88%) saturate(3235%) hue-rotate(336deg) brightness(93%) contrast(97%);
+        }
+
+        .cart-item .item-title {
+            font-size: 1rem;
+            font-weight: 700;
+            color: #1a1f2b;
+        }
+
+        .cart-item .item-type {
+            font-size: 0.9rem;
+            color: #6b7280;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: #f3f6fb;
+            border: 1px solid #e6ecf2;
+            padding: 4px 10px;
+            border-radius: 999px;
+            width: fit-content;
+        }
+
+        .cart-item .price-wrap {
+            background: #f8fafc;
+            border: 1px dashed #dbe2ea;
+            border-radius: 12px;
+            padding: 10px 14px;
+            text-align: center;
+            min-width: 140px;
+        }
+
+        .cart-item .final-price {
+            font-size: 1rem;
+            font-weight: 700;
+        }
+
+        .cart-item .remove-from-cart {
+            border-radius: 999px;
+            background: #f8f9fb;
+            border: 1px solid #e7ebf0;
+        }
+
+        .cart-item .remove-from-cart:hover {
+            background: #fff1f2;
+            border-color: #fecdd3;
+        }
+
     </style>
 @endsection
 @section('content')
@@ -72,119 +146,148 @@
                                     <div class="col-xl-8 mb-3 mb-xl-0">
 
                                         <!-- Offer alert -->
-{{--                                    <div class="alert alert-success mb-4" role="alert">--}}
-{{--                                        <div class="d-flex gap-3">--}}
-{{--                                            <div class="flex-shrink-0">--}}
-{{--                                                <i class="mdi mdi-tag-outline mdi-24px"></i>--}}
-{{--                                            </div>--}}
-{{--                                            <div class="flex-grow-1">--}}
-{{--                                                <div class="fw-medium">پیشنهادات موجود</div>--}}
-{{--                                                <ul class="list-unstyled mb-0">--}}
-{{--                                                    <li> - 10% تخفیف فوری در پرداخت از طریق کارت بانکی</li>--}}
-{{--                                                    <li> - 25%  بازگشت مبلغ برای خریدهای بالای دو میلیون تومان</li>--}}
-{{--                                                </ul>--}}
-{{--                                            </div>--}}
-{{--                                        </div>--}}
-{{--                                        <button type="button" class="btn-close btn-pinned" data-bs-dismiss="alert" aria-label="Close"></button>--}}
-{{--                                    </div>--}}
+                                        {{--                                    <div class="alert alert-success mb-4" role="alert">--}}
+                                        {{--                                        <div class="d-flex gap-3">--}}
+                                        {{--                                            <div class="flex-shrink-0">--}}
+                                        {{--                                                <i class="mdi mdi-tag-outline mdi-24px"></i>--}}
+                                        {{--                                            </div>--}}
+                                        {{--                                            <div class="flex-grow-1">--}}
+                                        {{--                                                <div class="fw-medium">پیشنهادات موجود</div>--}}
+                                        {{--                                                <ul class="list-unstyled mb-0">--}}
+                                        {{--                                                    <li> - 10% تخفیف فوری در پرداخت از طریق کارت بانکی</li>--}}
+                                        {{--                                                    <li> - 25%  بازگشت مبلغ برای خریدهای بالای دو میلیون تومان</li>--}}
+                                        {{--                                                </ul>--}}
+                                        {{--                                            </div>--}}
+                                        {{--                                        </div>--}}
+                                        {{--                                        <button type="button" class="btn-close btn-pinned" data-bs-dismiss="alert" aria-label="Close"></button>--}}
+                                        {{--                                    </div>--}}
 
-                                    <!-- Shopping bag -->
-                                    <h5> سبد خرید من {{count($invoices)}} مورد </h5>
-                                    <ul class="list-group mb-3">
-                                        @foreach($invoices as $invoice)
-                                            <li class="list-group-item p-4 cart-item"
-                                                data-invoice-id="{{ $invoice->id }}"
-                                                data-product-id="{{ $invoice->product_id }}"
-                                                data-product-type="{{ $invoice->product_type }}"
-                                                data-price="{{ $invoice->price }}"
-                                                data-final-price="{{ $invoice->final_price ?? $invoice->price }}">
+                                        <!-- Shopping bag -->
+                                        <h5> سبد خرید من {{count($invoices)}} مورد </h5>
+                                        <ul class="list-group mb-3">
+                                            @foreach($invoices as $invoice)
+                                                @php
+                                                    $productTypeLabel = [
+                                                        'workshop' => 'کارگاه',
+                                                        'estelam' => 'استعلام',
+                                                        'contract' => 'قرارداد',
+                                                    ][$invoice->product_type] ?? $invoice->product_type;
+                                                @endphp
+                                                <li class="list-group-item p-4 cart-item"
+                                                    data-invoice-id="{{ $invoice->id }}"
+                                                    data-product-id="{{ $invoice->product_id }}"
+                                                    data-product-type="{{ $productTypeLabel }}"
+                                                    data-price="{{ $invoice->price }}"
+                                                    data-final-price="{{ $invoice->final_price ?? $invoice->price }}">
 
-                                                <div class="d-flex gap-3">
-                                                    <div class="flex-shrink-0">
-                                                        <img src="{{ $invoice->product_image ?? asset('assets/img/products/1.png') }}"
-                                                             class="w-px-100" alt="">
-                                                    </div>
+                                                    <div class="d-flex gap-3">
+                                                        <div class="flex-grow-1">
+                                                            <div class="row align-items-center">
+                                                                <div class="col-md-8">
+                                                                    <h6 class="me-3 item-title">{{ $invoice->product_name }}</h6>
+                                                                    <div class="item-type mb-1">{{ $productTypeLabel }}</div>
+                                                                </div>
 
-                                                    <div class="flex-grow-1">
-                                                        <div class="row">
-                                                            <div class="col-md-8">
-                                                                <h6 class="me-3">{{ $invoice->product_name }}</h6>
-                                                                <div class="text-muted mb-1">{{ $invoice->product_type }}</div>
-                                                            </div>
+                                                                <div class="col-md-4 mt-3 mt-md-0">
+                                                                    <div
+                                                                        class="d-md-flex flex-column h-100 justify-content-between align-items-md-end gap-2">
+                                                                        <button type="button"
+                                                                                class="btn-close btn-pinned remove-from-cart"
+                                                                                data-invoice-id="{{ $invoice->id }}"></button>
 
-                                                            <div class="col-md-4 mt-3 mt-md-0">
-                                                                <div class="d-md-flex flex-column h-100 justify-content-between align-items-md-end">
-                                                                    <button type="button"
-                                                                            class="btn-close btn-pinned remove-from-cart"
-                                                                            data-invoice-id="{{ $invoice->id }}"></button>
-
-                                                                    <div class="my-2 my-md-4">
+                                                                        <div class="price-wrap my-2 my-md-4">
                                                                     <span class="text-primary final-price">
                                                                         {{ number_format($invoice->final_price ?? $invoice->price) }}
                                                                     </span>
-                                                                        تومان
+                                                                            تومان
+                                                                        </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                            </li>
-                                        @endforeach
+                                                </li>
+                                            @endforeach
 
-                                    </ul>
-                                </div>
+                                        </ul>
+                                    </div>
 
-                                <div class="col-xl-4">
-                                    <div class="checkout-summary">
-                                        <div class="border rounded p-3 mb-3">
-                                            <h6>صورتحساب</h6>
-                                            <div class="row g-3 mb-3">
-                                                <div class="col-8 col-xxl-8 col-xl-12">
-                                                    <input type="text" class="form-control" id="wizard-promo-code" placeholder="کد تخفیف را وارد کنید" aria-label="Enter Promo Code">
-                                                </div>
-                                                <div class="col-4 col-xxl-4 col-xl-12">
-                                                    <div class="d-grid">
-                                                        <button type="button" class="btn btn-outline-primary">اعمال</button>
+                                    <div class="col-xl-4">
+                                        <div class="checkout-summary">
+                                            <div class="border rounded p-3 mb-3">
+                                                <h6>صورتحساب</h6>
+                                                <div class="row g-3 mb-3">
+                                                    <div class="col-8 col-xxl-8 col-xl-12">
+                                                        <input type="text" class="form-control" id="wizard-promo-code"
+                                                               placeholder="کد تخفیف را وارد کنید"
+                                                               aria-label="Enter Promo Code">
+                                                    </div>
+                                                    <div class="col-4 col-xxl-4 col-xl-12">
+                                                        <div class="d-grid">
+                                                            <button type="button" class="btn btn-outline-primary">
+                                                                اعمال
+                                                            </button>
+                                                        </div>
                                                     </div>
                                                 </div>
+                                                <hr class="mx-n3">
+                                                <h6>جزئیات قیمت</h6>
+                                                <dl class="row mb-0">
+
+                                                    <dt class="col-6 fw-normal">جمع سبد</dt>
+                                                    <dd class="col-6 text-end" id="cart-subtotal">0 تومان</dd>
+
+                                                    <dt class="col-6 fw-normal"> تخفیف</dt>
+                                                    <dd class="col-6 text-success text-end" id="discount-price"
+                                                        data-applied="false"
+                                                        data-value="0">0 تومان
+                                                    </dd>
+
+                                                    <dt class="col-6 fw-normal">مجموع سفارش</dt>
+                                                    <dd class="col-6 text-end" id="cart-total">0 تومان</dd>
+
+                                                    <hr>
+
+                                                    <dt class="col-6">جمع</dt>
+                                                    <dd class="col-6 fw-semibold text-end mb-0" id="cart-final-sum">0
+                                                        تومان
+                                                    </dd>
+
+                                                </dl>
+
                                             </div>
-                                            <hr class="mx-n3">
-                                            <h6>جزئیات قیمت</h6>
-                                            <dl class="row mb-0">
-
-                                                <dt class="col-6 fw-normal">جمع سبد</dt>
-                                                <dd class="col-6 text-end" id="cart-subtotal">0 تومان</dd>
-
-                                                <dt class="col-6 fw-normal"> تخفیف</dt>
-                                                <dd class="col-6 text-success text-end" id="discount-price"
-                                                    data-applied="false"
-                                                    data-value="0">0 تومان</dd>
-
-                                                <dt class="col-6 fw-normal">مجموع سفارش</dt>
-                                                <dd class="col-6 text-end" id="cart-total">0 تومان</dd>
-
-                                                <hr>
-
-                                                <dt class="col-6">جمع</dt>
-                                                <dd class="col-6 fw-semibold text-end mb-0" id="cart-final-sum">0 تومان</dd>
-
-                                            </dl>
-
-                                        </div>
-                                        <div class="d-grid">
-                                            <button type="button" class="btn btn-primary" id="pay-btn">
-                                                پرداخت آنلاین
-                                            </button>
+                                            <div class="d-grid">
+                                                <button type="button" class="btn btn-primary" id="pay-btn">
+                                                    پرداخت آنلاین
+                                                </button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
                         </form>
                     </div>
                 </div>
                 <!--/ Checkout Wizard -->
 
+            </div>
+        </div>
+    </div>
+
+    <!-- Remove item confirmation modal -->
+    <div class="modal fade" id="remove-confirm-modal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">حذف آیتم</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="بستن"></button>
+                </div>
+                <div class="modal-body">
+                    آیا از حذف این آیتم از سبد خرید مطمئن هستید؟
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">انصراف</button>
+                    <button type="button" class="btn btn-danger" id="confirm-remove-btn">حذف</button>
+                </div>
             </div>
         </div>
     </div>
@@ -226,19 +329,36 @@
             if (!e.target.classList.contains('remove-from-cart')) return;
 
             let btn = e.target;
+            const modalEl = document.getElementById('remove-confirm-modal');
+            modalEl.dataset.invoiceId = btn.dataset.invoiceId;
+            const modal = bootstrap.Modal.getOrCreateInstance(modalEl);
+            modal.show();
+        });
+
+        document.getElementById('confirm-remove-btn').addEventListener('click', function () {
+            const modalEl = document.getElementById('remove-confirm-modal');
+            const invoiceId = modalEl.dataset.invoiceId;
+            const modal = bootstrap.Modal.getOrCreateInstance(modalEl);
+
             fetch("{{ route('invoicedestroy') }}", {
                 method: 'DELETE',
                 headers: {
                     'X-CSRF-TOKEN': '{{ csrf_token() }}',
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ id: btn.dataset.invoiceId })
+                body: JSON.stringify({id: invoiceId})
             })
                 .then(res => res.json())
                 .then(data => {
                     if (data.isSuccess) {
-                        btn.closest('.cart-item').remove();
-                        recalcPrices();
+                        const item = document.querySelector(
+                            `.cart-item[data-invoice-id="${invoiceId}"]`
+                        );
+                        if (item) {
+                            item.remove();
+                            recalcPrices();
+                        }
+                        modal.hide();
                     }
                 });
         });
@@ -253,7 +373,7 @@
                     'X-CSRF-TOKEN': '{{ csrf_token() }}',
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ discountcode: code })
+                body: JSON.stringify({discountcode: code})
             })
                 .then(res => res.json())
                 .then(data => {
@@ -299,6 +419,5 @@
             form.submit();
         });
     </script>
-
 
 @endsection

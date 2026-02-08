@@ -13,7 +13,7 @@
                         <h2 class="breadcrumb__title">سبد خرید</h2>
                         <ul class="breadcrumb__list">
                             <li class="breadcrumb__item">
-                                <a href="index.html"> خانه</a>
+                                <a href="{{url('/')}}"> خانه</a>
                             </li>
                             <li class="breadcrumb__item">
                                 <i class="fa-solid fa-arrow-left"></i>
@@ -51,9 +51,9 @@
                                     <div class="row">
                                         <div class="col-4">
                                             <div class="cart-single-product">
-                                                <div class="thumb">
-                                                    <img src="assets/images/explore/ex1.jpg" alt="cart thumb">
-                                                </div>
+{{--                                                <div class="thumb">--}}
+{{--                                                    <img src="assets/images/explore/ex1.jpg" alt="cart thumb">--}}
+{{--                                                </div>--}}
                                                 <div class="cart-content">
                                                     <p>طراحی خلاقانه</p>
                                                     <div class="star-list">
