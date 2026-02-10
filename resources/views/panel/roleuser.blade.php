@@ -194,7 +194,7 @@
                         </div>
 
                         <div class="text-end">
-                            <button type="button" id="submit" class="btn btn-primary">ذخیره اطلاعات</button>
+                            <button type="submit" id="submit" class="btn btn-primary">ذخیره اطلاعات</button>
                         </div>
                     </form>
                 </div>

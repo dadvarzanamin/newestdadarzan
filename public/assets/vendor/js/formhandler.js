@@ -46,7 +46,7 @@ document.addEventListener('DOMContentLoaded', () => {
             url: $form.attr('action'),
             method: $form.attr('method') || 'POST',
             data: $form.serialize(),
-            headers: { 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content') },
+            headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
 
             success: function (data) {
                 if (data.success) {

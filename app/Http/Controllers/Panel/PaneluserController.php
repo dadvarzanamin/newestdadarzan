@@ -84,17 +84,23 @@ class PaneluserController extends Controller
 
     public function store(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'typeuser_id'   => ['required'],
+            'name'          => ['required', 'string', 'max:255'],
+            'email'         => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'password'      => ['required', 'string', 'min:8', 'confirmed'],
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'success' => false,
+                'subject' => 'خطای اعتبارسنجی',
+                'flag'    => 'error',
+                'message' => $validator->errors()->first(),
+            ], 422);
+        }
+
         try {
-
-            $validator = Validator::make($request->all(), [
-                'typeuser_id'   => ['required'],
-                'name'          => ['required', 'string', 'max:255'],
-                'email'         => ['required', 'string', 'email', 'max:255', 'unique:users'],
-                'password'      => ['required', 'string', 'min:8', 'confirmed'],
-            ]);
-
-            $validator->validate();
-
             $user = new User();
             $user->name         = $request->input('name');
             $user->phone        = $request->input('phone');
@@ -107,38 +113,20 @@ class PaneluserController extends Controller
             $user->level        = 'admin';
             $user->status       = 4;
             $user->password     = Hash::make($request->input('password'));
-            $result1 = $user->save();
 
-            DB::table('role_user')->insert([
-                'role_id' => $user->role_id,
-                'user_id' => $user->id,
-            ]);
+            DB::transaction(function () use ($user, $request) {
+                $user->save();
+                $user->role()->sync([$request->input('typeuser_id')]);
+            });
 
-            if ($result1 == true) {
-                $success = true;
-                $flag    = 'success';
-                $subject = 'عملیات موفق';
-                $message = 'اطلاعات منو با موفقیت ثبت شد';
-            }
-            elseif($result1 == true) {
-                $success = false;
-                $flag    = 'error';
-                $subject = 'عملیات نا موفق';
-                $message = 'اطلاعات دسترسی ثبت نشد، لطفا مجددا تلاش نمایید';
-            }
-            elseif($result1 != true) {
-                $success = false;
-                $flag    = 'error';
-                $subject = 'عملیات نا موفق';
-                $message = 'اطلاعات منو ثبت نشد، لطفا مجددا تلاش نمایید';
-            }
-
+            $success = true;
+            $flag    = 'success';
+            $subject = 'عملیات موفق';
+            $message = 'اطلاعات منو با موفقیت ثبت شد';
         } catch (Exception $e) {
-
             $success = false;
             $flag    = 'error';
             $subject = 'خطا در ارتباط با سرور';
-            //$message = strchr($e);
             $message = 'اطلاعات منو ثبت نشد،لطفا بعدا مجدد تلاش نمایید ';
         }
         return response()->json(['success'=>$success , 'subject' => $subject, 'flag' => $flag, 'message' => $message]);

@@ -63,7 +63,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="بستن"></button>
                 </div>
                 <div class="modal-body">
-                    <form id="addform" method="POST" action="{{ route(request()->segment(2).'.store') }}">
+                    <form id="addform" data-type="create" method="POST" action="{{ route(request()->segment(2).'.store') }}">
                         @csrf
                         <div class="row mb-3">
                             <div class="col-md-4">
@@ -117,7 +117,7 @@
                             </div>
                         </div>
                         <div class="text-end">
-                            <button type="button" id="submit" class="btn btn-primary">ذخیره اطلاعات</button>
+                            <button type="submit" id="submit" class="btn btn-primary">ذخیره اطلاعات</button>
                         </div>
                     </form>
                 </div>

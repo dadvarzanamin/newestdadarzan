@@ -94,8 +94,6 @@ class RoleuserController extends Controller
             $role->title_fa     = $request->input('title_fa');
             $role->title        = $request->input('title');
             $role->status       = $request->input('status');
-            $role->user_id      = Auth::user()->id;
-
             $result1 = $role->save();
 
             if ($result1 == true) {
