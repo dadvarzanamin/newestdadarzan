@@ -10632,31 +10632,31 @@ label {
 
 @media screen and (max-width: 991px) {
   #preloader #text p {
-    font-size: 3.625rem;
+    font-size: 2rem;
   }
 }
 
 @media screen and (max-width: 575px) {
   #preloader #text p {
-    font-size: 3.563rem;
+    font-size: 2rem;
   }
 }
 
 @media screen and (max-width: 767px) {
   #preloader #text p {
-    font-size: 2.375rem;
+    font-size: 1.5rem;
   }
 }
 
 @media screen and (max-width: 767px) and (max-width: 1199px) {
   #preloader #text p {
-    font-size: 2.438rem;
+    font-size: 1.5rem;
   }
 }
 
 @media screen and (max-width: 767px) and (max-width: 991px) {
   #preloader #text p {
-    font-size: 2.375rem;
+    font-size: 1.5rem;
   }
 }
 
