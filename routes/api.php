@@ -17,8 +17,6 @@ use App\Http\Controllers\Api\v1\IndexController;
     Route::GET('v1/getcontract'         , [App\Http\Controllers\Api\V1\ProductController::class , 'getcontract']);
     Route::GET('v1/getarticle'          , [App\Http\Controllers\Api\V1\IndexController::class   , 'getarticle']);
     Route::GET('v1/workshops'           , [App\Http\Controllers\Api\V1\ProductController::class , 'workshops']);
-    Route::post('v1/product_payment'    , [App\Http\Controllers\Api\V1\PaymentController::class , 'product_payment'])->name('product_payment');
-    Route::GET('v1/payment/payback'     , [App\Http\Controllers\Api\V1\PaymentController::class , 'callbackpay'])->name('payback');
 
 Route::middleware('auth.jwt')->group(function () {
 
@@ -54,6 +52,9 @@ Route::middleware('auth.jwt')->group(function () {
     Route::get('v1/order'               , [App\Http\Controllers\Api\V1\InvoiceController::class        , 'order'])              ->name('order');
     Route::get('v1/showinvoice'         , [App\Http\Controllers\Api\V1\InvoiceController::class        , 'showinvoice'])        ->name('showinvoice');
     Route::post('v1/productuse'         , [App\Http\Controllers\Api\V1\InvoiceController::class        , 'productuse']);
+
+    Route::post('v1/product_payment'    , [App\Http\Controllers\Api\V1\PaymentController::class , 'product_payment'])->name('product_payment');
+    Route::GET('v1/payment/payback'     , [App\Http\Controllers\Api\V1\PaymentController::class , 'callbackpay'])->name('payback');
 
 
 });
