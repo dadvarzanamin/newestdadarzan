@@ -55,20 +55,36 @@
         }
         var version = banner.getAttribute('data-version') || 'unknown';
         var storageKey = 'site_version_banner_dismissed_' + version;
+        var root = document.documentElement;
+        var setOffset = function () {
+            if (banner && banner.offsetHeight) {
+                root.style.setProperty('--version-banner-offset', banner.offsetHeight + 'px');
+            }
+        };
         try {
             if (localStorage.getItem(storageKey) === '1') {
+                root.style.setProperty('--version-banner-offset', '0px');
                 banner.remove();
                 return;
             }
         } catch (e) {}
 
+        setOffset();
+        window.addEventListener('resize', setOffset);
+
         var closeBtn = banner.querySelector('.site-version-banner__close');
         if (closeBtn) {
             closeBtn.addEventListener('click', function () {
-                banner.style.display = 'none';
+                banner.classList.add('is-closing');
+                root.style.setProperty('--version-banner-offset', '0px');
                 try {
                     localStorage.setItem(storageKey, '1');
                 } catch (e) {}
+                setTimeout(function () {
+                    if (banner && banner.parentNode) {
+                        banner.parentNode.removeChild(banner);
+                    }
+                }, 220);
             });
         }
     });

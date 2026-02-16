@@ -15,8 +15,20 @@
         background: linear-gradient(90deg, #0d2c54 0%, #164a7e 100%);
         color: #fff;
         font-size: 14px;
-        position: relative;
-        z-index: 5;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 200;
+        transform: translateY(0);
+        transition: transform 0.2s ease, opacity 0.2s ease;
+    }
+    .site-version-banner.is-closing {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+    .navbar-main {
+        top: var(--version-banner-offset, 0px);
     }
     .site-version-banner__content {
         align-items: center;
