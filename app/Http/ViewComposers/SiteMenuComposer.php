@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 use App\Models\Menu;
+use App\Models\Version;
 
 class SiteMenuComposer
 {
@@ -21,6 +22,7 @@ class SiteMenuComposer
         $megacounts = DB::table('mega_menus')
             ->selectRaw('COUNT(*) as count, menu_id')
             ->groupBy('menu_id')->get();
+        $latestVersion = Version::latest('id')->first();
 
         if (count($url) == 1) {
             $thispage = Menu::whereSlug($url[0])->first();
@@ -48,6 +50,7 @@ class SiteMenuComposer
             'megacounts' => $megacounts,
             'thispage'   => $thispage,
             'cartCount'  => $cartCount,
+            'latestVersion' => $latestVersion,
         ]);
     }
 }

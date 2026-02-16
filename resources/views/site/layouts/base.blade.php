@@ -21,6 +21,9 @@
     </svg>
 </div>
 
+{{-- Version banner --}}
+@include('site.partials.version-banner')
+
 {{-- Navbar --}}
 @include('site.partials.navbar')
 
@@ -44,6 +47,32 @@
 <script src="{{ asset('site/assets/js/swiper-bundle.min.js') }}"></script>
 <script src="{{ asset('site/assets/js/odometer.min.js') }}"></script>
 <script src="{{ asset('site/assets/js/main.js') }}"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var banner = document.querySelector('.site-version-banner');
+        if (!banner) {
+            return;
+        }
+        var version = banner.getAttribute('data-version') || 'unknown';
+        var storageKey = 'site_version_banner_dismissed_' + version;
+        try {
+            if (localStorage.getItem(storageKey) === '1') {
+                banner.remove();
+                return;
+            }
+        } catch (e) {}
+
+        var closeBtn = banner.querySelector('.site-version-banner__close');
+        if (closeBtn) {
+            closeBtn.addEventListener('click', function () {
+                banner.style.display = 'none';
+                try {
+                    localStorage.setItem(storageKey, '1');
+                } catch (e) {}
+            });
+        }
+    });
+</script>
 
 @stack('page_scripts')
 </body>

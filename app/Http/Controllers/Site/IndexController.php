@@ -19,6 +19,7 @@ use App\Models\Invoice;
 use App\Models\Media;
 use App\Models\mega_menu;
 use App\Models\Post;
+use App\Models\Version;
 use App\Models\Workshop;
 use App\Models\Menu;
 use App\Models\Submenu;
@@ -183,6 +184,12 @@ class IndexController extends Controller
         return view('site.pages.single-contract')->with(compact('contract'));
     }
 
+    public function version(){
+        $response = [
+            'version'    => Version::latest('id')->first() ,
+        ];
+        return Response::json(['ok' =>true ,'message' => 'success','response'=>$response]);
+    }
 
 
 }
