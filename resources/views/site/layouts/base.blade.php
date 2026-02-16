@@ -10,7 +10,8 @@
 {{-- Preloader --}}
 <div id="preloader">
     <div id="text">
-        <p> موسسه </p><p> حقوقی </p><p> دادورزان </p><p class="active"> امین </p>
+{{--        <p> موسسه </p><p> حقوقی </p><p> دادورزان </p><p class="active"> امین </p>--}}
+        <p>موسسه حقوقی دادورزان امین</p>
     </div>
 </div>
 
