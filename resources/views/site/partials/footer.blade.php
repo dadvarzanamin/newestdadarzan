@@ -21,6 +21,7 @@
                         </div>
                         <div class="footer-phone">
                             <h4><a href="tel:09124917054">09124917054</a></h4>
+                            <h4><a href="tel:02188438191">02188438191</a></h4>
                         </div>
                         <ul class="social">
                             <li><a href="https://www.whatsapp.com/" target="_blank"><i
