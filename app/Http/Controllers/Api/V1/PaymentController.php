@@ -24,7 +24,7 @@ class PaymentController extends Controller
         $totalFinal  = $invoiceIds->final_price;
         $description = $product->title;
 
-        $paidInvoices = Invoice::whereIn('id', $invoiceIds->id)
+        $paidInvoices = Invoice::where('id', $invoiceIds->id)
             ->where('user_id', auth()->id())
             ->where('price_status', 4)
             ->exists();
