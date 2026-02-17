@@ -20,11 +20,17 @@ class PaymentController extends Controller
     {
         $invoice = Invoice::with('product')->findOrFail($request->input('invoice_id'));
 
-        abort_if(
-            $invoice->user_id !== auth()->id() || $invoice->price_status === 4,
-            500,
-            'شما قبلا فاکتور را پرداخت کرده‌اید'
-        );
+        if($invoice->user_id != auth()->id() || $invoice->price_status == 4) {
+
+            return response()->json(
+                ['isSuccess' => false,
+                    'message' => 'شما قبلا این فاکتور را پرداخت کرده اید',
+                    'errors' => true,
+                    'status_code' => 401,
+                    'result' => '',
+                ], 401
+            );
+        }
 
         $user   = auth()->user();
         $wallet = $user->wallet;
