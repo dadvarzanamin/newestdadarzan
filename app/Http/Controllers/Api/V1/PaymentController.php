@@ -46,7 +46,7 @@ class PaymentController extends Controller
 
         $paymentRequest = Toman::amount($invoice->final_price)
             ->description($invoice->product->title)
-            ->callback(url('https://dadvarzanamin.ir/api/v1/wallet/backtoapp'))
+            ->callback(url('https://dadvarzanamin.ir/api/v1/payment/payback'))
             ->mobile($user->phone)
             ->email($user->email)
             ->request();
