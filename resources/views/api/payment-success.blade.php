@@ -192,7 +192,9 @@
         $deepLinkParams = array_filter([
             'authority' => $paymentDetails['authority'] ?? null,
             'transaction_id' => $paymentDetails['transaction_id'] ?? null,
+            'transactionId' => $paymentDetails['transaction_id'] ?? null,
             'reference_id' => $paymentDetails['reference_id'] ?? null,
+            'referenceId' => $paymentDetails['reference_id'] ?? null,
             'status' => $paymentDetails['status'] ?? null,
             'gateway_status' => $paymentDetails['gateway_status'] ?? null,
             'type' => $paymentDetails['type'] ?? null,
@@ -230,6 +232,7 @@
                 'type' => 'نوع تراکنش',
                 'description' => 'توضیحات',
                 'transaction_id' => 'شناسه تراکنش',
+                'authority' => 'Authority',
                 'reference_id' => 'کد رهگیری',
                 'created_at' => 'تاریخ ثبت',
                 'error' => 'خطا',
@@ -306,6 +309,16 @@
         <a href="{{ $deepLinkUrl }}" class="btn">بازگشت به اپ</a>
     </div>
 </div>
+
+<script>
+    (function () {
+        var deepLinkUrl = @json($deepLinkUrl);
+        if (!deepLinkUrl) return;
+        setTimeout(function () {
+            window.location.href = deepLinkUrl;
+        }, 600);
+    })();
+</script>
 
 </body>
 </html>
