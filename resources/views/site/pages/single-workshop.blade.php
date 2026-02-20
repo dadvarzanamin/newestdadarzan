@@ -84,7 +84,10 @@
                             <li class="d-flex align-items-center justify-content-between">
                                 <span>
                                     <i class="mr-2 text-color"></i>نوع برگزاری : </span>
-                                {{implode("," , json_decode($singleworkshops->product_use))}}
+                                @php
+                                    $productUse = json_decode($singleworkshops->product_use, true);
+                                @endphp
+                                {{ is_array($productUse) ? implode('، ', $productUse) : ($singleworkshops->product_use ?? '-') }}
                             </li>
                             <div class="divider"><span></span></div>
 

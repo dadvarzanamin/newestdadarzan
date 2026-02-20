@@ -23,37 +23,37 @@
         <div class="col-12 col-md-4">
             <div class="form-floating form-floating-outline">
                 <input type="text" class="form-control" id="item1" name="item1" value="{{$product->item1}}">
-                <label for="item1">ایتم مربوط به خدمات</label>
+                <label for="item1">نام مدرس</label>
             </div>
         </div>
         <div class="col-12 col-md-4">
             <div class="form-floating form-floating-outline">
                 <input type="text" class="form-control" id="item2" name="item2" value="{{$product->item2}}">
-                <label for="item2">ایتم مربوط به خدمات</label>
+                <label for="item2">مسیر تصویر مدرس</label>
             </div>
         </div>
         <div class="col-12 col-md-4">
             <div class="form-floating form-floating-outline">
                 <input type="text" class="form-control" id="item3" name="item3" value="{{$product->item3}}">
-                <label for="item3">ایتم مربوط به خدمات</label>
+                <label for="item3">ایتم مربوط به محصول</label>
             </div>
         </div>
         <div class="col-12 col-md-4">
             <div class="form-floating form-floating-outline">
                 <input type="text" class="form-control" id="item4" name="item4" value="{{$product->item4}}">
-                <label for="item4">ایتم مربوط به خدمات</label>
+                <label for="item4">ایتم مربوط به محصول</label>
             </div>
         </div>
         <div class="col-12 col-md-4">
             <div class="form-floating form-floating-outline">
                 <input type="text" class="form-control" id="item5" name="item5" value="{{$product->item5}}">
-                <label for="item5">ایتم مربوط به خدمات</label>
+                <label for="item5">ایتم مربوط به محصول</label>
             </div>
         </div>
         <div class="col-12 col-md-4">
             <div class="form-floating form-floating-outline">
                 <input type="text" class="form-control input-number" id="price" name="price" value="{{$product->price}}">
-                <label for="price">هزینه خدمات</label>
+                <label for="price">قیمت محصول</label>
             </div>
         </div>
         <div class="col-12 col-md-4">
@@ -64,7 +64,7 @@
                     <option value="estelam"  {{$product->product_type == 'estelam'  ? 'selected' : ''}}>استعلام</option>
                     <option value="contract" {{$product->product_type == 'contract' ? 'selected' : ''}}>قرارداد</option>
                 </select>
-                <label for="product_type">نوع خدمات</label>
+                <label for="product_type">نوع محصول</label>
             </div>
         </div>
         <div class="col-12 col-md-4">
@@ -74,7 +74,7 @@
                     <option value="حضوری"  {{$product->product_use == 'حضوری' ? 'selected' : ''}}>حضوری</option>
                     <option value="آنلاین"  {{$product->product_use == 'آنلاین' ? 'selected' : ''}} >آنلاین</option>
                 </select>
-                <label for="product_type">شرایط خدمات</label>
+                <label for="product_type">شرایط محصول</label>
             </div>
         </div>
         <div class="col-12 col-md-4">
