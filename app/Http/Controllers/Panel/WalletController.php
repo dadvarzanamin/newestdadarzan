@@ -68,14 +68,6 @@ class WalletController extends Controller
                 ], 401);
         }
 
-        $transaction = $user->transactions()->create([
-            'wallet_id'     => $user->wallet->id,
-            'type'          => 'deposit',
-            'amount'        => $amount,
-            'description'   => $description,
-            'status'        => 'pending',
-        ]);
-
         $requiredFields = [
             'email' => 'آدرس ایمیل خالی می‌باشد',
             'phone' => 'شماره موبایل خالی می‌باشد',
@@ -91,8 +83,8 @@ class WalletController extends Controller
             }
         }
 
-        $transaction = auth()->user()->transactions()->create([
-            'wallet_id'   => auth()->user()->wallet->id,
+        $transaction = $user->transactions()->create([
+            'wallet_id'   => $user->wallet->id,
             'type'        => 'deposit',
             'amount'      => $amount,
             'description' => $description,
@@ -237,6 +229,21 @@ class WalletController extends Controller
             ->first();
 
         if (!$walletTransaction) {
+            $completedTransaction = WalletTransaction::where('transactionId', $authority)
+                ->where('user_id', $userId)
+                ->where('status', 'completed')
+                ->latest('id')
+                ->first();
+
+            if ($completedTransaction) {
+                return view('partials.payment-success', [
+                    'message' => 'این پرداخت قبلا تایید شده است.',
+                    'paymentDetails' => $this->buildPaymentDetails($completedTransaction, $status, 'gateway'),
+                ]);
+            }
+        }
+
+        if (!$walletTransaction) {
             return view('partials.payment-failed', [
                 'message' => 'تراکنش معتبر برای این کاربر پیدا نشد.',
                 'paymentDetails' => $this->buildPaymentDetails(null, $status, 'gateway', [
@@ -247,6 +254,7 @@ class WalletController extends Controller
         }
 
         if ($status !== 'OK') {
+            $this->rollbackFailedOrderPayment($walletTransaction);
             $walletTransaction->update(['status' => 'failed']);
 
             return view('partials.payment-failed', [
@@ -256,7 +264,16 @@ class WalletController extends Controller
         }
 
         try {
-            $payment = Toman::amount($walletTransaction->amount)
+            $verifyAmount = (int) $walletTransaction->amount;
+
+            if ($walletTransaction->type === 'order_payment') {
+                $gatewayPay = (int) data_get($walletTransaction->meta, 'gateway_pay', 0);
+                if ($gatewayPay > 0) {
+                    $verifyAmount = $gatewayPay;
+                }
+            }
+
+            $payment = Toman::amount($verifyAmount)
                 ->transactionId($authority)
                 ->verify();
 
@@ -289,6 +306,7 @@ class WalletController extends Controller
             }
 
             $walletTransaction->update(['status' => 'failed']);
+            $this->rollbackFailedOrderPayment($walletTransaction->fresh());
 
             return view('partials.payment-failed', [
                 'message' => 'تایید پرداخت از سمت درگاه انجام نشد.',
@@ -296,6 +314,7 @@ class WalletController extends Controller
             ]);
         } catch (\Throwable $e) {
             $walletTransaction->update(['status' => 'failed']);
+            $this->rollbackFailedOrderPayment($walletTransaction->fresh());
 
             return view('partials.payment-failed', [
                 'message' => 'خطا در بررسی نتیجه پرداخت.',
@@ -494,5 +513,27 @@ class WalletController extends Controller
         ];
 
         return array_merge($details, $extra);
+    }
+
+    protected function rollbackFailedOrderPayment(?WalletTransaction $transaction): void
+    {
+        if (!$transaction || $transaction->type !== 'order_payment') {
+            return;
+        }
+
+        $walletPay = (int) data_get($transaction->meta, 'wallet_pay', 0);
+        if ($walletPay <= 0) {
+            return;
+        }
+
+        $wallet = Wallet::whereUser_id($transaction->user_id)->first();
+        if ($wallet) {
+            $wallet->increment('balance', $walletPay);
+        }
+
+        WalletTransaction::where('parent_id', $transaction->id)
+            ->where('type', 'wallet_usage')
+            ->where('status', 'completed')
+            ->update(['status' => 'failed']);
     }
 }
