@@ -203,8 +203,38 @@
                 'description' => 'توضیحات',
                 'transaction_id' => 'شناسه تراکنش',
                 'reference_id' => 'کد رهگیری',
-                'authority' => 'Authority',
                 'created_at' => 'تاریخ ثبت',
+            ];
+
+            $toFaDigits = function ($value) {
+                return strtr((string) $value, [
+                    '0' => '۰', '1' => '۱', '2' => '۲', '3' => '۳', '4' => '۴',
+                    '5' => '۵', '6' => '۶', '7' => '۷', '8' => '۸', '9' => '۹',
+                ]);
+            };
+
+            $valueMaps = [
+                'channel' => [
+                    'gateway' => 'درگاه بانکی',
+                    'wallet' => 'کیف پول',
+                ],
+                'status' => [
+                    'pending' => 'در انتظار',
+                    'completed' => 'تکمیل شده',
+                    'failed' => 'ناموفق',
+                ],
+                'type' => [
+                    'deposit' => 'واریز',
+                    'withdraw' => 'برداشت',
+                    'order_payment' => 'پرداخت سفارش',
+                    'wallet_usage' => 'استفاده از کیف پول',
+                ],
+                'gateway_status' => [
+                    'OK' => 'موفق',
+                    'NOK' => 'ناموفق',
+                    'COMPLETED' => 'تکمیل شده',
+                    'FAILED' => 'ناموفق',
+                ],
             ];
         @endphp
         <div class="details">
@@ -217,9 +247,22 @@
                             <td>{{ $label }}</td>
                             <td>
                                 @if($key === 'amount')
-                                    {{ number_format((int)$paymentDetails[$key]) }} تومان
+                                    {{ $toFaDigits(number_format((int)$paymentDetails[$key])) }} تومان
+                                @elseif($key === 'created_at')
+                                    @php
+                                        try {
+                                            $formattedDate = jdate(\Illuminate\Support\Carbon::parse($paymentDetails[$key]))->format('Y/m/d - H:i:s');
+                                        } catch (\Throwable $e) {
+                                            $formattedDate = (string) $paymentDetails[$key];
+                                        }
+                                    @endphp
+                                    {{ $toFaDigits($formattedDate) }}
                                 @else
-                                    {{ $paymentDetails[$key] }}
+                                    @php
+                                        $rawValue = (string) $paymentDetails[$key];
+                                        $translatedValue = $valueMaps[$key][$rawValue] ?? $rawValue;
+                                    @endphp
+                                    {{ $toFaDigits($translatedValue) }}
                                 @endif
                             </td>
                         </tr>
