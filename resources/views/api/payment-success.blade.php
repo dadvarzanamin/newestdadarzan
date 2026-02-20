@@ -185,6 +185,34 @@
 </head>
 <body>
 
+@php
+    $deepLinkParams = [];
+
+    if (!empty($paymentDetails) && is_array($paymentDetails)) {
+        $deepLinkParams = array_filter([
+            'authority' => $paymentDetails['authority'] ?? null,
+            'transaction_id' => $paymentDetails['transaction_id'] ?? null,
+            'reference_id' => $paymentDetails['reference_id'] ?? null,
+            'status' => $paymentDetails['status'] ?? null,
+            'gateway_status' => $paymentDetails['gateway_status'] ?? null,
+            'type' => $paymentDetails['type'] ?? null,
+            'amount' => $paymentDetails['amount'] ?? null,
+            'description' => $paymentDetails['description'] ?? null,
+            'created_at' => $paymentDetails['created_at'] ?? null,
+            'channel' => $paymentDetails['channel'] ?? null,
+        ], fn ($value) => !is_null($value) && $value !== '');
+    }
+
+    if (!empty($message)) {
+        $deepLinkParams['message'] = $message;
+    }
+
+    $deepLinkUrl = 'myapp://payment-success';
+    if (!empty($deepLinkParams)) {
+        $deepLinkUrl .= '?' . http_build_query($deepLinkParams, '', '&', PHP_QUERY_RFC3986);
+    }
+@endphp
+
 <div class="container">
     <div class="success-icon">✓</div>
     <h1>پرداخت موفق</h1>
@@ -275,7 +303,7 @@
     @endif
 
     <div class="actions">
-        <a href="myapp://payment-success" class="btn">بازگشت به اپ</a>
+        <a href="{{ $deepLinkUrl }}" class="btn">بازگشت به اپ</a>
     </div>
 </div>
 
