@@ -23,7 +23,8 @@
             border-radius: 10px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
             padding: 30px;
-            width: 300px;
+            width: 95%;
+            max-width: 650px;
         }
 
         .success-icon {
@@ -54,6 +55,35 @@
         .btn:hover {
             background-color: #218838;
         }
+
+        .details {
+            margin-top: 20px;
+            text-align: right;
+            border: 1px solid #e5e5e5;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .details table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+        }
+
+        .details td {
+            padding: 10px 12px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .details tr:last-child td {
+            border-bottom: none;
+        }
+
+        .details td:first-child {
+            font-weight: 700;
+            width: 45%;
+            background: #f8fafc;
+        }
     </style>
 </head>
 <body>
@@ -61,8 +91,46 @@
 <div class="container">
     <div class="success-icon">✔️</div>
     <h1>پرداخت موفق</h1>
-    <p>پرداخت شما با موفقیت انجام شد.</p>
-    <p>ثبت نام شما کامل شد.</p>
+    <p>{{ $message ?? 'پرداخت شما با موفقیت انجام شد.' }}</p>
+    <p>ثبت نام/سفارش شما تکمیل شد.</p>
+
+    @if(!empty($paymentDetails) && is_array($paymentDetails))
+        @php
+            $labels = [
+                'channel' => 'کانال پرداخت',
+                'gateway_status' => 'وضعیت درگاه',
+                'amount' => 'مبلغ',
+                'status' => 'وضعیت تراکنش',
+                'type' => 'نوع تراکنش',
+                'description' => 'توضیحات',
+                'transaction_id' => 'شناسه تراکنش',
+                'reference_id' => 'کد رهگیری',
+                'authority' => 'Authority',
+                'created_at' => 'تاریخ ثبت',
+            ];
+        @endphp
+        <div class="details">
+            <table>
+                <tbody>
+                @foreach($labels as $key => $label)
+                    @if(array_key_exists($key, $paymentDetails) && !is_null($paymentDetails[$key]) && $paymentDetails[$key] !== '')
+                        <tr>
+                            <td>{{ $label }}</td>
+                            <td>
+                                @if($key === 'amount')
+                                    {{ number_format((int)$paymentDetails[$key]) }} تومان
+                                @else
+                                    {{ $paymentDetails[$key] }}
+                                @endif
+                            </td>
+                        </tr>
+                    @endif
+                @endforeach
+                </tbody>
+            </table>
+        </div>
+    @endif
+
     <a href="{{route('profile')}}" class="btn">بازگشت به حساب کاربری</a>
 </div>
 

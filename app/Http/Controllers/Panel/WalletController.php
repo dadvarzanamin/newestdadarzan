@@ -211,8 +211,14 @@ class WalletController extends Controller
             Invoice::where('transactionId', $transaction->id)
                 ->update(['price_status' => 'paid']);
 
-            $redirectResponse = view('partials.payment-success')
-                ->with('success', 'پرداخت با موفقیت از کیف پول انجام شد');
+            $redirectResponse = view('partials.payment-success', [
+                'message' => 'پرداخت با موفقیت از کیف پول انجام شد',
+                'paymentDetails' => $this->buildPaymentDetails(
+                    $transaction->fresh(),
+                    'COMPLETED',
+                    'wallet'
+                ),
+            ]);
 
         });
 
@@ -221,33 +227,82 @@ class WalletController extends Controller
 
     public function callbackpay(Request $request)
     {
-        $authority  = $request->query('Authority');
-        $status     = $request->query('Status');
+        $authority = $request->query('Authority');
+        $status = strtoupper((string) $request->query('Status'));
+        $userId = Auth::id();
 
-        if ($status == "OK") {
-            $wallet_transactions = WalletTransaction::
-            select('id','amount')
-                ->where('transactionId', '=', $authority)
-                ->where('user_id', '=', Auth::user()->id)
-                ->where('status', '=', 'pending')
-                ->first();
+        $walletTransaction = WalletTransaction::where('transactionId', $authority)
+            ->where('user_id', $userId)
+            ->where('status', 'pending')
+            ->first();
 
-            $payment = Toman::amount($wallet_transactions->amount)->transactionId($authority)->verify();
+        if (!$walletTransaction) {
+            return view('partials.payment-failed', [
+                'message' => 'تراکنش معتبر برای این کاربر پیدا نشد.',
+                'paymentDetails' => $this->buildPaymentDetails(null, $status, 'gateway', [
+                    'authority' => $authority,
+                    'error' => 'تراکنش یافت نشد یا قبلا پردازش شده است',
+                ]),
+            ]);
+        }
+
+        if ($status !== 'OK') {
+            $walletTransaction->update(['status' => 'failed']);
+
+            return view('partials.payment-failed', [
+                'message' => 'پرداخت در درگاه ناموفق یا توسط کاربر لغو شد.',
+                'paymentDetails' => $this->buildPaymentDetails($walletTransaction->fresh(), $status, 'gateway'),
+            ]);
+        }
+
+        try {
+            $payment = Toman::amount($walletTransaction->amount)
+                ->transactionId($authority)
+                ->verify();
 
             if ($payment->successful()) {
-                WalletTransaction::whereid($wallet_transactions->id)->whereUser_id(Auth::user()->id)->whereStatus('pending')
-                    ->update(['status' => 'completed' , 'referenceId' => $payment->referenceId()]);
-                $wallet = Wallet::whereUser_id(Auth::user()->id)->first();
-                $amount_total = $wallet->balance + $wallet_transactions->amount;
-                Wallet::whereUser_id(Auth::user()->id)->update(['balance' => $amount_total]);
-                return view('partials.payment-success');
-            } else {
-                WalletTransaction::whereid($wallet_transactions->id)->whereUser_id(Auth::user()->id)->whereStatus('pending')
-                    ->update(['status' => 'failed']);
-                return view('partials.payment-failed');
+                $walletTransaction->update([
+                    'status' => 'completed',
+                    'referenceId' => $payment->referenceId(),
+                ]);
+
+                if ($walletTransaction->type === 'deposit') {
+                    $wallet = Wallet::whereUser_id($userId)->first();
+                    if ($wallet) {
+                        $wallet->increment('balance', $walletTransaction->amount);
+                    }
+                }
+
+                if ($walletTransaction->type === 'order_payment') {
+                    Invoice::where('transactionId', $walletTransaction->id)
+                        ->update(['price_status' => 'paid']);
+                }
+
+                return view('partials.payment-success', [
+                    'message' => 'پرداخت با موفقیت انجام شد.',
+                    'paymentDetails' => $this->buildPaymentDetails(
+                        $walletTransaction->fresh(),
+                        $status,
+                        'gateway'
+                    ),
+                ]);
             }
-        } else {
-            return view('partials.payment-failed');
+
+            $walletTransaction->update(['status' => 'failed']);
+
+            return view('partials.payment-failed', [
+                'message' => 'تایید پرداخت از سمت درگاه انجام نشد.',
+                'paymentDetails' => $this->buildPaymentDetails($walletTransaction->fresh(), $status, 'gateway'),
+            ]);
+        } catch (\Throwable $e) {
+            $walletTransaction->update(['status' => 'failed']);
+
+            return view('partials.payment-failed', [
+                'message' => 'خطا در بررسی نتیجه پرداخت.',
+                'paymentDetails' => $this->buildPaymentDetails($walletTransaction->fresh(), $status, 'gateway', [
+                    'error' => $e->getMessage(),
+                ]),
+            ]);
         }
     }
 
@@ -417,5 +472,27 @@ class WalletController extends Controller
         $englishNumbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
 
         return str_replace($persianNumbers, $englishNumbers, $string);
+    }
+
+    protected function buildPaymentDetails(
+        ?WalletTransaction $transaction,
+        ?string $gatewayStatus = null,
+        string $channel = 'gateway',
+        array $extra = []
+    ): array {
+        $details = [
+            'channel' => $channel,
+            'gateway_status' => $gatewayStatus ?: '-',
+            'amount' => $transaction?->amount,
+            'status' => $transaction?->status,
+            'type' => $transaction?->type,
+            'description' => $transaction?->description,
+            'transaction_id' => $transaction?->transactionId,
+            'reference_id' => $transaction?->referenceId,
+            'authority' => $transaction?->transactionId,
+            'created_at' => optional($transaction?->created_at)->format('Y-m-d H:i:s'),
+        ];
+
+        return array_merge($details, $extra);
     }
 }
