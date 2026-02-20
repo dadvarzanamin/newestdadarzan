@@ -58,6 +58,7 @@ Route::middleware('auth.jwt')->group(function () {
 
     Route::post('v1/product_payment'    , [App\Http\Controllers\Api\V1\PaymentController::class , 'product_payment'])->name('product_payment');
     Route::get('v1/payment/result'      , [App\Http\Controllers\Api\V1\PaymentController::class , 'paymentResult'])->name('payment_result');
+    Route::get('v1/wallet/result'       , [App\Http\Controllers\Api\V1\WalletController::class  , 'paymentResult'])->name('wallet_payment_result');
 
 
 });

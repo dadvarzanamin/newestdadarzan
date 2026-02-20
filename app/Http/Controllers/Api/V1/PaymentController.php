@@ -73,6 +73,7 @@ class PaymentController extends Controller
             'response'=> [
                 'url'       => 'https://www.zarinpal.com/pg/StartPay/' . $paymentRequest->transactionId(),
                 'authority' => $paymentRequest->transactionId(),
+                'result_url' => route('payment_result', ['authority' => $paymentRequest->transactionId()]),
             ],
         ]);
     }
