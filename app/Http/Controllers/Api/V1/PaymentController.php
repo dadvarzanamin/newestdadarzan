@@ -93,15 +93,27 @@ class PaymentController extends Controller
                 ->first();
 
             if ($completedTransaction) {
-                return view('api.payment-success');
+                return view('api.payment-success', [
+                    'message' => 'این پرداخت قبلا تایید شده است.',
+                    'paymentDetails' => $this->buildPaymentDetails($completedTransaction, $status, 'gateway'),
+                ]);
             }
 
-            return view('api.payment-failed');
+            return view('api.payment-failed', [
+                'message' => 'تراکنش معتبر یافت نشد یا قبلا پردازش شده است.',
+                'paymentDetails' => $this->buildPaymentDetails(null, $status, 'gateway', [
+                    'authority' => $authority,
+                    'error' => 'تراکنش یافت نشد یا قبلا پردازش شده است',
+                ]),
+            ]);
         }
 
         if ($status !== 'OK') {
             $transaction->update(['status' => 'failed']);
-            return view('api.payment-failed');
+            return view('api.payment-failed', [
+                'message' => 'پرداخت در درگاه ناموفق یا توسط کاربر لغو شد.',
+                'paymentDetails' => $this->buildPaymentDetails($transaction->fresh(), $status, 'gateway'),
+            ]);
         }
 
         Auth::loginUsingId($transaction->user_id);
@@ -122,12 +134,20 @@ class PaymentController extends Controller
 
             if (! $payment->successful()) {
                 $transaction->update(['status' => 'failed']);
-                return view('api.payment-failed');
+                return view('api.payment-failed', [
+                    'message' => 'تایید پرداخت از سمت درگاه انجام نشد.',
+                    'paymentDetails' => $this->buildPaymentDetails($transaction->fresh(), $status, 'gateway'),
+                ]);
             }
         } catch (\Throwable $e) {
             $transaction->update(['status' => 'failed']);
             Log::error('payment callback verify failed: ' . $e->getMessage());
-            return view('api.payment-failed');
+            return view('api.payment-failed', [
+                'message' => 'خطا در بررسی نتیجه پرداخت.',
+                'paymentDetails' => $this->buildPaymentDetails($transaction->fresh(), $status, 'gateway', [
+                    'error' => $e->getMessage(),
+                ]),
+            ]);
         }
 
         $transaction->update([
@@ -163,7 +183,10 @@ class PaymentController extends Controller
             }
         }
 
-        return view('api.payment-success');
+        return view('api.payment-success', [
+            'message' => 'پرداخت با موفقیت انجام شد.',
+            'paymentDetails' => $this->buildPaymentDetails($transaction->fresh(), $status, 'gateway'),
+        ]);
     }
 
     public function paymentResult(Request $request)
@@ -259,6 +282,28 @@ class PaymentController extends Controller
         } catch (\Throwable $e) {
             return $this->toFaDigits((string) optional($date)->format('Y-m-d H:i:s'));
         }
+    }
+
+    protected function buildPaymentDetails(
+        ?WalletTransaction $transaction,
+        ?string $gatewayStatus = null,
+        string $channel = 'gateway',
+        array $extra = []
+    ): array {
+        $details = [
+            'channel' => $channel,
+            'gateway_status' => $gatewayStatus ?: '-',
+            'amount' => $transaction?->amount,
+            'status' => $transaction?->status,
+            'type' => $transaction?->type,
+            'description' => $transaction?->description,
+            'transaction_id' => $transaction?->transactionId,
+            'reference_id' => $transaction?->referenceId,
+            'authority' => $transaction?->transactionId,
+            'created_at' => optional($transaction?->created_at)->format('Y-m-d H:i:s'),
+        ];
+
+        return array_merge($details, $extra);
     }
 
 }

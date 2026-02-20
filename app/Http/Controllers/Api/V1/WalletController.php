@@ -146,23 +146,55 @@ class WalletController extends Controller
     public function callbackpay(Request $request)
     {
         $authority  = $request->query('Authority');
-        $status     = $request->query('Status');
+        $status     = strtoupper((string) $request->query('Status'));
 
-        if ($status == "OK") {
-            $wallet_transactions = WalletTransaction::select('id','amount','user_id')
-                ->where('transactionId', '=', $authority)
-                ->where('status', '=', 'pending')
+        $walletTransaction = WalletTransaction::where('transactionId', $authority)
+            ->where('status', 'pending')
+            ->first();
+
+        if (! $walletTransaction) {
+            $completedTransaction = WalletTransaction::where('transactionId', $authority)
+                ->where('status', 'completed')
+                ->latest('id')
                 ->first();
 
-            Auth::loginUsingId($wallet_transactions->user_id);
+            if ($completedTransaction) {
+                return view('api.payment-success', [
+                    'message' => 'این پرداخت قبلا تایید شده است.',
+                    'paymentDetails' => $this->buildPaymentDetails($completedTransaction, $status, 'gateway'),
+                ]);
+            }
 
-            $payment = Toman::amount($wallet_transactions->amount)->transactionId($authority)->verify();
+            return view('api.payment-failed', [
+                'message' => 'تراکنش معتبر یافت نشد یا قبلا پردازش شده است.',
+                'paymentDetails' => $this->buildPaymentDetails(null, $status, 'gateway', [
+                    'authority' => $authority,
+                    'error' => 'تراکنش یافت نشد یا قبلا پردازش شده است',
+                ]),
+            ]);
+        }
+
+        if ($status !== 'OK') {
+            $walletTransaction->update(['status' => 'failed']);
+            return view('api.payment-failed', [
+                'message' => 'پرداخت در درگاه ناموفق یا توسط کاربر لغو شد.',
+                'paymentDetails' => $this->buildPaymentDetails($walletTransaction->fresh(), $status, 'gateway'),
+            ]);
+        }
+
+        Auth::loginUsingId($walletTransaction->user_id);
+
+        try {
+            $payment = Toman::amount($walletTransaction->amount)->transactionId($authority)->verify();
 
             if ($payment->successful()) {
-                WalletTransaction::whereId($wallet_transactions->id)->whereUser_id(Auth::user()->id)->whereStatus('pending')
+                WalletTransaction::whereId($walletTransaction->id)->whereUser_id(Auth::user()->id)->whereStatus('pending')
                     ->update(['status' => 'completed' , 'referenceId' => $payment->referenceId()]);
-                Wallet::whereUser_id(Auth::user()->id)->update(['balance' => auth()->user()->wallet->balance + $wallet_transactions->amount]);
-                return view('api.payment-success');
+                Wallet::whereUser_id(Auth::user()->id)->update(['balance' => auth()->user()->wallet->balance + $walletTransaction->amount]);
+                return view('api.payment-success', [
+                    'message' => 'پرداخت با موفقیت انجام شد.',
+                    'paymentDetails' => $this->buildPaymentDetails($walletTransaction->fresh(), $status, 'gateway'),
+                ]);
 
 //                    return response()->json(
 //                        ['isSuccess' => true,
@@ -173,9 +205,12 @@ class WalletController extends Controller
 //                        ], 200);
 
             } else {
-                WalletTransaction::whereid($wallet_transactions->id)->whereUser_id(Auth::user()->id)->whereStatus('pending')
+                WalletTransaction::whereid($walletTransaction->id)->whereUser_id(Auth::user()->id)->whereStatus('pending')
                     ->update(['status' => 'failed']);
-                return view('api.payment-failed');
+                return view('api.payment-failed', [
+                    'message' => 'تایید پرداخت از سمت درگاه انجام نشد.',
+                    'paymentDetails' => $this->buildPaymentDetails($walletTransaction->fresh(), $status, 'gateway'),
+                ]);
 
 //                return response()->json(
 //                    ['isSuccess' => null,
@@ -184,14 +219,15 @@ class WalletController extends Controller
 //                        'status_code' => 500,
 //                    ], 500);
             }
-        } else {
-            return view('api.payment-failed');
-//            return response()->json(
-//                ['isSuccess' => null,
-//                    'message' => 'متاسفانه تراکنش موفقیت آمیز نبود.',
-//                    'errors' => true,
-//                    'status_code' => 500,
-//                ], 500);
+        } catch (\Throwable $e) {
+            $walletTransaction->update(['status' => 'failed']);
+            Log::error('wallet callback verify failed: ' . $e->getMessage());
+            return view('api.payment-failed', [
+                'message' => 'خطا در بررسی نتیجه پرداخت.',
+                'paymentDetails' => $this->buildPaymentDetails($walletTransaction->fresh(), $status, 'gateway', [
+                    'error' => $e->getMessage(),
+                ]),
+            ]);
         }
 
     }
@@ -366,6 +402,28 @@ class WalletController extends Controller
         $englishNumbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
 
         return str_replace($persianNumbers, $englishNumbers, $string);
+    }
+
+    protected function buildPaymentDetails(
+        ?WalletTransaction $transaction,
+        ?string $gatewayStatus = null,
+        string $channel = 'gateway',
+        array $extra = []
+    ): array {
+        $details = [
+            'channel' => $channel,
+            'gateway_status' => $gatewayStatus ?: '-',
+            'amount' => $transaction?->amount,
+            'status' => $transaction?->status,
+            'type' => $transaction?->type,
+            'description' => $transaction?->description,
+            'transaction_id' => $transaction?->transactionId,
+            'reference_id' => $transaction?->referenceId,
+            'authority' => $transaction?->transactionId,
+            'created_at' => optional($transaction?->created_at)->format('Y-m-d H:i:s'),
+        ];
+
+        return array_merge($details, $extra);
     }
 
 }
