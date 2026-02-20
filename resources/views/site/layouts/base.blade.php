@@ -36,7 +36,6 @@
 @include('site.partials.footer')
 
 {{-- Scripts عمومی --}}
-{{--<script data-cfasync="false" src="https://www.iarsalan.ir/template/pixgix/pixgix/index.htmlcdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>--}}
 <script src="{{ asset('site/assets/js/jquery-3.7.1.min.js') }}"></script>
 <script src="{{ asset('site/assets/js/boostrap.bundle.min.js') }}"></script>
 <script src="{{ asset('site/assets/js/gsap.min.js') }}"></script>

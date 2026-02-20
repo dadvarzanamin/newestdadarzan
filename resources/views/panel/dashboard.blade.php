@@ -1,118 +1,21 @@
 @extends('layouts.base')
 
 @section('style')
-<link rel="stylesheet" href="{{ asset('assets/vendor/css/rtl/dataTables.dataTables.min.css') }}"/>
-<link rel="stylesheet" href="{{asset('assets/vendor/css/rtl/quill.snow.css')}}" >
-<link rel="stylesheet" href="{{asset('assets/vendor/css/rtl/katex.min.css')}}">
-<link rel="stylesheet" href="{{asset('assets/vendor/css/rtl/dropzone.min.css')}}"/>
-
-<style>
-    /* Toolbar should stay LTR (icons/controls are designed LTR) */
-    .ql-toolbar,
-    .ql-toolbar * {
-        /*direction: ltr;*/
-    }
-
-    /* Editor content should be RTL for Persian */
-    .ql-editor {
-        direction: rtl;
-        text-align: right;
-        line-height: 1.9;
-        min-height: 180px;
-    }
-
-    /* Optional: make the editor fit Bootstrap card nicely */
-    .ql-toolbar.ql-snow {
-        border-top-left-radius: .5rem;
-        border-top-right-radius: .5rem;
-    }
-    .ql-container.ql-snow {
-        border-bottom-left-radius: .5rem;
-        border-bottom-right-radius: .5rem;
-    }
-</style>
-
+    <link rel="stylesheet" href="{{ asset('assets/vendor/css/rtl/dataTables.dataTables.min.css') }}"/>
+    <link rel="stylesheet" href="{{asset('assets/vendor/css/rtl/quill.snow.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/vendor/css/rtl/katex.min.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/vendor/css/rtl/dropzone.min.css')}}"/>
 
 @endsection
 
 @section('content')
 
     <div class="row gy-4 mb-4">
-    <div class="alert alert-info"> {{Auth::user()->name}} خوش آمدید به داشبورد مدیریت 👋</div>
+        <div class="alert alert-info"> {{Auth::user()->name}} خوش آمدید به داشبورد مدیریت 👋</div>
 
     </div>
 
     <div class="row gy-4 mb-4">
-
-
-        <div class="card mb-4">
-            <div class="card-body">
-                <div class="d-flex justify-content-between align-items-center mb-3">
-                    <h5 class="card-title mb-0">ویرایشگر متن</h5>
-                </div>
-
-                <div class="quill-wrapper">
-                    {{-- Quill Toolbar --}}
-                    <div id="snow-toolbar">
-                <span class="ql-formats">
-                    <select class="ql-font"></select>
-                    <select class="ql-size"></select>
-                </span>
-                        <span class="ql-formats">
-                    <button class="ql-bold" type="button"></button>
-                    <button class="ql-italic" type="button"></button>
-                    <button class="ql-underline" type="button"></button>
-                    <button class="ql-strike" type="button"></button>
-                </span>
-                        <span class="ql-formats">
-                    <select class="ql-color"></select>
-                    <select class="ql-background"></select>
-                </span>
-                        <span class="ql-formats">
-                    <button class="ql-script" value="sub" type="button"></button>
-                    <button class="ql-script" value="super" type="button"></button>
-                </span>
-                        <span class="ql-formats">
-                    <button class="ql-header" value="1" type="button"></button>
-                    <button class="ql-header" value="2" type="button"></button>
-                    <button class="ql-blockquote" type="button"></button>
-                    <button class="ql-code-block" type="button"></button>
-                </span>
-                        <span class="ql-formats">
-                    <button class="ql-list" value="ordered" type="button"></button>
-                    <button class="ql-list" value="bullet" type="button"></button>
-                    <button class="ql-indent" value="-1" type="button"></button>
-                    <button class="ql-indent" value="+1" type="button"></button>
-                </span>
-                        <span class="ql-formats">
-                    <button class="ql-direction" value="rtl" type="button"></button>
-                    <select class="ql-align"></select>
-                </span>
-                        <span class="ql-formats">
-                    <button class="ql-link" type="button"></button>
-                    <button class="ql-image" type="button"></button>
-                    <button class="ql-video" type="button"></button>
-                    <button class="ql-formula" type="button"></button>
-                </span>
-                        <span class="ql-formats">
-                    <button class="ql-clean" type="button"></button>
-                </span>
-                    </div>
-
-                    {{-- Quill Editor --}}
-                    <div id="snow-editor">
-                        <p>متن نمونه…</p>
-                    </div>
-
-                    {{-- Hidden input for submitting HTML (optional) --}}
-                    <input type="hidden" name="content_html" id="content_html" value="">
-                </div>
-
-            </div>
-        </div>
-
-
-
         <div class="row gy-4 mb-4">
             <div class="col-xl-2 col-lg-2 col-md-3 col-sm-4 col-6">
                 <div class="card h-100">
@@ -124,25 +27,30 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="card-info mt-4 pt-1" data-bs-toggle="modal" data-bs-target="#lawyersModal" style="cursor: pointer;">
+                        <div class="card-info mt-4 pt-1" data-bs-toggle="modal" data-bs-target="#lawyersModal"
+                             style="cursor: pointer;">
                             <p class="text-muted">تعداد وکلا</p>
                             <h5 class="mb-2">{{ DB::table('users')->whereRole_id(5)->count() }}</h5>
                         </div>
-                        <div class="modal fade" id="lawyersModal" tabindex="-1" aria-labelledby="lawyersModalLabel" aria-hidden="true">
+                        <div class="modal fade" id="lawyersModal" tabindex="-1" aria-labelledby="lawyersModalLabel"
+                             aria-hidden="true">
                             <div class="modal-dialog modal-lg">
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <h5 class="modal-title" id="lawyersModalLabel">لیست وکلا</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="بستن"></button>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="بستن"></button>
                                     </div>
                                     <div class="modal-body">
                                         <div class="table-responsive rounded-3">
                                             <div style="max-height: 400px; overflow-y: auto;">
-                                                <table class="table table-sm table-bordered" style="border-collapse: collapse;">
-                                                    <thead class="table-light" style="position: sticky; top: 0; z-index: 10;">
+                                                <table class="table table-sm table-bordered"
+                                                       style="border-collapse: collapse;">
+                                                    <thead class="table-light"
+                                                           style="position: sticky; top: 0; z-index: 10;">
                                                     <tr>
-                                                        <th class="py-3">تصویر </th>
-                                                        <th class="py-3">نام کاربری </th>
+                                                        <th class="py-3">تصویر</th>
+                                                        <th class="py-3">نام کاربری</th>
                                                         <th class="py-3">ایمیل</th>
                                                         <th class="py-3">نقش</th>
                                                         <th class="py-3">وضعیت</th>
@@ -153,15 +61,22 @@
                                                         <tr>
                                                             <td>
                                                                 @if($user->image)
-                                                                    <img data-src="{{ $user->image }}" class="w-px-40 h-auto rounded-circle" />
+                                                                    <img data-src="{{ $user->image }}"
+                                                                         class="w-px-40 h-auto rounded-circle"/>
                                                                 @else
                                                                     @if($user->gender == 1)
-                                                                        <img src="{{ asset('assets/img/avatars/1.png') }}" class="w-px-40 h-auto rounded-circle" />
+                                                                        <img
+                                                                            src="{{ asset('assets/img/avatars/1.png') }}"
+                                                                            class="w-px-40 h-auto rounded-circle"/>
                                                                     @elseif($user->gender == 2)
-                                                                        <img src="{{ asset('assets/img/avatars/8.png') }}" class="w-px-40 h-auto rounded-circle" />
+                                                                        <img
+                                                                            src="{{ asset('assets/img/avatars/8.png') }}"
+                                                                            class="w-px-40 h-auto rounded-circle"/>
                                                                     @else
-                                                                        <img src="{{ asset('assets/img/avatars/1.png') }}" class="w-px-40 h-auto rounded-circle" />
-                                                                   @endif
+                                                                        <img
+                                                                            src="{{ asset('assets/img/avatars/1.png') }}"
+                                                                            class="w-px-40 h-auto rounded-circle"/>
+                                                                    @endif
                                                                 @endif
                                                             </td>
                                                             <td>{{ $user->name }}</td>
@@ -176,7 +91,8 @@
                                         </div>
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">بستن</button>
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">بستن
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -198,27 +114,32 @@
                             {{--    <i class="mdi mdi-chevron-up text-success"></i>--}}
                             {{--</div>--}}
                         </div>
-                        <div class="card-info mt-4 pt-1" data-bs-toggle="modal" data-bs-target="#clientsModal" style="cursor: pointer;">
+                        <div class="card-info mt-4 pt-1" data-bs-toggle="modal" data-bs-target="#clientsModal"
+                             style="cursor: pointer;">
                             <p class="text-muted"> تعداد موکلین </p>
                             <h5 class="mb-2">{{ DB::table('users')->whereRole_id(4)->count() }}</h5>
 
                             {{--<div class="badge bg-label-secondary rounded-pill">4 ماه پیش</div>--}}
                         </div>
-                        <div class="modal fade" id="clientsModal" tabindex="-1" aria-labelledby="clientsModalLabel" aria-hidden="true">
+                        <div class="modal fade" id="clientsModal" tabindex="-1" aria-labelledby="clientsModalLabel"
+                             aria-hidden="true">
                             <div class="modal-dialog modal-lg">
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <h5 class="modal-title" id="clientsModalLabel">لیست موکلین</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="بستن"></button>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="بستن"></button>
                                     </div>
                                     <div class="modal-body">
                                         <div class="table-responsive rounded-3">
                                             <div style="max-height: 400px; overflow-y: auto;">
-                                                <table class="table table-sm table-bordered" style="border-collapse: collapse;">
-                                                    <thead class="table-light" style="position: sticky; top: 0; z-index: 10;">
+                                                <table class="table table-sm table-bordered"
+                                                       style="border-collapse: collapse;">
+                                                    <thead class="table-light"
+                                                           style="position: sticky; top: 0; z-index: 10;">
                                                     <tr>
-                                                        <th class="py-3">تصویر </th>
-                                                        <th class="py-3">نام کاربری </th>
+                                                        <th class="py-3">تصویر</th>
+                                                        <th class="py-3">نام کاربری</th>
                                                         <th class="py-3">ایمیل</th>
                                                         <th class="py-3">نقش</th>
                                                         <th class="py-3">وضعیت</th>
@@ -229,14 +150,21 @@
                                                         <tr>
                                                             <td>
                                                                 @if($user->image)
-                                                                    <img data-src="{{ $user->image }}" class="w-px-40 h-auto rounded-circle" />
+                                                                    <img data-src="{{ $user->image }}"
+                                                                         class="w-px-40 h-auto rounded-circle"/>
                                                                 @else
                                                                     @if($user->gender == 1)
-                                                                        <img src="{{ asset('assets/img/avatars/1.png') }}" class="w-px-40 h-auto rounded-circle" />
+                                                                        <img
+                                                                            src="{{ asset('assets/img/avatars/1.png') }}"
+                                                                            class="w-px-40 h-auto rounded-circle"/>
                                                                     @elseif($user->gender == 2)
-                                                                        <img src="{{ asset('assets/img/avatars/8.png') }}" class="w-px-40 h-auto rounded-circle" />
+                                                                        <img
+                                                                            src="{{ asset('assets/img/avatars/8.png') }}"
+                                                                            class="w-px-40 h-auto rounded-circle"/>
                                                                     @else
-                                                                        <img src="{{ asset('assets/img/avatars/1.png') }}" class="w-px-40 h-auto rounded-circle" />
+                                                                        <img
+                                                                            src="{{ asset('assets/img/avatars/1.png') }}"
+                                                                            class="w-px-40 h-auto rounded-circle"/>
                                                                     @endif
                                                                 @endif
                                                             </td>
@@ -252,7 +180,8 @@
                                         </div>
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">بستن</button>
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">بستن
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -271,25 +200,30 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="card-info mt-4 pt-1" data-bs-toggle="modal" data-bs-target="#studentsModal" style="cursor: pointer;">
+                        <div class="card-info mt-4 pt-1" data-bs-toggle="modal" data-bs-target="#studentsModal"
+                             style="cursor: pointer;">
                             <p class="text-muted">تعداد دانشپذیران</p>
                             <h5 class="mb-2">{{ DB::table('users')->whereRole_id(6)->count() }}</h5>
                         </div>
-                        <div class="modal fade" id="studentsModal" tabindex="-1" aria-labelledby="studentsModalLabel" aria-hidden="true">
+                        <div class="modal fade" id="studentsModal" tabindex="-1" aria-labelledby="studentsModalLabel"
+                             aria-hidden="true">
                             <div class="modal-dialog modal-lg">
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <h5 class="modal-title" id="studentsModalLabel">لیست دانشپذیران</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="بستن"></button>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="بستن"></button>
                                     </div>
                                     <div class="modal-body">
                                         <div class="table-responsive rounded-3">
                                             <div style="max-height: 400px; overflow-y: auto;">
-                                                <table class="table table-sm table-bordered" style="border-collapse: collapse;">
-                                                    <thead class="table-light" style="position: sticky; top: 0; z-index: 10;">
+                                                <table class="table table-sm table-bordered"
+                                                       style="border-collapse: collapse;">
+                                                    <thead class="table-light"
+                                                           style="position: sticky; top: 0; z-index: 10;">
                                                     <tr>
-                                                        <th class="py-3">تصویر </th>
-                                                        <th class="py-3">نام کاربری </th>
+                                                        <th class="py-3">تصویر</th>
+                                                        <th class="py-3">نام کاربری</th>
                                                         <th class="py-3">ایمیل</th>
                                                         <th class="py-3">نقش</th>
                                                         <th class="py-3">وضعیت</th>
@@ -300,14 +234,21 @@
                                                         <tr>
                                                             <td>
                                                                 @if($user->image)
-                                                                    <img data-src="{{ $user->image }}" class="w-px-40 h-auto rounded-circle" />
+                                                                    <img data-src="{{ $user->image }}"
+                                                                         class="w-px-40 h-auto rounded-circle"/>
                                                                 @else
                                                                     @if($user->gender == 1)
-                                                                        <img src="{{ asset('assets/img/avatars/1.png') }}" class="w-px-40 h-auto rounded-circle" />
+                                                                        <img
+                                                                            src="{{ asset('assets/img/avatars/1.png') }}"
+                                                                            class="w-px-40 h-auto rounded-circle"/>
                                                                     @elseif($user->gender == 2)
-                                                                        <img src="{{ asset('assets/img/avatars/8.png') }}" class="w-px-40 h-auto rounded-circle" />
+                                                                        <img
+                                                                            src="{{ asset('assets/img/avatars/8.png') }}"
+                                                                            class="w-px-40 h-auto rounded-circle"/>
                                                                     @else
-                                                                        <img src="{{ asset('assets/img/avatars/1.png') }}" class="w-px-40 h-auto rounded-circle" />
+                                                                        <img
+                                                                            src="{{ asset('assets/img/avatars/1.png') }}"
+                                                                            class="w-px-40 h-auto rounded-circle"/>
                                                                     @endif
                                                                 @endif
                                                             </td>
@@ -323,7 +264,8 @@
                                         </div>
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">بستن</button>
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">بستن
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -342,28 +284,33 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="card-info mt-4 pt-1" data-bs-toggle="modal" data-bs-target="#contractsModal" style="cursor: pointer;">
+                        <div class="card-info mt-4 pt-1" data-bs-toggle="modal" data-bs-target="#contractsModal"
+                             style="cursor: pointer;">
                             <p class="text-muted">تعداد نمونه قرارداد</p>
                             <h5 class="mb-2">
                                 {{DB::table('products')->Where('product_type' , 'contract')->where('status' , 4)->count()}}
                             </h5>
                         </div>
-                        <div class="modal fade" id="contractsModal" tabindex="-1" aria-labelledby="contractsModalLabel" aria-hidden="true">
+                        <div class="modal fade" id="contractsModal" tabindex="-1" aria-labelledby="contractsModalLabel"
+                             aria-hidden="true">
                             <div class="modal-dialog modal-lg">
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <h5 class="modal-title" id="contractsModalLabel">تعداد طرح خاتمه یافته</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="بستن"></button>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="بستن"></button>
                                     </div>
                                     <div class="modal-body">
                                         <div class="table-responsive rounded-3">
                                             <div style="max-height: 400px; overflow-y: auto;">
-                                                <table class="table table-sm table-bordered" style="border-collapse: collapse;">
-                                                    <thead class="table-light" style="position: sticky; top: 0; z-index: 10;">
+                                                <table class="table table-sm table-bordered"
+                                                       style="border-collapse: collapse;">
+                                                    <thead class="table-light"
+                                                           style="position: sticky; top: 0; z-index: 10;">
                                                     <tr>
-                                                        <th class="py-3"> عنوان </th>
-                                                        <th class="py-3"> مبلغ </th>
-                                                        <th class="py-3"> تعداد کلیک </th>
+                                                        <th class="py-3"> عنوان</th>
+                                                        <th class="py-3"> مبلغ</th>
+                                                        <th class="py-3"> تعداد کلیک</th>
                                                     </tr>
                                                     </thead>
                                                     <tbody>
@@ -380,7 +327,8 @@
                                         </div>
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">بستن</button>
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">بستن
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -399,24 +347,29 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="card-info mt-4 pt-1" data-bs-toggle="modal" data-bs-target="#rejectprojectsModal" style="cursor: pointer;">
+                        <div class="card-info mt-4 pt-1" data-bs-toggle="modal" data-bs-target="#rejectprojectsModal"
+                             style="cursor: pointer;">
                             <p class="text-muted">تعداد کارگاه ها</p>
                             <h5 class="mb-2">
                                 {{DB::table('products')->Where('product_type' , 'workshop')->count()}}
                             </h5>
                         </div>
-                        <div class="modal fade" id="rejectprojectsModal" tabindex="-1" aria-labelledby="rejectprojectsModalLabel" aria-hidden="true">
+                        <div class="modal fade" id="rejectprojectsModal" tabindex="-1"
+                             aria-labelledby="rejectprojectsModalLabel" aria-hidden="true">
                             <div class="modal-dialog modal-lg">
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <h5 class="modal-title" id="rejectprojectsModalLabel">تعداد مقالات</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="بستن"></button>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="بستن"></button>
                                     </div>
                                     <div class="modal-body">
                                         <div class="table-responsive rounded-3">
                                             <div style="max-height: 400px; overflow-y: auto;">
-                                                <table class="table table-sm table-bordered" style="border-collapse: collapse;">
-                                                    <thead class="table-light" style="position: sticky; top: 0; z-index: 10;">
+                                                <table class="table table-sm table-bordered"
+                                                       style="border-collapse: collapse;">
+                                                    <thead class="table-light"
+                                                           style="position: sticky; top: 0; z-index: 10;">
                                                     <tr>
                                                         <th class="py-3">نام کارگاه</th>
                                                         <th class="py-3">نام استاد</th>
@@ -444,7 +397,8 @@
                                         </div>
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">بستن</button>
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">بستن
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -530,9 +484,9 @@
                                             <i class="mdi mdi-teach ms-1"></i>
                                             لیست کارگاه‌ها
                                         </h5>
-{{--                                        <small class="text-body mb-0 d-block">--}}
-{{--                                            پروژه در حال اجرا--}}
-{{--                                        </small>--}}
+                                        {{--                                        <small class="text-body mb-0 d-block">--}}
+                                        {{--                                            پروژه در حال اجرا--}}
+                                        {{--                                        </small>--}}
                                     </div>
 
                                     <div class="dropdown">
@@ -578,7 +532,8 @@
 
                                         {{-- بخش تصویر 16:9 وسط‌چین --}}
                                         <div class="workshop-thumb ms-3 ml-2">
-                                            <img src="{{ asset('storage/'.$workshop->cover) }}" alt="{{ $workshop->title }}">
+                                            <img src="{{ asset('storage/'.$workshop->cover) }}"
+                                                 alt="{{ $workshop->title }}">
                                         </div>
 
                                         {{-- بخش متن --}}
@@ -636,7 +591,8 @@
                     <div class="card-header d-flex align-items-center justify-content-between bg-white rounded-top-4">
                         <h6 class="card-title m-0 me-2 fw-bold">موجودی کیف پول ها</h6>
                         <div class="dropdown">
-                            <button class="btn p-0" type="button" id="paymentHistory" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <button class="btn p-0" type="button" id="paymentHistory" data-bs-toggle="dropdown"
+                                    aria-haspopup="true" aria-expanded="false">
                                 <i class="mdi mdi-dots-vertical mdi-24px"></i>
                             </button>
                             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="paymentHistory">
@@ -653,20 +609,24 @@
                                 @foreach($wallets as $wallet)
                                     <li class="list-group-item px-3 py-3 payment-item d-flex align-items-center gap-3">
 
-                                        <div class="payment-logo rounded-3 d-flex align-items-center justify-content-center flex-shrink-0">
-                                            <img src="{{$wallet->gender == 2 ? asset('assets/img/avatars/8.png') : asset('assets/img/avatars/1.png')}}" alt="user" width="28" height="28" class="rounded-2">
+                                        <div
+                                            class="payment-logo rounded-3 d-flex align-items-center justify-content-center flex-shrink-0">
+                                            <img
+                                                src="{{$wallet->gender == 2 ? asset('assets/img/avatars/8.png') : asset('assets/img/avatars/1.png')}}"
+                                                alt="user" width="28" height="28" class="rounded-2">
                                         </div>
 
                                         <div class="flex-grow-1 min-w-0">
                                             <div class="d-flex justify-content-between align-items-center">
                                                 <div class="text-truncate fw-semibold">{{ $wallet->name }}</div>
-{{--                                                <div class="small text-muted ms-2">{{ $finance->date }}</div>--}}
+                                                {{--                                                <div class="small text-muted ms-2">{{ $finance->date }}</div>--}}
                                             </div>
                                         </div>
 
                                         <div class="text-end">
-                                            <div class="fw-semibold">{{ number_format($wallet->balance) }} <span class="text-muted small">تومان</span></div>
-{{--                                            <div class="text-muted small">{{ number_format($wallet->balance) }}</div>--}}
+                                            <div class="fw-semibold">{{ number_format($wallet->balance) }} <span
+                                                    class="text-muted small">تومان</span></div>
+                                            {{--                                            <div class="text-muted small">{{ number_format($wallet->balance) }}</div>--}}
                                         </div>
                                     </li>
                                 @endforeach
@@ -686,7 +646,8 @@
                             <small class="text-muted">نمای کلی سهم هر کارگاه از کل پرداختی ها</small>
                         </div>
                         <div class="dropdown">
-                            <button class="btn p-0" type="button" id="portfolioMenu" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <button class="btn p-0" type="button" id="portfolioMenu" data-bs-toggle="dropdown"
+                                    aria-haspopup="true" aria-expanded="false">
                                 <i class="mdi mdi-dots-vertical mdi-24px"></i>
                             </button>
                             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="portfolioMenu">
@@ -701,37 +662,37 @@
                     <div class="card-body py-2">
                         <div class="portfolio-scroll">
                             <ul class="list-group list-group-flush">
-{{--                                @foreach($projects as $project)--}}
-{{--                                    @php--}}
-{{--                                        $share = $totalPaid > 0 ? round(($project->total_amount / $totalPaid) * 100) : 0;--}}
-{{--                                        // tone: primary (>=25), info (10-24), warning (<10)--}}
-{{--                                        $tone = $share >= 25 ? 'primary' : ($share >= 10 ? 'info' : 'warning');--}}
-{{--                                    @endphp--}}
+                                {{--                                @foreach($projects as $project)--}}
+                                {{--                                    @php--}}
+                                {{--                                        $share = $totalPaid > 0 ? round(($project->total_amount / $totalPaid) * 100) : 0;--}}
+                                {{--                                        // tone: primary (>=25), info (10-24), warning (<10)--}}
+                                {{--                                        $tone = $share >= 25 ? 'primary' : ($share >= 10 ? 'info' : 'warning');--}}
+                                {{--                                    @endphp--}}
 
-{{--                                    <li class="list-group-item px-3 py-3 border-0 border-bottom d-flex flex-column portfolio-item">--}}
-{{--                                        <!-- Top row -->--}}
-{{--                                        <div class="d-flex justify-content-between align-items-center mb-1">--}}
-{{--                                            <div class="d-flex align-items-center gap-2 min-w-0">--}}
-{{--                                                <span class="tone-dot tone-{{ $tone }}"></span>--}}
-{{--                                                <span class="fw-semibold text-dark text-truncate" title="{{ $project->title }}">{{ $project->title }}</span>--}}
-{{--                                            </div>--}}
-{{--                                            <div class="text-end">--}}
-{{--                                                <span class="fw-semibold">{{ number_format($project->total_amount) }}</span>--}}
-{{--                                            </div>--}}
-{{--                                        </div>--}}
+                                {{--                                    <li class="list-group-item px-3 py-3 border-0 border-bottom d-flex flex-column portfolio-item">--}}
+                                {{--                                        <!-- Top row -->--}}
+                                {{--                                        <div class="d-flex justify-content-between align-items-center mb-1">--}}
+                                {{--                                            <div class="d-flex align-items-center gap-2 min-w-0">--}}
+                                {{--                                                <span class="tone-dot tone-{{ $tone }}"></span>--}}
+                                {{--                                                <span class="fw-semibold text-dark text-truncate" title="{{ $project->title }}">{{ $project->title }}</span>--}}
+                                {{--                                            </div>--}}
+                                {{--                                            <div class="text-end">--}}
+                                {{--                                                <span class="fw-semibold">{{ number_format($project->total_amount) }}</span>--}}
+                                {{--                                            </div>--}}
+                                {{--                                        </div>--}}
 
-{{--                                        <!-- Meta -->--}}
-{{--                                        <div class="d-flex justify-content-between align-items-center mb-2 small">--}}
-{{--                                            <span class="text-muted">سهم از پورتفو</span>--}}
-{{--                                            <span class="pill pill-{{ $tone }}">{{ $share }}%</span>--}}
-{{--                                        </div>--}}
+                                {{--                                        <!-- Meta -->--}}
+                                {{--                                        <div class="d-flex justify-content-between align-items-center mb-2 small">--}}
+                                {{--                                            <span class="text-muted">سهم از پورتفو</span>--}}
+                                {{--                                            <span class="pill pill-{{ $tone }}">{{ $share }}%</span>--}}
+                                {{--                                        </div>--}}
 
-{{--                                        <!-- Progress (gradient) -->--}}
-{{--                                        <div class="progress sleek" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="{{ $share }}">--}}
-{{--                                            <div class="progress-bar bar-{{ $tone }}" style="width: {{ $share }}%;"></div>--}}
-{{--                                        </div>--}}
-{{--                                    </li>--}}
-{{--                                @endforeach--}}
+                                {{--                                        <!-- Progress (gradient) -->--}}
+                                {{--                                        <div class="progress sleek" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="{{ $share }}">--}}
+                                {{--                                            <div class="progress-bar bar-{{ $tone }}" style="width: {{ $share }}%;"></div>--}}
+                                {{--                                        </div>--}}
+                                {{--                                    </li>--}}
+                                {{--                                @endforeach--}}
                             </ul>
                         </div>
                     </div>
@@ -782,19 +743,23 @@
                                             <div class="flex-grow-1 min-w-0">
                                                 <div class="d-flex justify-content-between align-items-center">
                                                     <div class="min-w-0">
-                                                        <div class="fw-semibold text-truncate" title="{{ $user->name }}">{{ $user->name }}</div>
-                                                        <div class="small text-muted text-truncate" title="{{ $user->email }}">{{ $user->email }}</div>
+                                                        <div class="fw-semibold text-truncate"
+                                                             title="{{ $user->name }}">{{ $user->name }}</div>
+                                                        <div class="small text-muted text-truncate"
+                                                             title="{{ $user->email }}">{{ $user->email }}</div>
                                                     </div>
                                                     <div class="text-end ms-2">
                                                     <span class="badge role-badge me-1
                                                       {{ $user->level==='admin' ? 'role-admin' : ($user->level==='applicant' ? 'role-applicant' : 'role-unknown') }}">
                                                       {{ $roleLabel }}
                                                     </span>
-                                                        <span class="pill pill-{{ $statusTone }}">{{ $statusLabel }}</span>
+                                                        <span
+                                                            class="pill pill-{{ $statusTone }}">{{ $statusLabel }}</span>
                                                     </div>
                                                 </div>
 
-                                                <div class="d-flex justify-content-between align-items-center mt-2 small text-muted">
+                                                <div
+                                                    class="d-flex justify-content-between align-items-center mt-2 small text-muted">
                                                     <span class="d-flex align-items-center gap-1">
                                                       <i class="mdi mdi-clock-outline mdi-18px"></i> آخرین ورود:
                                                     </span>
@@ -816,7 +781,8 @@
                         <div class="d-flex justify-content-between">
                             <h5 class="mb-1">فروش سالانه</h5>
                             <div class="dropdown">
-                                <button class="btn p-0" type="button" id="monthlyBudgetDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <button class="btn p-0" type="button" id="monthlyBudgetDropdown"
+                                        data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     <i class="mdi mdi-dots-vertical mdi-24px"></i>
                                 </button>
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="monthlyBudgetDropdown">
@@ -841,7 +807,8 @@
                     <div class="card-header d-flex align-items-center justify-content-between">
                         <h5 class="card-title mb-0 me-2">جدول زمانبندی جلسات</h5>
                         <div class="dropdown">
-                            <button class="btn p-0" type="button" id="meetingSchedule" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <button class="btn p-0" type="button" id="meetingSchedule" data-bs-toggle="dropdown"
+                                    aria-haspopup="true" aria-expanded="false">
                                 <i class="mdi mdi-dots-vertical mdi-24px"></i>
                             </button>
                             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="meetingSchedule">
@@ -853,33 +820,33 @@
                     </div>
                     <div class="card-body pt-2">
                         <ul class="p-0 m-0">
-{{--                            @foreach($calendars as $calendar)--}}
-{{--                                <li class="d-flex mb-4 pb-1">--}}
-{{--                                    <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">--}}
-{{--                                        <div class="me-2">--}}
-{{--                                            <h6 class="mb-0 fw-semibold">{{$calendar->title}}</h6>--}}
-{{--                                            <small class="text-muted">--}}
-{{--                                                <i class="mdi mdi-calendar-blank-outline mdi-14px"></i>--}}
-{{--                                                <span>{{$calendar->start}}</span> ----}}
-{{--                                                <span>{{$calendar->location}}</span>--}}
-{{--                                            </small>--}}
-{{--                                        </div>--}}
-{{--                                        <div class="badge bg-label-primary rounded-pill">--}}
-{{--                                            @if($calendar->label === 'meeting')--}}
-{{--                                                جلسه--}}
-{{--                                            @elseif($calendar->label === 'session')--}}
-{{--                                                نشست--}}
-{{--                                            @elseif($calendar->label === 'event')--}}
-{{--                                                رویداد--}}
-{{--                                            @elseif($calendar->label === 'person')--}}
-{{--                                                شخصی--}}
-{{--                                            @elseif($calendar->label === 'other')--}}
-{{--                                                سایر--}}
-{{--                                            @endif--}}
-{{--                                        </div>--}}
-{{--                                    </div>--}}
-{{--                                </li>--}}
-{{--                            @endforeach--}}
+                            {{--                            @foreach($calendars as $calendar)--}}
+                            {{--                                <li class="d-flex mb-4 pb-1">--}}
+                            {{--                                    <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">--}}
+                            {{--                                        <div class="me-2">--}}
+                            {{--                                            <h6 class="mb-0 fw-semibold">{{$calendar->title}}</h6>--}}
+                            {{--                                            <small class="text-muted">--}}
+                            {{--                                                <i class="mdi mdi-calendar-blank-outline mdi-14px"></i>--}}
+                            {{--                                                <span>{{$calendar->start}}</span> ----}}
+                            {{--                                                <span>{{$calendar->location}}</span>--}}
+                            {{--                                            </small>--}}
+                            {{--                                        </div>--}}
+                            {{--                                        <div class="badge bg-label-primary rounded-pill">--}}
+                            {{--                                            @if($calendar->label === 'meeting')--}}
+                            {{--                                                جلسه--}}
+                            {{--                                            @elseif($calendar->label === 'session')--}}
+                            {{--                                                نشست--}}
+                            {{--                                            @elseif($calendar->label === 'event')--}}
+                            {{--                                                رویداد--}}
+                            {{--                                            @elseif($calendar->label === 'person')--}}
+                            {{--                                                شخصی--}}
+                            {{--                                            @elseif($calendar->label === 'other')--}}
+                            {{--                                                سایر--}}
+                            {{--                                            @endif--}}
+                            {{--                                        </div>--}}
+                            {{--                                    </div>--}}
+                            {{--                                </li>--}}
+                            {{--                            @endforeach--}}
                         </ul>
                     </div>
                 </div>
@@ -891,7 +858,8 @@
                         <div class="d-flex justify-content-between">
                             <h5 class="mb-1">میزان تحقق اهداف</h5>
                             <div class="dropdown">
-                                <button class="btn p-0" type="button" id="organicSessionsDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <button class="btn p-0" type="button" id="organicSessionsDropdown"
+                                        data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     <i class="mdi mdi-dots-vertical mdi-24px"></i>
                                 </button>
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="organicSessionsDropdown">
@@ -916,8 +884,8 @@
 @push('scripts')
     <script src="{{ asset('assets/js/timeline-chart.js') }}"></script>
     <script src="{{ asset('assets/js/charts-apex.js') }}"></script>
-{{--    <script src="{{asset('assets/vendor/js/katex.min.js')}}"></script>--}}
-{{--    <script src="{{asset('assets/vendor/js/quill.min.js')}}"></script>--}}
+    {{--    <script src="{{asset('assets/vendor/js/katex.min.js')}}"></script>--}}
+    {{--    <script src="{{asset('assets/vendor/js/quill.min.js')}}"></script>--}}
     {{-- KaTeX must be loaded BEFORE initializing Quill formula module --}}
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/quill@1.3.7/dist/quill.min.js"></script>
@@ -949,7 +917,9 @@
             // Keep hidden input synced (optional, useful for form submit)
             const hidden = document.querySelector("#content_html");
             if (hidden) {
-                const sync = () => { hidden.value = quill.root.innerHTML; };
+                const sync = () => {
+                    hidden.value = quill.root.innerHTML;
+                };
                 sync();
                 quill.on("text-change", sync);
             }
@@ -967,7 +937,7 @@
             input.addEventListener('input', () => {
                 const q = (input.value || '').trim().toLowerCase();
                 items.forEach(li => {
-                    const name  = li.dataset.name  || '';
+                    const name = li.dataset.name || '';
                     const email = li.dataset.email || '';
                     li.style.display = (name.includes(q) || email.includes(q)) ? '' : 'none';
                 });
